@@ -1,4 +1,4 @@
-package mit_ocw_6004;
+package core_architecture;
 
 import java.util.HashMap;
 

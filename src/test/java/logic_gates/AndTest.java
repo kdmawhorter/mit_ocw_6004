@@ -1,12 +1,14 @@
-package mit_ocw_6004;
+package logic_gates;
 
+import core_architecture.CircuitNode;
+import core_architecture.ConnectionType;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 
 import static org.junit.jupiter.api.Assertions.*;
 
-import static mit_ocw_6004.DigitalCircuit.GND;
-import static mit_ocw_6004.DigitalCircuit.VDD;
+import static core_architecture.DigitalCircuit.GND;
+import static core_architecture.DigitalCircuit.VDD;
 
 public class AndTest {
 
