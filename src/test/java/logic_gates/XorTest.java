@@ -12,10 +12,10 @@ import static core_architecture.DigitalCircuit.VDD;
 
 public class XorTest {
 
-    private Xor xor1Bit;
-    private Xor xor2Bit;
-    private Xor xor4Bit;
-    private Xor externalOutputXor2Bit;
+    private XorGate xor1Bit;
+    private XorGate xor2Bit;
+    private XorGate xor4Bit;
+    private XorGate externalOutputXor2Bit;
 
     private CircuitNode externalOutput;
 
@@ -47,12 +47,12 @@ public class XorTest {
 
     @BeforeEach
     void init() {
-        xor1Bit = new Xor("1 Bit Xor", 1);
-        xor2Bit = new Xor("2 Bit Xor", 2);
-        xor4Bit = new Xor("4 Bit Xor", 4);
+        xor1Bit = new XorGate("1 Bit Xor", 1);
+        xor2Bit = new XorGate("2 Bit Xor", 2);
+        xor4Bit = new XorGate("4 Bit Xor", 4);
 
         externalOutput = new CircuitNode("External Output");
-        externalOutputXor2Bit = new Xor("External Output 2 Bit Xor", 2, externalOutput);
+        externalOutputXor2Bit = new XorGate("External Output 2 Bit Xor", 2, externalOutput);
     }
 
     @Test

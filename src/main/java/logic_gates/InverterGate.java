@@ -3,20 +3,20 @@ package logic_gates;
 import core_architecture.*;
 import org.jetbrains.annotations.NotNull;
 
-public class Inverter extends DigitalCircuit {
+public class InverterGate extends DigitalCircuit {
 
     private Pfet[] pfets;
     private Nfet[] nfets;
 
-    public Inverter() {
+    public InverterGate() {
         super();
     }
 
-    public Inverter(String label) {
+    public InverterGate(String label) {
         this(label, 1);
     }
 
-    public Inverter(String label, int nBit) {
+    public InverterGate(String label, int nBit) {
         super(label, nBit, nBit);
 
         pfets = new Pfet[getNumInputs()];
@@ -28,7 +28,7 @@ public class Inverter extends DigitalCircuit {
         }
     }
 
-    public Inverter(String label, int nBit, CircuitNode[] outputs, CircuitNode[] inputs) {
+    public InverterGate(String label, int nBit, CircuitNode[] outputs, CircuitNode[] inputs) {
         this(label, nBit);
 
         assignOutputs(outputs);

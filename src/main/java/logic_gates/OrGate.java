@@ -4,38 +4,38 @@ import core_architecture.CircuitNode;
 import core_architecture.DigitalCircuit;
 import org.jetbrains.annotations.NotNull;
 
-public class Or extends DigitalCircuit {
+public class OrGate extends DigitalCircuit {
 
-    private Nor nor;
-    private Inverter inv;
+    private NorGate nor;
+    private InverterGate inv;
 
-    public Or() {
+    public OrGate() {
         super();
     }
 
-    public Or(String label, int nBit) {
+    public OrGate(String label, int nBit) {
         this(label, nBit, new CircuitNode(label + " Output"));
     }
 
 
-    public Or(String label, int nBit, CircuitNode output) {
+    public OrGate(String label, int nBit, CircuitNode output) {
         super(label, nBit, 1);
 
-        nor = new Nor(label + " Nor", nBit);
+        nor = new NorGate(label + " Nor", nBit);
         nor.assignInputs(getPortOutputs());
 
-        inv = new Inverter(label + " Inverter", 1);
+        inv = new InverterGate(label + " Inverter", 1);
         inv.assignInput(0, nor.getOutput(0));
 
         assignOutput(0, output);
     }
 
-    public Or(String label, int nBit, CircuitNode[] inputs) {
+    public OrGate(String label, int nBit, CircuitNode[] inputs) {
         this(label, nBit);
         assignInputs(inputs);
     }
 
-    public Or(String label, int nBit, CircuitNode output, CircuitNode[] inputs) {
+    public OrGate(String label, int nBit, CircuitNode output, CircuitNode[] inputs) {
         this(label, nBit, output);
         assignInputs(inputs);
     }

@@ -4,31 +4,31 @@ import core_architecture.CircuitNode;
 import core_architecture.DigitalCircuit;
 import org.jetbrains.annotations.NotNull;
 
-public class And extends DigitalCircuit {
-    private Nand nand;
-    private Inverter inv;
+public class AndGate extends DigitalCircuit {
+    private NandGate nand;
+    private InverterGate inv;
 
-    public And() {
+    public AndGate() {
         super();
     }
 
-    public And(String label, int nBit) {
+    public AndGate(String label, int nBit) {
         this(label, nBit, new CircuitNode(label + " Output"));
     }
 
-    public And(String label, int nBit, CircuitNode output) {
+    public AndGate(String label, int nBit, CircuitNode output) {
         super(label, nBit, 1);
 
-        nand = new Nand(label + " Nand", nBit);
+        nand = new NandGate(label + " Nand", nBit);
         nand.assignInputs(getPortOutputs());
 
-        inv = new Inverter(label + " Inverter", 1);
+        inv = new InverterGate(label + " Inverter", 1);
         inv.assignInput(0, nand.getOutput(0));
 
         assignOutput(0, output);
     }
 
-    public And(String label, int nBit, CircuitNode output, CircuitNode[] inputs) {
+    public AndGate(String label, int nBit, CircuitNode output, CircuitNode[] inputs) {
         this(label, nBit, output);
         assignInputs(inputs);
     }

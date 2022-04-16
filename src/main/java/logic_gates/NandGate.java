@@ -6,38 +6,39 @@ import core_architecture.Nfet;
 import core_architecture.Pfet;
 import org.jetbrains.annotations.NotNull;
 
-public class Nor extends DigitalCircuit {
+public class NandGate extends DigitalCircuit {
     private Pfet[] pfets;
     private Nfet[] nfets;
 
-    public Nor() {
+    public NandGate() {
         super();
     }
 
-    public Nor(String label, int nBits) {
+    public NandGate(String label, int nBits) {
         this(label, nBits, new CircuitNode(label + " Output"));
     }
 
-    public Nor(String label, int nBits, CircuitNode output) {
-        super(label, nBits>0 ? nBits : 1, 1);
+    public NandGate(String label, int nBits, CircuitNode output) {
+        super(label, Math.max(nBits, 1), 1);
 
-        CircuitNode[] pullUpNodes = new CircuitNode[getNumInputs()];
+        CircuitNode[] pullDownNodes = new CircuitNode[getNumInputs()];
         pfets = new Pfet[getNumInputs()];
         nfets = new Nfet[getNumInputs()];
 
+
         for (int i = 0; i < getNumInputs(); i++) {
-            pullUpNodes[i] = new CircuitNode(label + " PMOS node " + i + "-" + (i+1));
+            pullDownNodes[i] = new CircuitNode(label + " NMOS node " + i + "-" + (i+1));
 
-            pfets[i] = new Pfet(label + " Pfet_" + i, pullUpNodes[i], getPortOutput(i),
-                    (i-1>=0) ? pullUpNodes[i-1] : DigitalCircuit.VDD);
+            nfets[i] = new Nfet(label + " Nfet_" + i, pullDownNodes[i], getPortOutput(i),
+                    (i-1>=0) ? pullDownNodes[i-1] : DigitalCircuit.GND);
 
-            nfets[i] = new Nfet(label + " Nfet_" + i, output, getPortOutput(i), DigitalCircuit.GND);
+            pfets[i] = new Pfet(label + " Pfet_" + i, output, getPortOutput(i), DigitalCircuit.VDD);
+
         }
-
         assignOutput(0, output);
     }
 
-    public Nor(String label, int nBits, CircuitNode output, CircuitNode[] inputs) {
+    public NandGate(String label, int nBits, CircuitNode output, CircuitNode[] inputs) {
         this(label, nBits, output);
 
         assignInputs(inputs);
@@ -45,10 +46,10 @@ public class Nor extends DigitalCircuit {
 
     @Override
     public void assignOutput(int i, @NotNull CircuitNode output) {
-        for (Nfet nfet : nfets) {
-            nfet.assignOutput(output);
+        for (Pfet pfet : pfets) {
+            pfet.assignOutput(output);
         }
-        pfets[pfets.length-1].assignOutput(output);
+        nfets[nfets.length-1].assignOutput(0, output);
 
         super.assignOutput(0, output);
     }
@@ -61,5 +62,4 @@ public class Nor extends DigitalCircuit {
             nfets[i].evaluate();
         }
     }
-
 }

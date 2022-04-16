@@ -4,34 +4,34 @@ import core_architecture.CircuitNode;
 import core_architecture.DigitalCircuit;
 import org.jetbrains.annotations.NotNull;
 
-public class Xor extends DigitalCircuit {
-    private And[] and;
-    private Inverter[] inv;
-    private Or or;
+public class XorGate extends DigitalCircuit {
+    private AndGate[] and;
+    private InverterGate[] inv;
+    private OrGate or;
 
-    public Xor() {
+    public XorGate() {
         super();
     }
 
-    public Xor(String label, int nBit) {
+    public XorGate(String label, int nBit) {
         this(label, nBit, new CircuitNode(label + " Output"));
     }
 
-    public Xor(String label, int nBit, CircuitNode output) {
+    public XorGate(String label, int nBit, CircuitNode output) {
         super(label, nBit, 1);
 
-        inv = new Inverter[getNumInputs()];
-        and = new And[getNumInputs()];
+        inv = new InverterGate[getNumInputs()];
+        and = new AndGate[getNumInputs()];
 
-        or = new Or(label + " Or", getNumInputs(), output);
+        or = new OrGate(label + " Or", getNumInputs(), output);
 
         for (int i = 0; i < getNumInputs(); i++) {
-            inv[i] = new Inverter(label + " Inv_" + i);
+            inv[i] = new InverterGate(label + " Inv_" + i);
             inv[i].assignInput(0, getPortOutput(i));
         }
 
         for (int andIdx = 0; andIdx < getNumInputs(); andIdx++) {
-            and[andIdx] = new And(label + " And_" + andIdx, getNumInputs());
+            and[andIdx] = new AndGate(label + " And_" + andIdx, getNumInputs());
             for (int inputIdx = 0; inputIdx < getNumInputs(); inputIdx++) {
                 and[andIdx].assignInput(inputIdx,
                         inputIdx!=andIdx ? inv[inputIdx].getOutput(0) : getPortOutput(inputIdx));
@@ -42,7 +42,7 @@ public class Xor extends DigitalCircuit {
         assignOutput(0, output);
     }
 
-    public Xor(String label, int nBit, CircuitNode output, CircuitNode[] inputs) {
+    public XorGate(String label, int nBit, CircuitNode output, CircuitNode[] inputs) {
         this(label, nBit, output);
 
         assignInputs(inputs);
