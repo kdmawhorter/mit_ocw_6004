@@ -26,6 +26,8 @@ public class AndGate extends DigitalCircuit {
         inv.assignInput(0, nand.getOutput(0));
 
         assignOutput(0, output);
+
+        transistorCount = inv.getTransistorCount() + nand.getTransistorCount();
     }
 
     public AndGate(String label, int nBit, CircuitNode output, CircuitNode[] inputs) {

@@ -56,6 +56,11 @@ public class NorTest {
 
     @Test
     void norFuncTest() {
+        // Transistor Count Tests
+        assertEquals(2, nor1Bit.getTransistorCount(), "1 Bit Nor Transistor Count Testing");
+        assertEquals(4, nor2Bit.getTransistorCount(), "2 Bit Nor Transistor Count Testing");
+        assertEquals(8, nor4Bit.getTransistorCount(), "4 Bit Nor Transistor Count Testing");
+
         //Nor 1 Tests
         nor1Bit.assignInputs(INPUT_1_0);
         nor1Bit.evaluate();

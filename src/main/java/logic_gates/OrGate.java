@@ -2,6 +2,8 @@ package logic_gates;
 
 import core_architecture.CircuitNode;
 import core_architecture.DigitalCircuit;
+import core_architecture.Nfet;
+import core_architecture.Pfet;
 import org.jetbrains.annotations.NotNull;
 
 public class OrGate extends DigitalCircuit {
@@ -28,6 +30,8 @@ public class OrGate extends DigitalCircuit {
         inv.assignInput(0, nor.getOutput(0));
 
         assignOutput(0, output);
+
+        transistorCount = inv.getTransistorCount() + nor.getTransistorCount();
     }
 
     public OrGate(String label, int nBit, CircuitNode[] inputs) {
@@ -45,8 +49,6 @@ public class OrGate extends DigitalCircuit {
         inv.assignOutput(0, output);
         super.assignOutput(i, output);
     }
-
-
 
     public void evaluate() {
         super.evaluate();

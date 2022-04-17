@@ -57,6 +57,11 @@ public class OrTest {
 
     @Test
     void orFuncTest() {
+        // Transistor Count Tests
+        assertEquals(4, or1Bit.getTransistorCount(), "1 Bit Or Transistor Count Testing");
+        assertEquals(6, or2Bit.getTransistorCount(), "2 Bit Or Transistor Count Testing");
+        assertEquals(10, or4Bit.getTransistorCount(), "4 Bit Or Transistor Count Testing");
+
         //Or 1 Tests
         or1Bit.assignInputs(INPUT_1_0);
         or1Bit.evaluate();

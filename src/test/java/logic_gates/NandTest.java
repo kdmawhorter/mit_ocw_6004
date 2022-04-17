@@ -56,6 +56,11 @@ public class NandTest {
 
     @Test
     void nandFuncTest() {
+        // Transistor Count Tests
+        assertEquals(2, nand1Bit.getTransistorCount(), "1 Bit Nand Transistor Count Testing");
+        assertEquals(4, nand2Bit.getTransistorCount(), "2 Bit Nand Transistor Count Testing");
+        assertEquals(8, nand4Bit.getTransistorCount(), "4 Bit Nand Transistor Count Testing");
+
         //Nand 1 Tests
         nand1Bit.assignInputs(INPUT_1_0);
         nand1Bit.evaluate();

@@ -24,14 +24,17 @@ public class XorGate extends DigitalCircuit {
         and = new AndGate[getNumInputs()];
 
         or = new OrGate(label + " Or", getNumInputs(), output);
+        transistorCount += or.getTransistorCount();
 
         for (int i = 0; i < getNumInputs(); i++) {
             inv[i] = new InverterGate(label + " Inv_" + i);
             inv[i].assignInput(0, getPortOutput(i));
+            transistorCount += inv[i].getTransistorCount();
         }
 
         for (int andIdx = 0; andIdx < getNumInputs(); andIdx++) {
             and[andIdx] = new AndGate(label + " And_" + andIdx, getNumInputs());
+            transistorCount += and[andIdx].getTransistorCount();
             for (int inputIdx = 0; inputIdx < getNumInputs(); inputIdx++) {
                 and[andIdx].assignInput(inputIdx,
                         inputIdx!=andIdx ? inv[inputIdx].getOutput(0) : getPortOutput(inputIdx));
