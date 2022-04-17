@@ -10,7 +10,7 @@ import org.jetbrains.annotations.NotNull;
 
 public class UnsignedAdd extends DigitalCircuit {
     private AndGate[][] carryAnds;
-    private OrGate[] carryOrs;
+    protected OrGate[] carryOrs;
 
     private AndGate[] outputAnds;
     private XorGate[] outputXors;
@@ -75,12 +75,12 @@ public class UnsignedAdd extends DigitalCircuit {
         assignOutput(nBit, outputNodes[nBit]);
     }
 
-    public UnsignedAdd(String label, int nBit, CircuitNode[] outputs) {
+    public UnsignedAdd(String label, int nBit, @NotNull CircuitNode[] outputs) {
         this(label, nBit);
         assignOutputs(outputs);
     }
 
-    public UnsignedAdd(String label, int nBit, CircuitNode[] outputs, CircuitNode[] inputs) {
+    public UnsignedAdd(String label, int nBit, @NotNull CircuitNode[] outputs, @NotNull CircuitNode[] inputs) {
         this(label, nBit, outputs);
         assignInputs(inputs);
     }
