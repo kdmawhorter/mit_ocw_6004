@@ -23,8 +23,8 @@ public class InverterGate extends DigitalCircuit {
         nfets = new Nfet[getNumInputs()];
 
         for (int i = 0; i < getNumInputs(); i++) {
-            pfets[i] = new Pfet("PMOS circuit Pfet", getOutput(i), getPortOutput(i));
-            nfets[i] = new Nfet("NMOS circuit Nfet", getOutput(i), getPortOutput(i));
+            pfets[i] = new Pfet(label + " PMOS circuit Pfet", getOutput(i), getPortOutput(i));
+            nfets[i] = new Nfet(label + " NMOS circuit Nfet", getOutput(i), getPortOutput(i));
         }
     }
 
