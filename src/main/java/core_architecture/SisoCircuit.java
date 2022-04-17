@@ -1,8 +1,6 @@
-package mit_ocw_6004;
+package core_architecture;
 
 import org.jetbrains.annotations.NotNull;
-
-import java.util.Arrays;
 
 public abstract class SisoCircuit extends DigitalCircuit {
     public SisoCircuit() {
@@ -33,7 +31,7 @@ public abstract class SisoCircuit extends DigitalCircuit {
         return readOutput(0);
     }
 
-    public void assignOutput(CircuitNode output) {
+    public void assignOutput(@NotNull CircuitNode output) {
         assignOutput(0, output);
     }
 

@@ -1,18 +1,20 @@
-package mit_ocw_6004;
+package logic_gates;
 
+import core_architecture.CircuitNode;
+import core_architecture.ConnectionType;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 
 import static org.junit.jupiter.api.Assertions.*;
-import static mit_ocw_6004.DigitalCircuit.GND;
-import static mit_ocw_6004.DigitalCircuit.VDD;
+import static core_architecture.DigitalCircuit.GND;
+import static core_architecture.DigitalCircuit.VDD;
 
 public class NorTest {
 
-    private Nor nor1Bit;
-    private Nor nor2Bit;
-    private Nor nor4Bit;
-    private Nor externalOutputNor2Bit;
+    private NorGate nor1Bit;
+    private NorGate nor2Bit;
+    private NorGate nor4Bit;
+    private NorGate externalOutputNor2Bit;
 
     private CircuitNode externalOutput;
 
@@ -44,12 +46,12 @@ public class NorTest {
 
     @BeforeEach
     void init() {
-        nor1Bit = new Nor("1 Bit Nor", 1);
-        nor2Bit = new Nor("2 Bit Nor", 2);
-        nor4Bit = new Nor("4 Bit Nor", 4);
+        nor1Bit = new NorGate("1 Bit Nor", 1);
+        nor2Bit = new NorGate("2 Bit Nor", 2);
+        nor4Bit = new NorGate("4 Bit Nor", 4);
 
         externalOutput = new CircuitNode("External Output");
-        externalOutputNor2Bit = new Nor("External Output 2 Bit Nor", 2, externalOutput);
+        externalOutputNor2Bit = new NorGate("External Output 2 Bit Nor", 2, externalOutput);
     }
 
     @Test

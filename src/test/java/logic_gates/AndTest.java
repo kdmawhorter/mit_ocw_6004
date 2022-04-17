@@ -1,19 +1,21 @@
-package mit_ocw_6004;
+package logic_gates;
 
+import core_architecture.CircuitNode;
+import core_architecture.ConnectionType;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 
 import static org.junit.jupiter.api.Assertions.*;
 
-import static mit_ocw_6004.DigitalCircuit.GND;
-import static mit_ocw_6004.DigitalCircuit.VDD;
+import static core_architecture.DigitalCircuit.GND;
+import static core_architecture.DigitalCircuit.VDD;
 
 public class AndTest {
 
-    private And and1Bit;
-    private And and2Bit;
-    private And and4Bit;
-    private And externalOutputAnd2Bit;
+    private AndGate and1Bit;
+    private AndGate and2Bit;
+    private AndGate and4Bit;
+    private AndGate externalOutputAnd2Bit;
 
     private CircuitNode externalOutput;
 
@@ -45,12 +47,12 @@ public class AndTest {
 
     @BeforeEach
     void init() {
-        and1Bit = new And("1 Bit And", 1);
-        and2Bit = new And("2 Bit And", 2);
-        and4Bit = new And("4 Bit And", 4);
+        and1Bit = new AndGate("1 Bit And", 1);
+        and2Bit = new AndGate("2 Bit And", 2);
+        and4Bit = new AndGate("4 Bit And", 4);
 
         externalOutput = new CircuitNode("External Output");
-        externalOutputAnd2Bit = new And("External Output 2 Bit And", 2, externalOutput);
+        externalOutputAnd2Bit = new AndGate("External Output 2 Bit And", 2, externalOutput);
     }
 
     @Test

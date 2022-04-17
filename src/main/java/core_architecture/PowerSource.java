@@ -1,8 +1,8 @@
-package mit_ocw_6004;
+package core_architecture;
 
-public class Ground extends CircuitNode {
+public class PowerSource extends CircuitNode {
 
-    public Ground(String label) {
+    public PowerSource(String label) {
         super(label);
     }
 
@@ -13,6 +13,6 @@ public class Ground extends CircuitNode {
 
     @Override
     public ConnectionType getStatus() {
-        return ConnectionType.GROUND;
+        return ConnectionType.POWER;
     }
 }

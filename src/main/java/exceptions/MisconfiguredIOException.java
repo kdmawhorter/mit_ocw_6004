@@ -1,4 +1,4 @@
-package mit_ocw_6004;
+package exceptions;
 
 public class MisconfiguredIOException extends Exception {
     public MisconfiguredIOException(String message) {

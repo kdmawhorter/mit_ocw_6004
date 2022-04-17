@@ -1,18 +1,20 @@
-package mit_ocw_6004;
+package logic_gates;
 
+import core_architecture.CircuitNode;
+import core_architecture.ConnectionType;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 
 import static org.junit.jupiter.api.Assertions.*;
-import static mit_ocw_6004.DigitalCircuit.GND;
-import static mit_ocw_6004.DigitalCircuit.VDD;
+import static core_architecture.DigitalCircuit.GND;
+import static core_architecture.DigitalCircuit.VDD;
 
 public class NandTest {
 
-    private Nand nand1Bit;
-    private Nand nand2Bit;
-    private Nand nand4Bit;
-    private Nand externalOutputNand2Bit;
+    private NandGate nand1Bit;
+    private NandGate nand2Bit;
+    private NandGate nand4Bit;
+    private NandGate externalOutputNand2Bit;
 
     private CircuitNode externalOutput;
 
@@ -44,12 +46,12 @@ public class NandTest {
 
     @BeforeEach
     void init() {
-        nand1Bit = new Nand("1 Bit Nand", 1);
-        nand2Bit = new Nand("2 Bit Nand", 2);
-        nand4Bit = new Nand("4 Bit Nand", 4);
+        nand1Bit = new NandGate("1 Bit Nand", 1);
+        nand2Bit = new NandGate("2 Bit Nand", 2);
+        nand4Bit = new NandGate("4 Bit Nand", 4);
 
         externalOutput = new CircuitNode("External Output");
-        externalOutputNand2Bit = new Nand("External Output 2 Bit Nand", 2, externalOutput);
+        externalOutputNand2Bit = new NandGate("External Output 2 Bit Nand", 2, externalOutput);
     }
 
     @Test

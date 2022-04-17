@@ -1,19 +1,21 @@
-package mit_ocw_6004;
+package logic_gates;
 
+import core_architecture.CircuitNode;
+import core_architecture.ConnectionType;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 
 import static org.junit.jupiter.api.Assertions.*;
 
-import static mit_ocw_6004.DigitalCircuit.GND;
-import static mit_ocw_6004.DigitalCircuit.VDD;
+import static core_architecture.DigitalCircuit.GND;
+import static core_architecture.DigitalCircuit.VDD;
 
 public class OrTest {
 
-    private Or or1Bit;
-    private Or or2Bit;
-    private Or or4Bit;
-    private Or externalOutputOr2Bit;
+    private OrGate or1Bit;
+    private OrGate or2Bit;
+    private OrGate or4Bit;
+    private OrGate externalOutputOr2Bit;
     
     private CircuitNode externalOutput;
 
@@ -45,12 +47,12 @@ public class OrTest {
 
     @BeforeEach
     void init() {
-        or1Bit = new Or("1 Bit Or", 1);
-        or2Bit = new Or("2 Bit Or", 2);
-        or4Bit = new Or("4 Bit Or", 4);
+        or1Bit = new OrGate("1 Bit Or", 1);
+        or2Bit = new OrGate("2 Bit Or", 2);
+        or4Bit = new OrGate("4 Bit Or", 4);
         
         externalOutput = new CircuitNode("External Output");
-        externalOutputOr2Bit = new Or("External Output 2 Bit Or", 2, externalOutput);
+        externalOutputOr2Bit = new OrGate("External Output 2 Bit Or", 2, externalOutput);
     }
 
     @Test
