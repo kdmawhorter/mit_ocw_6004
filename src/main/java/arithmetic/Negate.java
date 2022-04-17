@@ -25,6 +25,8 @@ public class Negate extends DigitalCircuit {
         incrementer.assignInputs(inverter.getOutputs());
 
         assignOutputs(Arrays.copyOf(incrementer.getOutputs(), nBits));
+
+        transistorCount = inverter.getTransistorCount() + incrementer.getTransistorCount();
     }
 
     @Override

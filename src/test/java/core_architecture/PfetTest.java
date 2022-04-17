@@ -22,6 +22,10 @@ public class PfetTest {
 
     @Test
     void properGateSettingTest() {
+        // Transistor Count Tests
+        assertEquals(1, pfet.getTransistorCount(), "PFET Transistor Count Test");
+
+        // PFET Testing
         pfet.turnOn();
         pfet.evaluate();
         assertEquals(ConnectionType.FLOATING, pfet.getOutput().getStatus(),

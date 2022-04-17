@@ -34,6 +34,8 @@ public class NandGate extends DigitalCircuit {
 
             pfets[i] = new Pfet(label + " Pfet_" + i, output, getPortOutput(i), DigitalCircuit.VDD);
 
+            transistorCount += pfets[i].getTransistorCount() + nfets[i].getTransistorCount();
+
         }
         assignOutput(0, output);
     }
@@ -54,6 +56,7 @@ public class NandGate extends DigitalCircuit {
         super.assignOutput(0, output);
     }
 
+    @Override
     public void evaluate() {
         super.evaluate();
 

@@ -32,6 +32,8 @@ public class NorGate extends DigitalCircuit {
                     (i-1>=0) ? pullUpNodes[i-1] : DigitalCircuit.VDD);
 
             nfets[i] = new Nfet(label + " Nfet_" + i, output, getPortOutput(i), DigitalCircuit.GND);
+
+            transistorCount += pfets[i].getTransistorCount() + nfets[i].getTransistorCount();
         }
 
         assignOutput(0, output);
@@ -53,6 +55,7 @@ public class NorGate extends DigitalCircuit {
         super.assignOutput(0, output);
     }
 
+    @Override
     public void evaluate() {
         super.evaluate();
 
@@ -61,5 +64,4 @@ public class NorGate extends DigitalCircuit {
             nfets[i].evaluate();
         }
     }
-
 }

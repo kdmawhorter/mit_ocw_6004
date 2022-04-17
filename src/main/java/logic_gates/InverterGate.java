@@ -25,6 +25,8 @@ public class InverterGate extends DigitalCircuit {
         for (int i = 0; i < getNumInputs(); i++) {
             pfets[i] = new Pfet(label + " PMOS circuit Pfet", getOutput(i), getPortOutput(i));
             nfets[i] = new Nfet(label + " NMOS circuit Nfet", getOutput(i), getPortOutput(i));
+
+            transistorCount += pfets[i].getTransistorCount() + nfets[i].getTransistorCount();
         }
     }
 
@@ -52,6 +54,4 @@ public class InverterGate extends DigitalCircuit {
             nfets[i].evaluate();
         }
     }
-
-
 }

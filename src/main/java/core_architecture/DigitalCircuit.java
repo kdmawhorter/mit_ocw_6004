@@ -13,6 +13,8 @@ public abstract class DigitalCircuit {
 
     private final String label;
 
+    protected int transistorCount;
+
     public DigitalCircuit() {
         outputs = null;
         ports = null;
@@ -33,6 +35,8 @@ public abstract class DigitalCircuit {
         for (int i = 0; i < getNumOutputs(); i++) {
             outputs[i] = new CircuitNode(label + " Output_" + i);
         }
+
+        transistorCount = 0;
     }
 
     // ASSIGN/GET INPUTS FUNCTIONALITY
@@ -159,4 +163,7 @@ public abstract class DigitalCircuit {
         return returnOutputs;
     }
 
+    public int getTransistorCount() {
+        return transistorCount;
+    }
 }

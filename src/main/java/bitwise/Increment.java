@@ -23,10 +23,12 @@ public class Increment extends DigitalCircuit {
             carryAnd[i] = new AndGate(label + " CarryAnd_" + i, 2);
             carryAnd[i].assignInput(0, getPortOutput(i));
             carryAnd[i].assignInput(1, i<nBits-1 ? carryAnd[i+1].getOutput(0) : VDD);
+            transistorCount += carryAnd[i].getTransistorCount();
 
             outputXor[i] = new XorGate(label + " OutputXor_" + i, 2);
             outputXor[i].assignInput(0, getPortOutput(i));
             outputXor[i].assignInput(1, i<nBits-1 ? carryAnd[i+1].getOutput(0) : VDD);
+            transistorCount += outputXor[i].getTransistorCount();
 
             assignOutput(i, outputXor[i].getOutput(0));
         }

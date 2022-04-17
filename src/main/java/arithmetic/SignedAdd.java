@@ -29,26 +29,32 @@ public class SignedAdd extends UnsignedAdd {
 
         invertedASign = new InverterGate(label + " Inverted A Sign Bit");
         invertedASign.assignInput(0, getPortOutput(0));
+        transistorCount += invertedASign.getTransistorCount();
 
         invertedBSign = new InverterGate(label + " Inverted B Sign Bit");
         invertedBSign.assignInput(0, getPortOutput(nBit));
+        transistorCount += invertedBSign.getTransistorCount();
 
         invertedOutputSign = new InverterGate(label + " Inverted Output Sign Bit");
         invertedOutputSign.assignInput(0,getOutput(0));
+        transistorCount += invertedOutputSign.getTransistorCount();
 
         twoPosMakesNeg = new AndGate(label + " Positive Overflow And", 3);
         twoPosMakesNeg.assignInput(0, invertedASign.getOutput(0));
         twoPosMakesNeg.assignInput(1, invertedBSign.getOutput(0));
         twoPosMakesNeg.assignInput(2, getOutput(0));
+        transistorCount += twoPosMakesNeg.getTransistorCount();
 
         twoNegMakesPos = new AndGate(label + " Negative Overflow And", 3);
         twoNegMakesPos.assignInput(0, getPortOutput(0));
         twoNegMakesPos.assignInput(1, getPortOutput(nBit));
         twoNegMakesPos.assignInput(2, invertedOutputSign.getOutput(0));
+        transistorCount += twoNegMakesPos.getTransistorCount();
 
-        overflowOr = new OrGate(label + "Overflow And", 2);
+        overflowOr = new OrGate(label + "Overflow Or", 2);
         overflowOr.assignInput(0, twoPosMakesNeg.getOutput(0));
         overflowOr.assignInput(1, twoNegMakesPos.getOutput(0));
+        transistorCount += overflowOr.getTransistorCount();
 
         assignOutput(nBit, overflowOr.getOutput(0));
 

@@ -41,33 +41,40 @@ public class UnsignedAdd extends DigitalCircuit {
             carryAnds[i][0] = new AndGate(label + " CarryAnd_" + i + "_0", 2);
             carryAnds[i][0].assignInput(0, i<nBit-1 ? carryOrs[i+1].getOutput(0) : GND);
             carryAnds[i][0].assignInput(1, getPortOutput(i));
+            transistorCount += carryAnds[i][0].getTransistorCount();
 
             carryAnds[i][1] = new AndGate(label + " CarryAnd_" + i + "_1", 2);
             carryAnds[i][1].assignInput(0, getPortOutput(i));
             carryAnds[i][1].assignInput(1, getPortOutput(i+nBit));
+            transistorCount += carryAnds[i][1].getTransistorCount();
 
             carryAnds[i][2] = new AndGate(label + " CarryAnd_" + i + "_2", 2);
             carryAnds[i][2].assignInput(0, i<nBit-1 ? carryOrs[i+1].getOutput(0) : GND);
             carryAnds[i][2].assignInput(1, getPortOutput(i+nBit));
+            transistorCount += carryAnds[i][2].getTransistorCount();
 
             carryOrs[i] = new OrGate(label + " CarryOr_" + i, 3);
             for (int j = 0; j < 3; j++) {
                 carryOrs[i].assignInput(j, carryAnds[i][j].getOutput(0));
             }
+            transistorCount += carryOrs[i].getTransistorCount();
 
             outputAnds[i] = new AndGate(label + " OutputAnd_" + i, 3);
             outputAnds[i].assignInput(0, getPortOutput(i));
             outputAnds[i].assignInput(1, getPortOutput(i+nBit));
             outputAnds[i].assignInput(2, i<nBit-1 ? carryOrs[i+1].getOutput(0) : GND);
+            transistorCount += outputAnds[i].getTransistorCount();
 
             outputXors[i] = new XorGate(label + "OutputXor_" + i, 3);
             outputXors[i].assignInput(0, getPortOutput(i));
             outputXors[i].assignInput(1, getPortOutput(i+nBit));
             outputXors[i].assignInput(2, i<nBit-1 ? carryOrs[i+1].getOutput(0) : GND);
+            transistorCount += outputXors[i].getTransistorCount();
 
             outputOrs[i] = new OrGate(label + " OutputOr_" + i, 2);
             outputOrs[i].assignInput(0, outputXors[i].getOutput(0));
             outputOrs[i].assignInput(1, outputAnds[i].getOutput(0));
+            transistorCount += outputOrs[i].getTransistorCount();
 
             assignOutput(i, outputNodes[i]);
         }

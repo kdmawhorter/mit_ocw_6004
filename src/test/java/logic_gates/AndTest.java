@@ -57,6 +57,11 @@ public class AndTest {
 
     @Test
     void andFuncTest() {
+        // Transistor Count Tests
+        assertEquals(4, and1Bit.getTransistorCount(), "1 Bit And Transistor Count Testing");
+        assertEquals(6, and2Bit.getTransistorCount(), "2 Bit And Transistor Count Testing");
+        assertEquals(10, and4Bit.getTransistorCount(), "4 Bit And Transistor Count Testing");
+
         //And 1 Tests
         and1Bit.assignInputs(INPUT_1_0);
         and1Bit.evaluate();

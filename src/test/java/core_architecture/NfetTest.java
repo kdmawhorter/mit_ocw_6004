@@ -22,6 +22,10 @@ public class NfetTest {
 
     @Test
     void properGateSettingTest() {
+        // Transistor Count Tests
+        assertEquals(1, nfet.getTransistorCount(), "NFET Transistor Count Test");
+
+        // NFET Testing
         nfet.turnOn();
         nfet.evaluate();
         assertEquals(ConnectionType.GROUND, nfet.getOutput().getStatus(),

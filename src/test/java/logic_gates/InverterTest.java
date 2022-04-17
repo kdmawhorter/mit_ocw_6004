@@ -60,6 +60,10 @@ public class InverterTest {
 
     @Test
     void inverterEvaluationTest() {
+        // Transistor Count Tests
+        assertEquals(2, inv1Bit.getTransistorCount(), "1 Bit Inverter Transistor Count Testing");
+        assertEquals(4, inv2Bit.getTransistorCount(), "2 Bit Inverter Transistor Count Testing");
+        assertEquals(8, inv4Bit.getTransistorCount(), "4 Bit Inverter Transistor Count Testing");
 
         // 1 Bit Inverter Test
         inv1Bit.assignInputs(TEST_1_0);

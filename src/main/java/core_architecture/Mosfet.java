@@ -12,6 +12,8 @@ public abstract class Mosfet extends SisoCircuit {
     public Mosfet(String label, CircuitNode output, CircuitNode input, CircuitNode source) {
         super(label);
 
+        transistorCount = 1;
+
         assignInput(input);
         assignOutput(output);
         this.source = source;

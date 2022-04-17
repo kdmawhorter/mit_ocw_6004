@@ -10,7 +10,8 @@ import static core_architecture.DigitalCircuit.GND;
 
 public class IncrementTest {
 
-    private Increment increment;
+    private Increment inc2Bit;
+    private Increment inc4Bit;
 
     private static final CircuitNode[] ZERO_INC = {GND, GND, GND, GND };
     private static final CircuitNode[] SEVEN_INC = {GND, VDD, VDD, VDD };
@@ -23,21 +24,28 @@ public class IncrementTest {
 
     @BeforeEach
     void init() {
-        increment = new Increment("4 Bit Increment Test", 4);
+        inc2Bit = new Increment("2 Bit Increment Test", 2);
+        inc4Bit = new Increment("4 Bit Increment Test", 4);
     }
+
 
     @Test
     void incTest() {
-        increment.assignInputs(ZERO_INC);
-        increment.evaluate();
-        assertArrayEquals(ZERO_INC_ANS, increment.readOutputs(), "Increment 0");
+        // Transistor Count Tests
+        assertEquals(56, inc2Bit.getTransistorCount(), "2 Bit Incrementer Transistor Count Test");
+        assertEquals(112, inc4Bit.getTransistorCount(), "4 Bit Incrementer Transistor Count Test");
 
-        increment.assignInputs(SEVEN_INC);
-        increment.evaluate();
-        assertArrayEquals(SEVEN_INC_ANS, increment.readOutputs(), "Increment 7");
+        // Increment Testing
+        inc4Bit.assignInputs(ZERO_INC);
+        inc4Bit.evaluate();
+        assertArrayEquals(ZERO_INC_ANS, inc4Bit.readOutputs(), "Increment 0");
 
-        increment.assignInputs(F_INC);
-        increment.evaluate();
-        assertArrayEquals(F_INC_ANS, increment.readOutputs(), "Increment 15");
+        inc4Bit.assignInputs(SEVEN_INC);
+        inc4Bit.evaluate();
+        assertArrayEquals(SEVEN_INC_ANS, inc4Bit.readOutputs(), "Increment 7");
+
+        inc4Bit.assignInputs(F_INC);
+        inc4Bit.evaluate();
+        assertArrayEquals(F_INC_ANS, inc4Bit.readOutputs(), "Increment 15");
     }
 }

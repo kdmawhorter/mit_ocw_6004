@@ -10,7 +10,8 @@ import static core_architecture.DigitalCircuit.GND;
 
 public class NegateTest {
 
-    private Negate negate;
+    private Negate neg3Bit;
+    private Negate neg5Bit;
 
     private static final CircuitNode[] NEGATE_FOUR_TEST = { GND, GND, VDD, GND, GND };
     private static final CircuitNode[] NEGATE_NFOUR_TEST = { VDD, VDD, VDD, GND, GND };
@@ -28,30 +29,36 @@ public class NegateTest {
 
     @BeforeEach
     void init() {
-        negate = new Negate("Negate Test 5 Bit", 5);
+        neg3Bit = new Negate("Negate Test 5 Bit", 3);
+        neg5Bit = new Negate("Negate Test 5 Bit", 5);
     }
 
     @Test
     void negateTest() {
-        negate.assignInputs(NEGATE_FOUR_TEST);
-        negate.evaluate();
-        assertArrayEquals(NEGATE_FOUR_TEST_ANS, negate.readOutputs(), "Negate 4 = -4 Test");
+        // Transistor Count Tests
+        assertEquals(90, neg3Bit.getTransistorCount(), "2 Bit Incrementer Transistor Count Test");
+        assertEquals(150, neg5Bit.getTransistorCount(), "4 Bit Incrementer Transistor Count Test");
 
-        negate.assignInputs(NEGATE_NFOUR_TEST);
-        negate.evaluate();
-        assertArrayEquals(NEGATE_NFOUR_TEST_ANS, negate.readOutputs(), "Negate -4 = 4 Test");
+        // Negate test
+        neg5Bit.assignInputs(NEGATE_FOUR_TEST);
+        neg5Bit.evaluate();
+        assertArrayEquals(NEGATE_FOUR_TEST_ANS, neg5Bit.readOutputs(), "Negate 4 = -4 Test");
 
-        negate.assignInputs(NEGATE_ZERO_TEST);
-        negate.evaluate();
-        assertArrayEquals(NEGATE_ZERO_TEST_ANS, negate.readOutputs(), "Negate 0 = 0 Test");
+        neg5Bit.assignInputs(NEGATE_NFOUR_TEST);
+        neg5Bit.evaluate();
+        assertArrayEquals(NEGATE_NFOUR_TEST_ANS, neg5Bit.readOutputs(), "Negate -4 = 4 Test");
 
-        negate.assignInputs(NEGATE_MIN_TEST);
-        negate.evaluate();
-        assertArrayEquals(NEGATE_MIN_TEST_ANS, negate.readOutputs(), "Negate -16 = -16 Test");
+        neg5Bit.assignInputs(NEGATE_ZERO_TEST);
+        neg5Bit.evaluate();
+        assertArrayEquals(NEGATE_ZERO_TEST_ANS, neg5Bit.readOutputs(), "Negate 0 = 0 Test");
 
-        negate.assignInputs(NEGATE_MAX_TEST);
-        negate.evaluate();
-        assertArrayEquals(NEGATE_MAX_TEST_ANS, negate.readOutputs(), "Negate 15 = -15 Test");
+        neg5Bit.assignInputs(NEGATE_MIN_TEST);
+        neg5Bit.evaluate();
+        assertArrayEquals(NEGATE_MIN_TEST_ANS, neg5Bit.readOutputs(), "Negate -16 = -16 Test");
+
+        neg5Bit.assignInputs(NEGATE_MAX_TEST);
+        neg5Bit.evaluate();
+        assertArrayEquals(NEGATE_MAX_TEST_ANS, neg5Bit.readOutputs(), "Negate 15 = -15 Test");
 
 
 
