@@ -52,6 +52,7 @@ public class MultiplexerTest {
         CircuitNode[] testArray = {GND, GND, GND, GND, GND, GND, GND, GND, GND, GND, GND};
 
         assertEquals(3, mux8to1.getSelBitCnt(), "8to1 Mux Proper Selector Bit Count");
+        assertEquals(86, mux8to1.getTransistorCount(), "8to1 Mux Transistor Count");
 
         testArray[0] = VDD;
         mux8to1.assignInputs(testArray);
@@ -92,6 +93,7 @@ public class MultiplexerTest {
                                    VDD, VDD, VDD, VDD,
                                    GND, GND, GND};
         assertEquals(3, mux20to4.getSelBitCnt(), "20to4 Mux Proper Selector Bit Count");
+        assertEquals(206, mux20to4.getTransistorCount(), "20to4 Mux Transistor Count");
 
 
         mux20to4.assignInputs(testArray);
@@ -134,7 +136,10 @@ public class MultiplexerTest {
                 VDD, GND, VDD, VDD, GND,
                 VDD, VDD, VDD, VDD, VDD,
                 GND, GND};
+
         assertEquals(2, mux15to5.getSelBitCnt(), "15to5 Mux Proper Selector Bit Count");
+        assertEquals(124, mux15to5.getTransistorCount(), "15to5 Mux Transistor Count");
+
 
         mux15to5.assignInputs(testArray);
         mux15to5.evaluate();
@@ -168,7 +173,7 @@ public class MultiplexerTest {
                 VDD, VDD,
                 GND };
         assertEquals(1, mux4to2.getSelBitCnt(), "20to4 Mux Proper Selector Bit Count");
-
+        assertEquals(26, mux4to2.getTransistorCount(), "4to2 Mux Transistor Count");
 
         mux4to2.assignInputs(testArray);
         mux4to2.evaluate();
