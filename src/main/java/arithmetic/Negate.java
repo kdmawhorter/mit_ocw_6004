@@ -1,16 +1,16 @@
 package arithmetic;
 
 import bitwise.Increment;
+import bitwise.Inverter;
 import core_architecture.CircuitNode;
 import core_architecture.DigitalCircuit;
-import logic_gates.InverterGate;
 import org.jetbrains.annotations.NotNull;
 
 import java.util.Arrays;
 
 public class Negate extends DigitalCircuit {
 
-    InverterGate inverter;
+    Inverter inverter;
     Increment incrementer;
 
     public Negate() { super(); }
@@ -18,7 +18,7 @@ public class Negate extends DigitalCircuit {
     public Negate(String label, int nBits) {
         super(label, nBits, nBits);
 
-        inverter = new InverterGate(label + " Inverter", nBits);
+        inverter = new Inverter(label + " Inverter", nBits);
         inverter.assignInputs(getPortOutputs());
 
         incrementer = new Increment(label + " Incrementer", nBits);

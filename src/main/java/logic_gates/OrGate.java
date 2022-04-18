@@ -24,7 +24,7 @@ public class OrGate extends DigitalCircuit {
         nor = new NorGate(label + " Nor", nBit);
         nor.assignInputs(getPortOutputs());
 
-        inv = new InverterGate(label + " Inverter", 1);
+        inv = new InverterGate(label + " Inverter");
         inv.assignInput(0, nor.getOutput(0));
 
         assignOutput(0, output);

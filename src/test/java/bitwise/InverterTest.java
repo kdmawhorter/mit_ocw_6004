@@ -1,21 +1,20 @@
-package logic_gates;
+package bitwise;
 
 import core_architecture.CircuitNode;
-
 import core_architecture.ConnectionType;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 
 import static org.junit.jupiter.api.Assertions.*;
-import static core_architecture.DigitalCircuit.GND;
 import static core_architecture.DigitalCircuit.VDD;
+import static core_architecture.DigitalCircuit.GND;
 
 public class InverterTest {
 
-    private InverterGate inv1Bit;
-    private InverterGate inv2Bit;
-    private InverterGate inv4Bit;
-    private InverterGate inv2BitExternalOutput;
+    private Inverter inv1Bit;
+    private Inverter inv2Bit;
+    private Inverter inv4Bit;
+    private Inverter inv2BitExternalOutput;
 
     private CircuitNode[] externalOutputs;
 
@@ -47,15 +46,14 @@ public class InverterTest {
 
     @BeforeEach
     void init() {
-        inv1Bit = new InverterGate("Inverter 1 Bit", 1);
-        inv2Bit = new InverterGate("Inverter 2 Bit", 2);
-        inv4Bit = new InverterGate("Inverter 4 Bit", 4);
+        inv1Bit = new Inverter("Inverter 1 Bit", 1);
+        inv2Bit = new Inverter("Inverter 2 Bit", 2);
+        inv4Bit = new Inverter("Inverter 4 Bit", 4);
 
         externalOutputs = new CircuitNode[2];
         externalOutputs[0] = new CircuitNode("External Output 0");
         externalOutputs[1] = new CircuitNode("External Output 1");
-        inv2BitExternalOutput= new InverterGate("Test External Output Inverter", 2);
-        inv2BitExternalOutput.assignOutputs(externalOutputs);
+        inv2BitExternalOutput= new Inverter("Test External Output Inverter", 2, externalOutputs);
     }
 
     @Test

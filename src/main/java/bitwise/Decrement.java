@@ -23,7 +23,7 @@ public class Decrement extends DigitalCircuit {
         invPorts = new InverterGate[nBit];
 
         for (int i = nBit - 1; i >= 0; i--) {
-            invPorts[i] = new InverterGate(label + " InvPort_" + i, 1);
+            invPorts[i] = new InverterGate(label + " InvPort_" + i);
             invPorts[i].assignInput(0, getPortOutput(i));
             transistorCount += invPorts[i].getTransistorCount();
 

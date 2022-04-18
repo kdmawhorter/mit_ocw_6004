@@ -28,7 +28,7 @@ public class Multiplexer extends DigitalCircuit {
         outputNands = new NandGate[wordWidth];
 
         for (int selIdx = 0; selIdx < getSelBitCnt(); selIdx++) {
-            invSelBitPorts[selIdx] = new InverterGate(label + " InvertedSelBit_" + selIdx, 1);
+            invSelBitPorts[selIdx] = new InverterGate(label + " InvertedSelBit_" + selIdx);
             invSelBitPorts[selIdx].assignInput(0, getSelBitOut(selIdx));
             transistorCount += invSelBitPorts[selIdx].getTransistorCount();
         }

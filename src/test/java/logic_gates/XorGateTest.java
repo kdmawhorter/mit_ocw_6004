@@ -10,7 +10,7 @@ import static org.junit.jupiter.api.Assertions.*;
 import static core_architecture.DigitalCircuit.GND;
 import static core_architecture.DigitalCircuit.VDD;
 
-public class XorTest {
+public class XorGateTest {
 
     private XorGate xor1Bit;
     private XorGate xor2Bit;

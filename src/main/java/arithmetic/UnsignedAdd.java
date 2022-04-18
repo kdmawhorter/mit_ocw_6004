@@ -66,15 +66,15 @@ public class UnsignedAdd extends DigitalCircuit {
                 carryNands[i].assignInput(j, carryCalcNands[i][j].getOutput(0));
             }
 
-            invPortsCarrys[i][0] = new InverterGate(label + " Inverted Carry_" + i, 1);
+            invPortsCarrys[i][0] = new InverterGate(label + " Inverted Carry_" + i);
             invPortsCarrys[i][0].assignInput(0, i<nBit-1 ? carryNands[i+1].getOutput(0) : GND);
             transistorCount += invPortsCarrys[i][0].getTransistorCount();
 
-            invPortsCarrys[i][1] = new InverterGate(label + " Inverted Port_" + i, 1);
+            invPortsCarrys[i][1] = new InverterGate(label + " Inverted Port_" + i);
             invPortsCarrys[i][1].assignInput(0, getPortOutput(i));
             transistorCount += invPortsCarrys[i][1].getTransistorCount();
 
-            invPortsCarrys[i][2] = new InverterGate(label + " Inverted Port_" + i+nBit, 1);
+            invPortsCarrys[i][2] = new InverterGate(label + " Inverted Port_" + i+nBit);
             invPortsCarrys[i][2].assignInput(0, getPortOutput(i+nBit));
             transistorCount += invPortsCarrys[i][2].getTransistorCount();
             
