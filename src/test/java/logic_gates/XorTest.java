@@ -58,9 +58,9 @@ public class XorTest {
     @Test
     void xorFuncTest() {
         // Transistor Count Tests
-        assertEquals(10, xor1Bit.getTransistorCount(), "1 Bit Xor Transistor Count Testing");
-        assertEquals(22, xor2Bit.getTransistorCount(), "2 Bit Xor Transistor Count Testing");
-        assertEquals(58, xor4Bit.getTransistorCount(), "4 Bit Xor Transistor Count Testing");
+        assertEquals(6, xor1Bit.getTransistorCount(), "1 Bit Xor Transistor Count Testing");
+        assertEquals(16, xor2Bit.getTransistorCount(), "2 Bit Xor Transistor Count Testing");
+        assertEquals(48, xor4Bit.getTransistorCount(), "4 Bit Xor Transistor Count Testing");
 
         //Xor 1 Tests
         xor1Bit.assignInputs(INPUT_1_0);

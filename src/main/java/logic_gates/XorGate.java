@@ -5,9 +5,10 @@ import core_architecture.DigitalCircuit;
 import org.jetbrains.annotations.NotNull;
 
 public class XorGate extends DigitalCircuit {
-    private AndGate[] and;
     private InverterGate[] inv;
-    private OrGate or;
+
+    private NandGate[] calcNands;
+    private NandGate outputNand;
 
     public XorGate() {
         super();
@@ -21,25 +22,25 @@ public class XorGate extends DigitalCircuit {
         super(label, nBit, 1);
 
         inv = new InverterGate[getNumInputs()];
-        and = new AndGate[getNumInputs()];
+        calcNands = new NandGate[getNumInputs()];
 
-        or = new OrGate(label + " Or", getNumInputs(), output);
-        transistorCount += or.getTransistorCount();
+        outputNand = new NandGate(label + " Or", getNumInputs(), output);
+        transistorCount += outputNand.getTransistorCount();
 
-        for (int i = 0; i < getNumInputs(); i++) {
-            inv[i] = new InverterGate(label + " Inv_" + i);
-            inv[i].assignInput(0, getPortOutput(i));
-            transistorCount += inv[i].getTransistorCount();
+        for (int invIdx = 0; invIdx < getNumInputs(); invIdx++) {
+            inv[invIdx] = new InverterGate(label + " Inv_" + invIdx);
+            inv[invIdx].assignInput(0, getPortOutput(invIdx));
+            transistorCount += inv[invIdx].getTransistorCount();
         }
 
-        for (int andIdx = 0; andIdx < getNumInputs(); andIdx++) {
-            and[andIdx] = new AndGate(label + " And_" + andIdx, getNumInputs());
-            transistorCount += and[andIdx].getTransistorCount();
+        for (int nandIdx = 0; nandIdx < getNumInputs(); nandIdx++) {
+            calcNands[nandIdx] = new NandGate(label + " And_" + nandIdx, getNumInputs());
+            transistorCount += calcNands[nandIdx].getTransistorCount();
             for (int inputIdx = 0; inputIdx < getNumInputs(); inputIdx++) {
-                and[andIdx].assignInput(inputIdx,
-                        inputIdx!=andIdx ? inv[inputIdx].getOutput(0) : getPortOutput(inputIdx));
+                calcNands[nandIdx].assignInput(inputIdx,
+                        inputIdx!=nandIdx ? inv[inputIdx].getOutput(0) : getPortOutput(inputIdx));
             }
-            or.assignInput(andIdx, and[andIdx].getOutput(0));
+            outputNand.assignInput(nandIdx, calcNands[nandIdx].getOutput(0));
         }
 
         assignOutput(0, output);
@@ -53,7 +54,7 @@ public class XorGate extends DigitalCircuit {
 
     @Override
     public void assignOutput(int i, @NotNull CircuitNode output) {
-        or.assignOutput(0, output);
+        outputNand.assignOutput(0, output);
         super.assignOutput(i, output);
     }
 
@@ -63,9 +64,9 @@ public class XorGate extends DigitalCircuit {
         for (int portIdx = 0; portIdx < getNumInputs(); portIdx++) {
             inv[portIdx].evaluate();
         }
-        for (int andIdx = 0; andIdx < getNumInputs(); andIdx++) {
-            and[andIdx].evaluate();
+        for (int nandIdx = 0; nandIdx < getNumInputs(); nandIdx++) {
+            calcNands[nandIdx].evaluate();
         }
-        or.evaluate();
+        outputNand.evaluate();
     }
 }
