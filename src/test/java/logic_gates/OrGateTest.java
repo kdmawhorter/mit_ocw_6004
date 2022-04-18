@@ -10,7 +10,7 @@ import static org.junit.jupiter.api.Assertions.*;
 import static core_architecture.DigitalCircuit.GND;
 import static core_architecture.DigitalCircuit.VDD;
 
-public class OrTest {
+public class OrGateTest {
 
     private OrGate or1Bit;
     private OrGate or2Bit;

@@ -22,7 +22,7 @@ public class AndGate extends DigitalCircuit {
         nand = new NandGate(label + " Nand", nBit);
         nand.assignInputs(getPortOutputs());
 
-        inv = new InverterGate(label + " Inverter", 1);
+        inv = new InverterGate(label + " Inverter");
         inv.assignInput(0, nand.getOutput(0));
 
         assignOutput(0, output);

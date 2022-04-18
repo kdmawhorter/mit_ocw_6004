@@ -10,7 +10,7 @@ import static org.junit.jupiter.api.Assertions.*;
 import static core_architecture.DigitalCircuit.GND;
 import static core_architecture.DigitalCircuit.VDD;
 
-public class AndTest {
+public class AndGateTest {
 
     private AndGate and1Bit;
     private AndGate and2Bit;

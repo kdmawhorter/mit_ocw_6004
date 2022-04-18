@@ -3,44 +3,40 @@ package logic_gates;
 import core_architecture.*;
 import org.jetbrains.annotations.NotNull;
 
-public class InverterGate extends DigitalCircuit {
+public class InverterGate extends SisoCircuit {
 
-    private Pfet[] pfets;
-    private Nfet[] nfets;
+    private Pfet pfet;
+    private Nfet nfet;
 
     public InverterGate() {
         super();
     }
 
     public InverterGate(String label) {
-        this(label, 1);
+        super(label);
+
+        pfet = new Pfet(label + " PMOS circuit Pfet", getOutput(0), getPortOutput(0));
+        nfet = new Nfet(label + " NMOS circuit Nfet", getOutput(0), getPortOutput(0));
+
+        transistorCount += pfet.getTransistorCount() + nfet.getTransistorCount();
     }
 
-    public InverterGate(String label, int nBit) {
-        super(label, nBit, nBit);
+    public InverterGate(String label, CircuitNode output) {
+        this(label);
 
-        pfets = new Pfet[getNumInputs()];
-        nfets = new Nfet[getNumInputs()];
-
-        for (int i = 0; i < getNumInputs(); i++) {
-            pfets[i] = new Pfet(label + " PMOS circuit Pfet", getOutput(i), getPortOutput(i));
-            nfets[i] = new Nfet(label + " NMOS circuit Nfet", getOutput(i), getPortOutput(i));
-
-            transistorCount += pfets[i].getTransistorCount() + nfets[i].getTransistorCount();
-        }
+        assignOutput(0, output);
     }
 
-    public InverterGate(String label, int nBit, CircuitNode[] outputs, CircuitNode[] inputs) {
-        this(label, nBit);
+    public InverterGate(String label, CircuitNode output, CircuitNode input) {
+        this(label, output);
 
-        assignOutputs(outputs);
-        assignInputs(inputs);
+        assignInput(input);
     }
 
     @Override
     public void assignOutput(int i, @NotNull CircuitNode output) {
-        pfets[i].assignOutput(0, output);
-        nfets[i].assignOutput(0, output);
+        pfet.assignOutput(output);
+        nfet.assignOutput(output);
 
         super.assignOutput(i, output);
     }
@@ -49,9 +45,7 @@ public class InverterGate extends DigitalCircuit {
     public void evaluate() {
         super.evaluate();
 
-        for (int i = 0; i < getNumInputs(); i++) {
-            pfets[i].evaluate();
-            nfets[i].evaluate();
-        }
+        pfet.evaluate();
+        nfet.evaluate();
     }
 }

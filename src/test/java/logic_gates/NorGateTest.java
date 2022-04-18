@@ -9,7 +9,7 @@ import static org.junit.jupiter.api.Assertions.*;
 import static core_architecture.DigitalCircuit.GND;
 import static core_architecture.DigitalCircuit.VDD;
 
-public class NorTest {
+public class NorGateTest {
 
     private NorGate nor1Bit;
     private NorGate nor2Bit;
