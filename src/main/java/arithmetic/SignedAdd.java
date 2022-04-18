@@ -1,10 +1,8 @@
 package arithmetic;
 
 import core_architecture.CircuitNode;
-import logic_gates.AndGate;
 import logic_gates.InverterGate;
 import logic_gates.NandGate;
-import logic_gates.OrGate;
 import org.jetbrains.annotations.NotNull;
 
 public class SignedAdd extends UnsignedAdd {
