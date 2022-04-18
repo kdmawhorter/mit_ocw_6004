@@ -9,7 +9,7 @@ import static org.junit.jupiter.api.Assertions.*;
 import static core_architecture.DigitalCircuit.VDD;
 import static core_architecture.DigitalCircuit.GND;
 
-public class InverterTest {
+public class InverterTest extends BitwiseTest{
 
     private Inverter inv1Bit;
     private Inverter inv2Bit;
@@ -17,31 +17,6 @@ public class InverterTest {
     private Inverter inv2BitExternalOutput;
 
     private CircuitNode[] externalOutputs;
-
-    private static final CircuitNode[] TEST_1_0 = {GND};
-    private static final CircuitNode[] TEST_1_1 = {VDD};
-
-    private static final CircuitNode[] TEST_2_00 = {GND, GND};
-    private static final CircuitNode[] TEST_2_01 = {GND, VDD};
-    private static final CircuitNode[] TEST_2_10 = {VDD, GND};
-    private static final CircuitNode[] TEST_2_11 = {VDD, VDD};
-
-    private static final CircuitNode[] TEST_4_0000 = {GND, GND, GND, GND};
-    private static final CircuitNode[] TEST_4_0001 = {GND, GND, GND, VDD};
-    private static final CircuitNode[] TEST_4_0010 = {GND, GND, VDD, GND};
-    private static final CircuitNode[] TEST_4_0011 = {GND, GND, VDD, VDD};
-    private static final CircuitNode[] TEST_4_0100 = {GND, VDD, GND, GND};
-    private static final CircuitNode[] TEST_4_0101 = {GND, VDD, GND, VDD};
-    private static final CircuitNode[] TEST_4_0110 = {GND, VDD, VDD, GND};
-    private static final CircuitNode[] TEST_4_0111 = {GND, VDD, VDD, VDD};
-    private static final CircuitNode[] TEST_4_1000 = {VDD, GND, GND, GND};
-    private static final CircuitNode[] TEST_4_1001 = {VDD, GND, GND, VDD};
-    private static final CircuitNode[] TEST_4_1010 = {VDD, GND, VDD, GND};
-    private static final CircuitNode[] TEST_4_1011 = {VDD, GND, VDD, VDD};
-    private static final CircuitNode[] TEST_4_1100 = {VDD, VDD, GND, GND};
-    private static final CircuitNode[] TEST_4_1101 = {VDD, VDD, GND, VDD};
-    private static final CircuitNode[] TEST_4_1110 = {VDD, VDD, VDD, GND};
-    private static final CircuitNode[] TEST_4_1111 = {VDD, VDD, VDD, VDD};
 
 
     @BeforeEach
@@ -170,19 +145,5 @@ public class InverterTest {
         inv2BitExternalOutput.assignInputs(TEST_2_11);
         inv2BitExternalOutput.evaluate();
         assertArrayEquals(mapTest(TEST_2_00), mapTest(externalOutputs), "2 Bit External Out Inverter 11 Test");
-    }
-
-    private Boolean[] mapTest(CircuitNode[] test) {
-        Boolean[] booleanTest = new Boolean[test.length];
-        for (int i = 0; i < test.length; i++) {
-            if (test[i].getStatus() == ConnectionType.POWER) {
-                booleanTest[i] = true;
-            } else if (test[i].getStatus() == ConnectionType.GROUND) {
-                booleanTest[i] = false;
-            } else {
-                booleanTest[i] = null;
-            }
-        }
-        return booleanTest;
     }
 }
