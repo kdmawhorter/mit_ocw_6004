@@ -32,8 +32,8 @@ public class IncrementTest {
     @Test
     void incTest() {
         // Transistor Count Tests
-        assertEquals(56, inc2Bit.getTransistorCount(), "2 Bit Incrementer Transistor Count Test");
-        assertEquals(112, inc4Bit.getTransistorCount(), "4 Bit Incrementer Transistor Count Test");
+        assertEquals(22*2, inc2Bit.getTransistorCount(), "2 Bit Incrementer Transistor Count Test");
+        assertEquals(22*4, inc4Bit.getTransistorCount(), "4 Bit Incrementer Transistor Count Test");
 
         // Increment Testing
         inc4Bit.assignInputs(ZERO_INC);
