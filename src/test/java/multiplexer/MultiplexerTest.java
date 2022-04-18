@@ -4,6 +4,8 @@ import core_architecture.CircuitNode;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 
+import java.util.Arrays;
+
 import static core_architecture.DigitalCircuit.GND;
 import static core_architecture.DigitalCircuit.VDD;
 import static org.junit.jupiter.api.Assertions.*;
@@ -14,6 +16,12 @@ public class MultiplexerTest {
     private Multiplexer mux20to4;
     private Multiplexer mux15to5;
     private Multiplexer mux4to2;
+    private Multiplexer memMux;
+
+    private final static Boolean[] TEST_0x0000 = {false, false, false, false, false, false, false, false,
+                                                  false, false, false, false, false, false, false, false };
+    private final static Boolean[] TEST_0xFFFF = {true, true, true, true, true, true, true, true,
+                                                  true, true, true, true, true, true, true, true };
 
     @BeforeEach
     void init() {
@@ -21,6 +29,7 @@ public class MultiplexerTest {
         mux20to4 = new Multiplexer("20 to 4 Mux", 5, 4);
         mux15to5 = new Multiplexer("15 to 5 Mux", 3, 5);
         mux4to2 = new Multiplexer("4 to 2 Mux", 2, 2);
+        memMux = new Multiplexer("Mem Mux", 1024, 16);
     }
 
     private static final boolean[] INCR_TEST_0x0 = {false, false, false, false};
@@ -172,6 +181,7 @@ public class MultiplexerTest {
                 GND, GND,
                 VDD, VDD,
                 GND };
+
         assertEquals(1, mux4to2.getSelBitCnt(), "20to4 Mux Proper Selector Bit Count");
         assertEquals(26, mux4to2.getTransistorCount(), "4to2 Mux Transistor Count");
 
@@ -185,5 +195,30 @@ public class MultiplexerTest {
         mux4to2.evaluate();
         assertArrayEquals(new Boolean[] { true, true }, mux4to2.readOutputs(),
                 "4to2 Mux Choice 1");
+    }
+
+    @Test
+    void memMuxTest() {
+        CircuitNode[] externalNodes = new CircuitNode[1024*16+10];
+
+        assertEquals(10, memMux.getSelBitCnt(), "20to4 Mux Proper Selector Bit Count");
+        assertEquals(393236, memMux.getTransistorCount(), "4to2 Mux Transistor Count");
+
+        Arrays.fill(externalNodes, GND);
+
+        memMux.assignInputs(externalNodes);
+        memMux.evaluate();
+        assertArrayEquals(TEST_0x0000, memMux.readOutputs(), "Mem Mux reading blank");
+
+        // Set the 138th Element
+        for (int i = 0; i < 16; i++) {
+            externalNodes[2192+i] = VDD;
+        }
+        externalNodes[16393]=VDD;
+        externalNodes[16390]=VDD;
+        externalNodes[16386]=VDD;
+        memMux.assignInputs(externalNodes);
+        memMux.evaluate();
+        assertArrayEquals(TEST_0xFFFF, memMux.readOutputs(), "Mem Mux reading 138th element");
     }
 }
