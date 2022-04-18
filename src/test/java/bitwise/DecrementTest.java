@@ -30,8 +30,8 @@ public class DecrementTest {
     @Test
     void decrementTest() {
         // Transistor Count Tests
-        assertEquals(30*3, decrement3Bit.getTransistorCount(), "2 Bit Incrementer Transistor Count Test");
-        assertEquals(30*4, decrement4Bit.getTransistorCount(), "4 Bit Incrementer Transistor Count Test");
+        assertEquals(24*3, decrement3Bit.getTransistorCount(), "2 Bit Incrementer Transistor Count Test");
+        assertEquals(24*4, decrement4Bit.getTransistorCount(), "4 Bit Incrementer Transistor Count Test");
 
         // Increment Testing
         decrement4Bit.assignInputs(F_DEC);

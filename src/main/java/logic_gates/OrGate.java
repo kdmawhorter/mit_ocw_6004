@@ -2,8 +2,6 @@ package logic_gates;
 
 import core_architecture.CircuitNode;
 import core_architecture.DigitalCircuit;
-import core_architecture.Nfet;
-import core_architecture.Pfet;
 import org.jetbrains.annotations.NotNull;
 
 public class OrGate extends DigitalCircuit {

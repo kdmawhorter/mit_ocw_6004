@@ -34,9 +34,9 @@ public class UnsignedAddTest {
     @Test
     void unsignedAddTest() {
         // Transistor Count Tests
-        assertEquals(78*3, unsignedAdd3Bit.getTransistorCount(),
+        assertEquals(56*3, unsignedAdd3Bit.getTransistorCount(),
                 "3 Bit Unsigned Add Transistor Count Test");
-        assertEquals(78*4, unsignedAdd4Bit.getTransistorCount(),
+        assertEquals(56*4, unsignedAdd4Bit.getTransistorCount(),
                 "4 Bit Unsigned Add Transistor Count Test");
 
         // Unsigned addition test

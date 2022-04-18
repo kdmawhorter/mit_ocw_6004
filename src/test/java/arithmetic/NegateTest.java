@@ -36,8 +36,8 @@ public class NegateTest {
     @Test
     void negateTest() {
         // Transistor Count Tests
-        assertEquals(90, neg3Bit.getTransistorCount(), "2 Bit Incrementer Transistor Count Test");
-        assertEquals(150, neg5Bit.getTransistorCount(), "4 Bit Incrementer Transistor Count Test");
+        assertEquals(24*3, neg3Bit.getTransistorCount(), "2 Bit Incrementer Transistor Count Test");
+        assertEquals(24*5, neg5Bit.getTransistorCount(), "4 Bit Incrementer Transistor Count Test");
 
         // Negate test
         neg5Bit.assignInputs(NEGATE_FOUR_TEST);

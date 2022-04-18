@@ -1,16 +1,15 @@
 package arithmetic;
 
 import core_architecture.CircuitNode;
-import logic_gates.AndGate;
 import logic_gates.InverterGate;
-import logic_gates.OrGate;
+import logic_gates.NandGate;
 import org.jetbrains.annotations.NotNull;
 
 public class SignedAdd extends UnsignedAdd {
 
-    private AndGate twoPosMakesNeg;
-    private AndGate twoNegMakesPos;
-    private OrGate overflowOr;
+    private NandGate twoPosMakesNeg;
+    private NandGate twoNegMakesPos;
+    private NandGate overflowNand;
 
     private InverterGate invertedASign;
     private InverterGate invertedBSign;
@@ -19,6 +18,8 @@ public class SignedAdd extends UnsignedAdd {
 
     // Overflow if two negatives add to a positive or two positives add to a negative
     //      (!A_n-1 * !B_n-1 * O_n-1) + (A_n-1 * B_n-1 * !O_n-1)
+    //          ==>
+    //      NAND(NAND(!A!BO), NAND(AB!0);
 
     public SignedAdd() {
         super();
@@ -39,24 +40,24 @@ public class SignedAdd extends UnsignedAdd {
         invertedOutputSign.assignInput(0,getOutput(0));
         transistorCount += invertedOutputSign.getTransistorCount();
 
-        twoPosMakesNeg = new AndGate(label + " Positive Overflow And", 3);
+        twoPosMakesNeg = new NandGate(label + " Positive Overflow Nand", 3);
         twoPosMakesNeg.assignInput(0, invertedASign.getOutput(0));
         twoPosMakesNeg.assignInput(1, invertedBSign.getOutput(0));
         twoPosMakesNeg.assignInput(2, getOutput(0));
         transistorCount += twoPosMakesNeg.getTransistorCount();
 
-        twoNegMakesPos = new AndGate(label + " Negative Overflow And", 3);
+        twoNegMakesPos = new NandGate(label + " Negative Overflow And", 3);
         twoNegMakesPos.assignInput(0, getPortOutput(0));
         twoNegMakesPos.assignInput(1, getPortOutput(nBit));
         twoNegMakesPos.assignInput(2, invertedOutputSign.getOutput(0));
         transistorCount += twoNegMakesPos.getTransistorCount();
 
-        overflowOr = new OrGate(label + "Overflow Or", 2);
-        overflowOr.assignInput(0, twoPosMakesNeg.getOutput(0));
-        overflowOr.assignInput(1, twoNegMakesPos.getOutput(0));
-        transistorCount += overflowOr.getTransistorCount();
+        overflowNand = new NandGate(label + "Overflow Or", 2);
+        overflowNand.assignInput(0, twoPosMakesNeg.getOutput(0));
+        overflowNand.assignInput(1, twoNegMakesPos.getOutput(0));
+        transistorCount += overflowNand.getTransistorCount();
 
-        assignOutput(nBit, overflowOr.getOutput(0));
+        assignOutput(nBit, overflowNand.getOutput(0));
 
     }
 
@@ -73,9 +74,9 @@ public class SignedAdd extends UnsignedAdd {
     @Override
     public void assignOutput(int i, @NotNull CircuitNode output) {
         super.assignOutput(i, output);
-        if (overflowOr!=null && i==getNumOutputs()-1) {
-            overflowOr.assignOutput(0, output);
-            carryOrs[0].assignOutput(0, new CircuitNode("Unused Carry Node"));
+        if (overflowNand!=null && i==getNumOutputs()-1) {
+            overflowNand.assignOutput(0, output);
+            carryNands[0].assignOutput(0, new CircuitNode("Unused Carry Node"));
         }
     }
 
@@ -89,6 +90,6 @@ public class SignedAdd extends UnsignedAdd {
 
         twoPosMakesNeg.evaluate();
         twoNegMakesPos.evaluate();
-        overflowOr.evaluate();
+        overflowNand.evaluate();
     }
 }

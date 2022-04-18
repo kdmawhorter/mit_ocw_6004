@@ -37,9 +37,9 @@ public class SignedAddTest {
     @Test
     void signedAddTest() {
         // Transistor Count Tests
-        assertEquals(78*3+28, signedAdd3Bit.getTransistorCount(),
+        assertEquals(56*3+22, signedAdd3Bit.getTransistorCount(),
                 "3 Bit Signed Add Transistor Count Test");
-        assertEquals(78*5+28, signedAdd5Bit.getTransistorCount(),
+        assertEquals(56*5+22, signedAdd5Bit.getTransistorCount(),
                 "5 Bit Signed Add Transistor Count Test");
 
         // Signed Addition Test

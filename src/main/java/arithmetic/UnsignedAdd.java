@@ -2,19 +2,18 @@ package arithmetic;
 
 import core_architecture.CircuitNode;
 import core_architecture.DigitalCircuit;
-import logic_gates.AndGate;
+import logic_gates.*;
 
-import logic_gates.OrGate;
-import logic_gates.XorGate;
 import org.jetbrains.annotations.NotNull;
 
 public class UnsignedAdd extends DigitalCircuit {
-    private AndGate[][] carryAnds;
-    protected OrGate[] carryOrs;
+    private NandGate[][] carryCalcNands;
+    protected NandGate[] carryNands;
 
-    private AndGate[] outputAnds;
-    private XorGate[] outputXors;
-    private OrGate[] outputOrs;
+    private InverterGate[][] invPortsCarrys;
+    private NandGate[][] outputCalcNands;
+    private NandGate[] outputNands;
+    
 
     public UnsignedAdd() {
         super();
@@ -23,58 +22,84 @@ public class UnsignedAdd extends DigitalCircuit {
     public UnsignedAdd(String label, int nBit) {
         super(label, nBit+nBit, nBit+1);
 
+        invPortsCarrys = new InverterGate[nBit][3];
+        
         // C_i = OR(AND(C_i-1,A), AND(A,B), AND(C_i-1, B)
-        carryAnds = new AndGate[nBit][3];
-        carryOrs = new OrGate[nBit];
-
-        // O_i = OR(XOR(ABC), AND(ABC))
-        outputAnds = new AndGate[nBit];
-        outputXors = new XorGate[nBit];
-        outputOrs = new OrGate[nBit];
+        //      ==>
+        // C_i = NAND((NAND(C_i-1,A), NAND(A,B), NAND(C_i-1, B)
+        
+        carryCalcNands = new NandGate[nBit][3];
+        carryNands = new NandGate[nBit];
+        
+        /* 
+        O_i = OR(XOR(ABC), AND(ABC))
+                ==>
+        O_i = NAND(NAND(AB!C), NAND(A!BC), NAND(!ABC), NAND(ABC))
+        */
+        
+        
+        outputCalcNands = new NandGate[nBit][4];
+        outputNands = new NandGate[nBit];
 
         // Overflow = C_n-1
         CircuitNode[] outputNodes = new CircuitNode[nBit+1];
 
         for (int i = nBit-1; i >= 0; i--) {
+            CircuitNode[] carryCalcNandSrcArray = {i<nBit-1 ? carryNands[i+1].getOutput(0) : GND,
+                                                 getPortOutput(i),
+                                                 getPortOutput(i+nBit)};
+            
+            int[][] carryCalcNandSrcInds = {{0, 1}, {1, 2}, {0, 2}};
+                    
+            
             outputNodes[i] = new CircuitNode(label + " Output_" + i);
 
-            carryAnds[i][0] = new AndGate(label + " CarryAnd_" + i + "_0", 2);
-            carryAnds[i][0].assignInput(0, i<nBit-1 ? carryOrs[i+1].getOutput(0) : GND);
-            carryAnds[i][0].assignInput(1, getPortOutput(i));
-            transistorCount += carryAnds[i][0].getTransistorCount();
-
-            carryAnds[i][1] = new AndGate(label + " CarryAnd_" + i + "_1", 2);
-            carryAnds[i][1].assignInput(0, getPortOutput(i));
-            carryAnds[i][1].assignInput(1, getPortOutput(i+nBit));
-            transistorCount += carryAnds[i][1].getTransistorCount();
-
-            carryAnds[i][2] = new AndGate(label + " CarryAnd_" + i + "_2", 2);
-            carryAnds[i][2].assignInput(0, i<nBit-1 ? carryOrs[i+1].getOutput(0) : GND);
-            carryAnds[i][2].assignInput(1, getPortOutput(i+nBit));
-            transistorCount += carryAnds[i][2].getTransistorCount();
-
-            carryOrs[i] = new OrGate(label + " CarryOr_" + i, 3);
+            carryNands[i] = new NandGate(label + " CarryNand_" + i, 3);
+            transistorCount += carryNands[i].getTransistorCount();
+            
             for (int j = 0; j < 3; j++) {
-                carryOrs[i].assignInput(j, carryAnds[i][j].getOutput(0));
+                carryCalcNands[i][j] = new NandGate(label + " CarryCalcNand_" + i + "_" + j, 2);
+                carryCalcNands[i][j].assignInput(0, carryCalcNandSrcArray[carryCalcNandSrcInds[j][0]]);
+                carryCalcNands[i][j].assignInput(1, carryCalcNandSrcArray[carryCalcNandSrcInds[j][1]]);
+                transistorCount += carryCalcNands[i][j].getTransistorCount();
+
+                carryNands[i].assignInput(j, carryCalcNands[i][j].getOutput(0));
             }
-            transistorCount += carryOrs[i].getTransistorCount();
 
-            outputAnds[i] = new AndGate(label + " OutputAnd_" + i, 3);
-            outputAnds[i].assignInput(0, getPortOutput(i));
-            outputAnds[i].assignInput(1, getPortOutput(i+nBit));
-            outputAnds[i].assignInput(2, i<nBit-1 ? carryOrs[i+1].getOutput(0) : GND);
-            transistorCount += outputAnds[i].getTransistorCount();
+            invPortsCarrys[i][0] = new InverterGate(label + " Inverted Carry_" + i, 1);
+            invPortsCarrys[i][0].assignInput(0, i<nBit-1 ? carryNands[i+1].getOutput(0) : GND);
+            transistorCount += invPortsCarrys[i][0].getTransistorCount();
 
-            outputXors[i] = new XorGate(label + "OutputXor_" + i, 3);
-            outputXors[i].assignInput(0, getPortOutput(i));
-            outputXors[i].assignInput(1, getPortOutput(i+nBit));
-            outputXors[i].assignInput(2, i<nBit-1 ? carryOrs[i+1].getOutput(0) : GND);
-            transistorCount += outputXors[i].getTransistorCount();
+            invPortsCarrys[i][1] = new InverterGate(label + " Inverted Port_" + i, 1);
+            invPortsCarrys[i][1].assignInput(0, getPortOutput(i));
+            transistorCount += invPortsCarrys[i][1].getTransistorCount();
 
-            outputOrs[i] = new OrGate(label + " OutputOr_" + i, 2);
-            outputOrs[i].assignInput(0, outputXors[i].getOutput(0));
-            outputOrs[i].assignInput(1, outputAnds[i].getOutput(0));
-            transistorCount += outputOrs[i].getTransistorCount();
+            invPortsCarrys[i][2] = new InverterGate(label + " Inverted Port_" + i+nBit, 1);
+            invPortsCarrys[i][2].assignInput(0, getPortOutput(i+nBit));
+            transistorCount += invPortsCarrys[i][2].getTransistorCount();
+            
+            CircuitNode[][] outputCalcNandSrcArray = {
+                    { i<nBit-1 ? carryNands[i+1].getOutput(0) : GND, getPortOutput(i),
+                            getPortOutput(i+nBit) },
+
+                    { invPortsCarrys[i][0].getOutput(0), invPortsCarrys[i][1].getOutput(0),
+                            invPortsCarrys[i][2].getOutput(0) } };
+                                                    
+
+            int[][] outputCalcNandSrcInds = { {0, 0, 0}, {0, 1, 1}, {1, 0, 1}, {1, 1, 0} };
+
+            outputNands[i] = new NandGate(label + " OutputNand_" + i, 4);
+            transistorCount += outputNands[i].getTransistorCount();
+
+            for (int j = 0; j < 4; j++) {
+                outputCalcNands[i][j] = new NandGate(label + " OutputCalcNand_" + i + "_" + j, 3);
+                outputCalcNands[i][j].assignInput(0, outputCalcNandSrcArray[outputCalcNandSrcInds[j][0]][0] );
+                outputCalcNands[i][j].assignInput(1, outputCalcNandSrcArray[outputCalcNandSrcInds[j][1]][1] );
+                outputCalcNands[i][j].assignInput(2, outputCalcNandSrcArray[outputCalcNandSrcInds[j][2]][2] );
+                transistorCount += outputCalcNands[i][j].getTransistorCount();
+
+                outputNands[i].assignInput(j, outputCalcNands[i][j].getOutput(0));
+            }
 
             assignOutput(i, outputNodes[i]);
         }
@@ -95,9 +120,9 @@ public class UnsignedAdd extends DigitalCircuit {
     @Override
     public void assignOutput(int i, @NotNull CircuitNode output) {
         if (i==getNumOutputs()-1) {
-            carryOrs[0].assignOutput(0, output);
+            carryNands[0].assignOutput(0, output);
         } else if (i>=0 && i<getNumOutputs()-1) {
-            outputOrs[i].assignOutput(0, output);
+            outputNands[i].assignOutput(0, output);
         }
         super.assignOutput(i, output);
     }
@@ -107,13 +132,18 @@ public class UnsignedAdd extends DigitalCircuit {
 
         for (int i = getNumOutputs()-2; i >= 0; i--) {
             for (int j = 0; j < 3; j++) {
-                carryAnds[i][j].evaluate();
+                carryCalcNands[i][j].evaluate();
             }
-            carryOrs[i].evaluate();
+            carryNands[i].evaluate();
 
-            outputAnds[i].evaluate();
-            outputXors[i].evaluate();
-            outputOrs[i].evaluate();
+            for (int j = 0; j < 3; j++) {
+                invPortsCarrys[i][j].evaluate();
+            }
+
+            for (int j = 0; j < 4; j++) {
+                outputCalcNands[i][j].evaluate();
+            }
+            outputNands[i].evaluate();
         }
     }
 }
