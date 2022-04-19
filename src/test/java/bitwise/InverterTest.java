@@ -1,13 +1,10 @@
 package bitwise;
 
 import core_architecture.CircuitNode;
-import core_architecture.ConnectionType;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 
 import static org.junit.jupiter.api.Assertions.*;
-import static core_architecture.DigitalCircuit.VDD;
-import static core_architecture.DigitalCircuit.GND;
 
 public class InverterTest extends BitwiseTest{
 
@@ -17,7 +14,6 @@ public class InverterTest extends BitwiseTest{
     private Inverter inv2BitExternalOutput;
 
     private CircuitNode[] externalOutputs;
-
 
     @BeforeEach
     void init() {
