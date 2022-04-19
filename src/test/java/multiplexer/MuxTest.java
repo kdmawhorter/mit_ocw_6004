@@ -10,13 +10,13 @@ import static core_architecture.DigitalCircuit.GND;
 import static core_architecture.DigitalCircuit.VDD;
 import static org.junit.jupiter.api.Assertions.*;
 
-public class MultiplexerTest {
+public class MuxTest {
 
-    private Multiplexer mux8to1;
-    private Multiplexer mux20to4;
-    private Multiplexer mux15to5;
-    private Multiplexer mux4to2;
-    private Multiplexer memMux;
+    private Mux mux8to1;
+    private Mux mux20to4;
+    private Mux mux15to5;
+    private Mux mux4to2;
+    private Mux memMux;
 
     private final static Boolean[] TEST_0x0000 = {false, false, false, false, false, false, false, false,
                                                   false, false, false, false, false, false, false, false };
@@ -25,11 +25,11 @@ public class MultiplexerTest {
 
     @BeforeEach
     void init() {
-        mux8to1 = new Multiplexer("8 to 1 Mux", 8, 1);
-        mux20to4 = new Multiplexer("20 to 4 Mux", 5, 4);
-        mux15to5 = new Multiplexer("15 to 5 Mux", 3, 5);
-        mux4to2 = new Multiplexer("4 to 2 Mux", 2, 2);
-        memMux = new Multiplexer("Mem Mux", 1024, 16);
+        mux8to1 = new Mux("8 to 1 Mux", 8, 1);
+        mux20to4 = new Mux("20 to 4 Mux", 5, 4);
+        mux15to5 = new Mux("15 to 5 Mux", 3, 5);
+        mux4to2 = new Mux("4 to 2 Mux", 2, 2);
+        memMux = new Mux("Mem Mux", 1024, 16);
     }
 
     private static final boolean[] INCR_TEST_0x0 = {false, false, false, false};
@@ -40,20 +40,20 @@ public class MultiplexerTest {
 
     @Test
     void incrementTruthArrayTest() {
-        assertArrayEquals(INCR_TEST_0x1, Multiplexer.incrementTruthArray(INCR_TEST_0x0), "Incr 0 Test");
-        assertArrayEquals(INCR_TEST_0x2, Multiplexer.incrementTruthArray(INCR_TEST_0x1), "Incr 0 Test");
-        assertArrayEquals(INCR_TEST_0xF, Multiplexer.incrementTruthArray(INCR_TEST_0xE), "Incr 0 Test");
-        assertArrayEquals(INCR_TEST_0x0, Multiplexer.incrementTruthArray(INCR_TEST_0xF), "Incr 0 Test");
+        assertArrayEquals(INCR_TEST_0x1, Mux.incrementTruthArray(INCR_TEST_0x0), "Incr 0 Test");
+        assertArrayEquals(INCR_TEST_0x2, Mux.incrementTruthArray(INCR_TEST_0x1), "Incr 0 Test");
+        assertArrayEquals(INCR_TEST_0xF, Mux.incrementTruthArray(INCR_TEST_0xE), "Incr 0 Test");
+        assertArrayEquals(INCR_TEST_0x0, Mux.incrementTruthArray(INCR_TEST_0xF), "Incr 0 Test");
     }
 
     @Test
     void determineSelectorBitCountTest() {
-        assertEquals(4, Multiplexer.determineSelectorBitCount(15), "15 input bit test");
-        assertEquals(4, Multiplexer.determineSelectorBitCount(16), "16 input bit test");
-        assertEquals(5, Multiplexer.determineSelectorBitCount(17), "17 input bit test");
-        assertEquals(5, Multiplexer.determineSelectorBitCount(26), "26 input bit test");
-        assertEquals(5, Multiplexer.determineSelectorBitCount(32), "32 input bit test");
-        assertEquals(6, Multiplexer.determineSelectorBitCount(33), "33 input bit test");
+        assertEquals(4, Mux.determineSelectorBitCount(15), "15 input bit test");
+        assertEquals(4, Mux.determineSelectorBitCount(16), "16 input bit test");
+        assertEquals(5, Mux.determineSelectorBitCount(17), "17 input bit test");
+        assertEquals(5, Mux.determineSelectorBitCount(26), "26 input bit test");
+        assertEquals(5, Mux.determineSelectorBitCount(32), "32 input bit test");
+        assertEquals(6, Mux.determineSelectorBitCount(33), "33 input bit test");
     }
 
     @Test

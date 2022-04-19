@@ -6,16 +6,16 @@ import logic_gates.NandGate;
 
 import org.jetbrains.annotations.NotNull;
 
-public class Multiplexer extends BitMuxShiftCore {
+public class Mux extends BitMuxShiftCore {
 
     private int numChoices;
 
     private NandGate[][] selectionNands;
     private NandGate[] outputNands;
 
-    public Multiplexer() { super(); }
+    public Mux() { super(); }
 
-    public Multiplexer(String label, int numChoices, int wordWidth) {
+    public Mux(String label, int numChoices, int wordWidth) {
         super(label, numChoices * wordWidth, wordWidth, determineSelectorBitCount(numChoices));
 
         this.numChoices = numChoices;
@@ -45,7 +45,7 @@ public class Multiplexer extends BitMuxShiftCore {
 
                 outputNands[outIdx].assignInput(choiceIdx, selectionNands[outIdx][choiceIdx].getOutput(0));
 
-                currentSelectorBits = Multiplexer.incrementTruthArray(currentSelectorBits);
+                currentSelectorBits = Mux.incrementTruthArray(currentSelectorBits);
 
             }
             assignOutput(outIdx, outputNands[outIdx].getOutput(0));
@@ -66,9 +66,6 @@ public class Multiplexer extends BitMuxShiftCore {
     @Override
     public void evaluate() {
         super.evaluate();
-        for (int selIdx = 0; selIdx < getSelBitCnt(); selIdx++) {
-            invSelBitPorts[selIdx].evaluate();
-        }
 
         for (int outIdx = 0; outIdx < getNumOutputs(); outIdx++) {
             for (int choiceIdx = 0; choiceIdx < numChoices; choiceIdx++) {
