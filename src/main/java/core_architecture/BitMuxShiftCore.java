@@ -50,4 +50,12 @@ public class BitMuxShiftCore extends DigitalCircuit {
         }
         return outputTruthArray;
     }
+
+    @Override
+    public void evaluate() {
+        super.evaluate();
+        for (int selIdx = 0; selIdx < getSelBitCnt(); selIdx++) {
+            invSelBitPorts[selIdx].evaluate();
+        }
+    }
 }

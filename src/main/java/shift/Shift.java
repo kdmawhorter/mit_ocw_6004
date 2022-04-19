@@ -2,21 +2,21 @@ package shift;
 
 import core_architecture.BitMuxShiftCore;
 import core_architecture.CircuitNode;
-import multiplexer.Multiplexer;
+import multiplexer.Mux;
 import org.jetbrains.annotations.NotNull;
 
 public abstract class Shift extends BitMuxShiftCore {
 
-    private Multiplexer[] muxes;
+    private Mux[] muxes;
 
     public Shift() { super(); }
 
     public Shift(String label, int nBit) {
         super(label, nBit, nBit, determineSelectorBitCount(nBit));
 
-        muxes = new Multiplexer[nBit];
+        muxes = new Mux[nBit];
         for (int inputIdx = 0; inputIdx < nBit; inputIdx++) {
-            muxes[inputIdx] = new Multiplexer(label + " Multiplexer_" + inputIdx, nBit, 1);
+            muxes[inputIdx] = new Mux(label + " Multiplexer_" + inputIdx, nBit, 1);
             transistorCount += muxes[inputIdx].getTransistorCount();
 
             for (int assignIdx = 0; assignIdx < nBit; assignIdx++) {
@@ -41,7 +41,7 @@ public abstract class Shift extends BitMuxShiftCore {
     public void evaluate() {
         super.evaluate();
 
-        for (Multiplexer mux : muxes) {
+        for (Mux mux : muxes) {
             mux.evaluate();
         }
     }
