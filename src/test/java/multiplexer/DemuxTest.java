@@ -39,17 +39,21 @@ public class DemuxTest {
 
     @Test
     void demux4To16Test() {
+        // Transistor Count Tests
+        assertEquals((4*2+10)*(4-1)*4+2*2, demux4To16.getTransistorCount(),
+                "4 Choice, 4 Bit Mux Transistor Count Test");
+
         demux4To16.evaluate();
         assertArrayEquals(TEST_416_A_0, demux4To16.readOutputs());
 
         // Test Write 0
         demux4To16.assignInputs(TEST_416_WRITE_0_0);
         demux4To16.evaluate();
-        assertArrayEquals(TEST_416_A_0, demux4To16.readOutputs(), "Verify 0");
+        assertArrayEquals(TEST_416_A_0, demux4To16.readOutputs(), "Test Write 0: F");
 
         demux4To16.assignInputs(TEST_416_WRITE_F_0);
         demux4To16.evaluate();
-        assertArrayEquals(TEST_416_A_0, demux4To16.readOutputs(), "Test Write 0: F");
+        assertArrayEquals(TEST_416_A_0, demux4To16.readOutputs(), "Test Write 0: 0");
 
         //Test Write 1
         demux4To16.assignInputs(TEST_416_WRITE_F_1);
