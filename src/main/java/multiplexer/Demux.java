@@ -82,7 +82,7 @@ public class Demux extends BitMuxShiftCore {
     }
     
     public CircuitNode getNthIOutput(int n, int i) {
-        return getOutput((n+1)*wordWidth + i);
+        return getOutPortInput((n+1)*wordWidth + i);
     }
     
     @Override
