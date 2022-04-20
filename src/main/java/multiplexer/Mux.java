@@ -4,21 +4,13 @@ import core_architecture.BitMuxShiftCore;
 import core_architecture.CircuitNode;
 import logic_gates.NandGate;
 
-import org.jetbrains.annotations.NotNull;
-
 public class Mux extends BitMuxShiftCore {
 
-    private int numChoices;
-
-    private NandGate[][] selectionNands;
-    private NandGate[] outputNands;
-
-    public Mux() { super(); }
+    private final NandGate[][] selectionNands;
+    private final NandGate[] outputNands;
 
     public Mux(String label, int numChoices, int wordWidth) {
         super(label, numChoices * wordWidth, wordWidth, determineSelectorBitCount(numChoices));
-
-        this.numChoices = numChoices;
 
         selectionNands = new NandGate[wordWidth][numChoices];
         outputNands = new NandGate[wordWidth];
@@ -48,28 +40,21 @@ public class Mux extends BitMuxShiftCore {
                 currentSelectorBits = Mux.incrementTruthArray(currentSelectorBits);
 
             }
-            assignOutput(outIdx, outputNands[outIdx].getOutput(0));
+            outputNands[outIdx].assignOutput(getOutPortInput(outIdx));
         }
     }
 
     private CircuitNode getNthIPortOutput(int n, int i) {
-        return getPortOutput(n*getNumOutputs()+i);
+        return getInPortOutput(n*getNumOutputs()+i);
     }
 
     @Override
-    public void assignOutput(int i, @NotNull CircuitNode output) {
-        outputNands[i].assignOutput(0, output);
-
-        super.assignOutput(i, output);
-    }
-
-    @Override
-    public void evaluate() {
-        super.evaluate();
+    protected void evaluateCircuit() {
+        super.evaluateCircuit();
 
         for (int outIdx = 0; outIdx < getNumOutputs(); outIdx++) {
-            for (int choiceIdx = 0; choiceIdx < numChoices; choiceIdx++) {
-                selectionNands[outIdx][choiceIdx].evaluate();
+            for (NandGate selectionNand : selectionNands[outIdx]) {
+                selectionNand.evaluate();
             }
             outputNands[outIdx].evaluate();
         }

@@ -52,7 +52,8 @@ public class AndGateTest {
         and4Bit = new AndGate("4 Bit And", 4);
 
         externalOutput = new CircuitNode("External Output");
-        externalOutputAnd2Bit = new AndGate("External Output 2 Bit And", 2, externalOutput);
+        externalOutputAnd2Bit = new AndGate("External Output 2 Bit And", 2);
+        externalOutputAnd2Bit.assignOutput(externalOutput);
     }
 
     @Test

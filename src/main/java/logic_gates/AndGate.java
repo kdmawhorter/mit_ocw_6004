@@ -1,50 +1,26 @@
 package logic_gates;
 
-import core_architecture.CircuitNode;
-import core_architecture.DigitalCircuit;
-import org.jetbrains.annotations.NotNull;
+import core_architecture.SingleOutputCircuit;
 
-public class AndGate extends DigitalCircuit {
-    private NandGate nand;
-    private InverterGate inv;
-
-    public AndGate() {
-        super();
-    }
+public class AndGate extends SingleOutputCircuit {
+    private final NandGate nand;
+    private final InverterGate inv;
 
     public AndGate(String label, int nBit) {
-        this(label, nBit, new CircuitNode(label + " Output"));
-    }
-
-    public AndGate(String label, int nBit, CircuitNode output) {
-        super(label, nBit, 1);
+        super(label, nBit);
 
         nand = new NandGate(label + " Nand", nBit);
-        nand.assignInputs(getPortOutputs());
+        nand.assignInputs(getInPortOutputs());
 
         inv = new InverterGate(label + " Inverter");
         inv.assignInput(0, nand.getOutput(0));
-
-        assignOutput(0, output);
+        inv.assignOutput(0, getOutPortInput());
 
         transistorCount = inv.getTransistorCount() + nand.getTransistorCount();
     }
 
-    public AndGate(String label, int nBit, CircuitNode output, CircuitNode[] inputs) {
-        this(label, nBit, output);
-        assignInputs(inputs);
-    }
-
     @Override
-    public void assignOutput(int i, @NotNull CircuitNode output) {
-        inv.assignOutput(0, output);
-        super.assignOutput(i, output);
-    }
-
-    @Override
-    public void evaluate() {
-        super.evaluate();
-
+    protected void evaluateCircuit() {
         nand.evaluate();
         inv.evaluate();
     }

@@ -3,17 +3,16 @@ package multiplexer;
 import core_architecture.BitMuxShiftCore;
 import core_architecture.CircuitNode;
 import logic_gates.NandGate;
-import org.jetbrains.annotations.NotNull;
 
 public class Demux extends BitMuxShiftCore {
     
-    private int wordWidth;
-    private int numChoices;
+    private final int wordWidth;
+    private final int numChoices;
     
-    private NandGate[][] inputSelNands;
-    private NandGate[][] memSelNands;
-    private NandGate[][] selNands;
-    private NandGate[][] outputNands;
+    private final NandGate[][] inputSelNands;
+    private final NandGate[][] memSelNands;
+    private final NandGate[][] selNands;
+    private final NandGate[][] outputNands;
     
     // For any memory address, the ith bit of that memory address is the following:
          
@@ -25,9 +24,7 @@ public class Demux extends BitMuxShiftCore {
     //     selCombo -> selNand
     //     selNand, mem_i -> memSelNand
     //     inputSelNand, memSelNand -> outputNand
-    
-    public Demux() { super(); }
-    
+
     public Demux(String label, int numChoicesIncZero, int wordWidth) {
         super(label, wordWidth, numChoicesIncZero*wordWidth, determineSelectorBitCount(numChoicesIncZero));
         
@@ -61,7 +58,7 @@ public class Demux extends BitMuxShiftCore {
                         label + "OutputNand_" + outWord + "_" + outBit, 2);
                 transistorCount += outputNands[outWord][outBit].getTransistorCount();
 
-                inputSelNands[outWord][outBit].assignInput(0, getPortOutput(outBit));
+                inputSelNands[outWord][outBit].assignInput(0, getInPortOutput(outBit));
                 for (int selBit = 0; selBit < getSelBitCnt(); selBit++) {
                     CircuitNode selOut = currSelBits[selBit] ? getSelBitOut(selBit) : getInvSelBitOut(selBit);
                     
@@ -75,7 +72,7 @@ public class Demux extends BitMuxShiftCore {
                 outputNands[outWord][outBit].assignInput(0, memSelNands[outWord][outBit].getOutput(0));
                 outputNands[outWord][outBit].assignInput(1, inputSelNands[outWord][outBit].getOutput(0));
 
-                assignOutput((outWord+1)*wordWidth+outBit, outputNands[outWord][outBit].getOutput(0));
+                outputNands[outWord][outBit].assignOutput(getOutPortInput((outWord+1)*wordWidth+outBit));
             }
 
             for (int zeroRegisterBit = 0; zeroRegisterBit < wordWidth; zeroRegisterBit++) {
@@ -86,25 +83,12 @@ public class Demux extends BitMuxShiftCore {
     
     public CircuitNode getNthIOutput(int n, int i) {
         return getOutput((n+1)*wordWidth + i);
-    }  
-    
-    @Override
-    public void assignOutput(int i, @NotNull CircuitNode output) {
-        int n = Math.floorDiv(i, wordWidth);
-        int o = i % wordWidth;
-
-        if (n>0) {
-            outputNands[n-1][o].assignOutput(0, output);
-            memSelNands[n-1][o].assignInput(1, output);
-
-            super.assignOutput(i, output);
-        }
-
     }
     
     @Override
-    public void evaluate() {
-        super.evaluate();
+    public void evaluateCircuit() {
+        super.evaluateCircuit();
+
         for (int outWord = 0; outWord < numChoices; outWord++) {
             for (int outBit = 0; outBit < wordWidth; outBit++) {
                 inputSelNands[outWord][outBit].evaluate();

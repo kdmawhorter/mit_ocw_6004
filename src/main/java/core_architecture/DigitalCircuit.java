@@ -7,33 +7,27 @@ public abstract class DigitalCircuit {
     public static final CircuitNode VDD = new PowerSource("Vdd");
     public static final CircuitNode GND = new Ground("GND");
 
-    private final CircuitNode[] outputs;
-
-    private final Port[] ports;
+    private final Port[] inPorts;
+    private final Port[] outPorts;
 
     private final String label;
 
     protected int transistorCount;
 
-    public DigitalCircuit() {
-        outputs = null;
-        ports = null;
-        label = "INVALID COMPONENT";
-    }
-
     public DigitalCircuit(String label, int numInputs, int numOutputs) {
         this.label = label;
 
-        outputs = new CircuitNode[Math.max(numOutputs, 1)];
-        ports = new Port[numInputs];
+        inPorts = new Port[Math.max(numInputs, 0)];
+        outPorts = new Port[Math.max(numOutputs, 0)];
 
         for (int i = 0; i < getNumInputs(); i++) {
-            ports[i] = new Port(label + " Port_" + i);
-            ports[i].setInput(DigitalCircuit.GND);
+            inPorts[i] = new Port(label + " InPort_" + i);
+            inPorts[i].setInput(new CircuitNode(label + " InPort_" + i));
         }
 
         for (int i = 0; i < getNumOutputs(); i++) {
-            outputs[i] = new CircuitNode(label + " Output_" + i);
+            outPorts[i] = new Port(label + " OutPort_" + i);
+            outPorts[i].setInput(new CircuitNode(label + " OutPort_" + i));
         }
 
         transistorCount = 0;
@@ -52,22 +46,21 @@ public abstract class DigitalCircuit {
     public void assignInputOff(int i)  { assignInput(i, DigitalCircuit.GND); }
 
     public void assignInput(int i, CircuitNode input)  {
-        if (ports!=null && i>=0 && i<ports.length) {
-            ports[i].setInput(input);
+        if (inPorts!=null && i>=0 && i<inPorts.length) {
+            inPorts[i].setInput(input);
         }
     }
 
     public CircuitNode[] getInputs() {
         CircuitNode[] returnInputs = new CircuitNode[getNumInputs()];
         for (int i = 0; i < getNumInputs(); i++) {
-            returnInputs[i] = ports[i].getInput();
+            returnInputs[i] = inPorts[i].getInput();
         }
         return returnInputs;
     }
 
     public CircuitNode getInput(int i)  {
-        if (ports!=null && i>=0 && i<ports.length) { return ports[i].getInput(); }
-        return null;
+        return (inPorts!=null && i>=0 && i<inPorts.length) ? inPorts[i].getInput() : null;
     }
 
     // ASSIGN/GET OUTPUTS
@@ -79,16 +72,21 @@ public abstract class DigitalCircuit {
     }
 
     public void assignOutput(int i, @NotNull CircuitNode output)  {
-        if (outputs!=null && i>=0 && i<outputs.length) { outputs[i] = output; }
+        if (outPorts!=null && i>=0 && i<outPorts.length) {
+            outPorts[i].setOutput(output);
+        }
     }
 
-    public CircuitNode[] getOutputs() { return outputs; }
+    public CircuitNode[] getOutputs() {
+        CircuitNode[] returnOutputs = new CircuitNode[getNumOutputs()];
+        for (int i = 0; i < getNumOutputs(); i++) {
+            returnOutputs[i] = getOutput(i);
+        }
+        return returnOutputs;
+    }
 
     public CircuitNode getOutput(int i)  {
-        if (outputs!=null && i>=0 && i<outputs.length) {
-            return outputs[i];
-        }
-        return null;
+        return (outPorts!=null && i>=0 && i<outPorts.length) ? outPorts[i].getOutput() : null;
     }
 
     // READ INPUTS/OUTPUTS
@@ -128,10 +126,10 @@ public abstract class DigitalCircuit {
     }
 
     private Boolean readIo(int i, CircuitNode[] io) {
-        if (outputs!=null && i>=0 && i<outputs.length) {
-            if (outputs[i].getStatus().equals(ConnectionType.GROUND)) {
+        if (outPorts!=null && i>=0 && i<outPorts.length) {
+            if (outPorts[i].getOutput().getStatus().equals(ConnectionType.GROUND)) {
                 return false;
-            } else if (outputs[i].getStatus().equals(ConnectionType.POWER)) {
+            } else if (outPorts[i].getOutput().getStatus().equals(ConnectionType.POWER)) {
                 return true;
             }
         }
@@ -142,25 +140,48 @@ public abstract class DigitalCircuit {
     // Evaluate circuitry logic
 
     public void evaluate() {
-        for (int i = 0; i < getNumInputs(); i++) {
-            ports[i].readPort();
+        for (Port inPort : inPorts) {
+            inPort.readPort();
+        }
+
+        evaluateCircuit();
+
+        for (Port outPort : outPorts) {
+            outPort.readPort();
         }
     }
+
+    protected abstract void evaluateCircuit();
 
     // Accessors
 
     public String getLabel() { return label; }
 
-    public int getNumInputs() { return (ports!=null) ? ports.length : 0; }
-    public int getNumOutputs() { return (outputs!=null) ? outputs.length : 0; }
+    public int getNumInputs() { return (inPorts!=null) ? inPorts.length : 0; }
+    public int getNumOutputs() { return (outPorts!=null) ? outPorts.length : 0; }
 
-    public CircuitNode getPortOutput(int i) { return ports[i].getOutput(); }
-    public CircuitNode[] getPortOutputs() {
+    public CircuitNode getInPortOutput(int i) { return inPorts[i].getOutput(); }
+    public CircuitNode[] getInPortOutputs() {
         CircuitNode[] returnOutputs = new CircuitNode[getNumInputs()];
         for (int i = 0; i < getNumInputs(); i++) {
-            returnOutputs[i] = getPortOutput(i);
+            returnOutputs[i] = getInPortOutput(i);
         }
         return returnOutputs;
+    }
+
+    public CircuitNode getOutPortInput(int i) { return outPorts[i]. getInput(); }
+    public CircuitNode[] getOutPortInputs() {
+        CircuitNode[] returnInputs = new CircuitNode[getNumOutputs()];
+        for (int i = 0; i < getNumOutputs(); i++) {
+            returnInputs[i] = getOutPortInput(i);
+        }
+        return returnInputs;
+    }
+
+    public void setOutPortInput(int i, @NotNull CircuitNode input) {
+        if (outPorts!=null && i>=0 && i<outPorts.length) {
+            outPorts[i].setInput(input);
+        }
     }
 
     public int getTransistorCount() {

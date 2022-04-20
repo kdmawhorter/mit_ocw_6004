@@ -52,7 +52,8 @@ public class OrGateTest {
         or4Bit = new OrGate("4 Bit Or", 4);
         
         externalOutput = new CircuitNode("External Output");
-        externalOutputOr2Bit = new OrGate("External Output 2 Bit Or", 2, externalOutput);
+        externalOutputOr2Bit = new OrGate("External Output 2 Bit Or", 2);
+        externalOutputOr2Bit.assignOutput(externalOutput);
     }
 
     @Test

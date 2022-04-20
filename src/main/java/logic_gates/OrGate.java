@@ -1,56 +1,27 @@
 package logic_gates;
 
-import core_architecture.CircuitNode;
-import core_architecture.DigitalCircuit;
-import org.jetbrains.annotations.NotNull;
+import core_architecture.SingleOutputCircuit;
 
-public class OrGate extends DigitalCircuit {
+public class OrGate extends SingleOutputCircuit {
 
-    private NorGate nor;
-    private InverterGate inv;
-
-    public OrGate() {
-        super();
-    }
+    private final NorGate nor;
+    private final InverterGate inv;
 
     public OrGate(String label, int nBit) {
-        this(label, nBit, new CircuitNode(label + " Output"));
-    }
-
-
-    public OrGate(String label, int nBit, CircuitNode output) {
-        super(label, nBit, 1);
+        super(label, nBit);
 
         nor = new NorGate(label + " Nor", nBit);
-        nor.assignInputs(getPortOutputs());
+        nor.assignInputs(getInPortOutputs());
 
         inv = new InverterGate(label + " Inverter");
         inv.assignInput(0, nor.getOutput(0));
-
-        assignOutput(0, output);
+        inv.assignOutput(0, getOutPortInput());
 
         transistorCount = inv.getTransistorCount() + nor.getTransistorCount();
     }
 
-    public OrGate(String label, int nBit, CircuitNode[] inputs) {
-        this(label, nBit);
-        assignInputs(inputs);
-    }
-
-    public OrGate(String label, int nBit, CircuitNode output, CircuitNode[] inputs) {
-        this(label, nBit, output);
-        assignInputs(inputs);
-    }
-
     @Override
-    public void assignOutput(int i, @NotNull CircuitNode output) {
-        inv.assignOutput(0, output);
-        super.assignOutput(i, output);
-    }
-
-    public void evaluate() {
-        super.evaluate();
-
+    protected void evaluateCircuit() {
         nor.evaluate();
         inv.evaluate();
     }

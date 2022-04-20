@@ -6,11 +6,7 @@ public class Port {
 
     private final String label;
     private CircuitNode input;
-    private final CircuitNode output;
-
-    public Port() {
-        this("Unlabled Port");
-    }
+    private CircuitNode output;
 
     public Port(String label) {
         this.label = label;
@@ -25,6 +21,7 @@ public class Port {
     public void setInput(@NotNull CircuitNode input) {
         this.input = input;
     }
+    public void setOutput(@NotNull CircuitNode output) { this.output = output; }
 
     public void readPort() {
         getOutput().updateStatus(getLabel(), getInput().getStatus());

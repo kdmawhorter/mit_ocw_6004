@@ -23,7 +23,8 @@ public class InverterGateTest {
         inv = new InverterGate("Inverter Gate");
 
         externalNode = new CircuitNode("External Node");
-        invExternalNode = new InverterGate("Inverter Gate External Node", externalNode);
+        invExternalNode = new InverterGate("Inverter Gate External Node");
+        invExternalNode.assignOutput(externalNode);
     }
 
     @Test

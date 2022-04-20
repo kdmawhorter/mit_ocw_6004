@@ -2,13 +2,12 @@ package core_architecture;
 
 import logic_gates.InverterGate;
 
-public class BitMuxShiftCore extends DigitalCircuit {
+public abstract class BitMuxShiftCore extends DigitalCircuit {
 
-    protected int selBitCnt;
+    protected final int selBitCnt;
 
-    protected InverterGate[] invSelBitPorts;
+    protected final InverterGate[] invSelBitPorts;
 
-    public BitMuxShiftCore() { super(); }
 
     public BitMuxShiftCore(String label, int numInputs, int numOutputs, int selBitCnt) {
         super(label, numInputs+selBitCnt, numOutputs);
@@ -26,7 +25,7 @@ public class BitMuxShiftCore extends DigitalCircuit {
     }
 
     protected CircuitNode getSelBitOut(int i) {
-        return getPortOutput(getNumInputs()-getSelBitCnt()+i);
+        return getInPortOutput(getNumInputs()-getSelBitCnt()+i);
     }
 
     protected CircuitNode getInvSelBitOut(int i) {
@@ -52,8 +51,7 @@ public class BitMuxShiftCore extends DigitalCircuit {
     }
 
     @Override
-    public void evaluate() {
-        super.evaluate();
+    protected void evaluateCircuit() {
         for (int selIdx = 0; selIdx < getSelBitCnt(); selIdx++) {
             invSelBitPorts[selIdx].evaluate();
         }
