@@ -3,13 +3,10 @@ package shift;
 import core_architecture.BitMuxShiftCore;
 import core_architecture.CircuitNode;
 import multiplexer.Mux;
-import org.jetbrains.annotations.NotNull;
 
 public abstract class Shift extends BitMuxShiftCore {
 
-    private Mux[] muxes;
-
-    public Shift() { super(); }
+    private final Mux[] muxes;
 
     public Shift(String label, int nBit) {
         super(label, nBit, nBit, determineSelectorBitCount(nBit));
@@ -25,22 +22,14 @@ public abstract class Shift extends BitMuxShiftCore {
                     muxes[inputIdx].assignInput(nBit+selIdx, getSelBitOut(selIdx));
                 }
             }
-
-            assignOutput(inputIdx, muxes[inputIdx].getOutput(0));
+            muxes[inputIdx].assignOutput(0, getOutPortInput(inputIdx));
         }
     }
 
     public abstract CircuitNode getNthMappingForInputI(int n, int i);
 
     @Override
-    public void assignOutput(int i, @NotNull CircuitNode output) {
-        super.assignOutput(i, output);
-    }
-
-    @Override
-    public void evaluate() {
-        super.evaluate();
-
+    protected void evaluateCircuit() {
         for (Mux mux : muxes) {
             mux.evaluate();
         }

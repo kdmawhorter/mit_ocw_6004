@@ -29,7 +29,7 @@ public class NegateTest {
 
     @BeforeEach
     void init() {
-        neg3Bit = new Negate("Negate Test 5 Bit", 3);
+        neg3Bit = new Negate("Negate Test 3 Bit", 3);
         neg5Bit = new Negate("Negate Test 5 Bit", 5);
     }
 

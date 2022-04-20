@@ -24,7 +24,8 @@ public class InverterTest extends BitwiseTest{
         externalOutputs = new CircuitNode[2];
         externalOutputs[0] = new CircuitNode("External Output 0");
         externalOutputs[1] = new CircuitNode("External Output 1");
-        inv2BitExternalOutput= new Inverter("Test External Output Inverter", 2, externalOutputs);
+        inv2BitExternalOutput= new Inverter("Test External Output Inverter", 2);
+        inv2BitExternalOutput.assignOutputs(externalOutputs);
     }
 
     @Test

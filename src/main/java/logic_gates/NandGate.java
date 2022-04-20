@@ -1,65 +1,34 @@
 package logic_gates;
 
-import core_architecture.CircuitNode;
-import core_architecture.DigitalCircuit;
-import core_architecture.Nfet;
-import core_architecture.Pfet;
-import org.jetbrains.annotations.NotNull;
+import core_architecture.*;
 
-public class NandGate extends DigitalCircuit {
-    private Pfet[] pfets;
-    private Nfet[] nfets;
-
-    public NandGate() {
-        super();
-    }
+public class NandGate extends SingleOutputCircuit {
+    private final Pfet[] pfets;
+    private final Nfet[] nfets;
 
     public NandGate(String label, int nBits) {
-        this(label, nBits, new CircuitNode(label + " Output"));
-    }
+        super(label, nBits);
 
-    public NandGate(String label, int nBits, CircuitNode output) {
-        super(label, Math.max(nBits, 1), 1);
+        CircuitNode[] pullDownNodes = new CircuitNode[nBits];
+        pfets = new Pfet[nBits];
+        nfets = new Nfet[nBits];
 
-        CircuitNode[] pullDownNodes = new CircuitNode[getNumInputs()];
-        pfets = new Pfet[getNumInputs()];
-        nfets = new Nfet[getNumInputs()];
+        for (int i = 0; i < nBits; i++) {
+            pullDownNodes[i] = (i==nBits-1) ?
+                    getOutPortInput() :
+                    new CircuitNode(label + " NMOS node " + i + "-" + (i+1));
 
+            nfets[i] = new Nfet(label + " Nfet_" + i, pullDownNodes[i], getInPortOutput(i),
+                    (i-1>=0) ? pullDownNodes[i-1] : GND);
 
-        for (int i = 0; i < getNumInputs(); i++) {
-            pullDownNodes[i] = new CircuitNode(label + " NMOS node " + i + "-" + (i+1));
-
-            nfets[i] = new Nfet(label + " Nfet_" + i, pullDownNodes[i], getPortOutput(i),
-                    (i-1>=0) ? pullDownNodes[i-1] : DigitalCircuit.GND);
-
-            pfets[i] = new Pfet(label + " Pfet_" + i, output, getPortOutput(i), DigitalCircuit.VDD);
+            pfets[i] = new Pfet(label + " Pfet_" + i, getOutPortInput(), getInPortOutput(i), VDD);
 
             transistorCount += pfets[i].getTransistorCount() + nfets[i].getTransistorCount();
-
         }
-        assignOutput(0, output);
-    }
-
-    public NandGate(String label, int nBits, CircuitNode output, CircuitNode[] inputs) {
-        this(label, nBits, output);
-
-        assignInputs(inputs);
     }
 
     @Override
-    public void assignOutput(int i, @NotNull CircuitNode output) {
-        for (Pfet pfet : pfets) {
-            pfet.assignOutput(output);
-        }
-        nfets[nfets.length-1].assignOutput(0, output);
-
-        super.assignOutput(0, output);
-    }
-
-    @Override
-    public void evaluate() {
-        super.evaluate();
-
+    protected void evaluateCircuit() {
         for (int i = 0; i < getNumInputs(); i++) {
             pfets[i].evaluate();
             nfets[i].evaluate();

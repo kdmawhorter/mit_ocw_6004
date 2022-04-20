@@ -4,31 +4,24 @@ public abstract class Mosfet extends SisoCircuit {
 
     private final CircuitNode source;
 
-    public Mosfet() {
-        super();
-        source = null;
-    }
-
     public Mosfet(String label, CircuitNode output, CircuitNode input, CircuitNode source) {
         super(label);
 
         transistorCount = 1;
 
         assignInput(input);
-        assignOutput(output);
+        setOutPortInput(0, output);
         this.source = source;
     }
 
     public abstract boolean areDrainAndSourceConnected();
 
     @Override
-    public void evaluate() {
-        super.evaluate();
-
+    protected void evaluateCircuit() {
         ConnectionType newStatus = ConnectionType.FLOATING;
         if (areDrainAndSourceConnected()) {
             newStatus = source.getStatus();
         }
-        getOutput().updateStatus(getLabel(), newStatus);
+        getOutPortInput().updateStatus(getLabel(), newStatus);
     }
 }

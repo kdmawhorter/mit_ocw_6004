@@ -8,9 +8,6 @@ public class CircuitNode  {
     private final String label;
     private final HashMap<String, ConnectionType> statuses;
 
-    public CircuitNode() {
-        this("INVALID NODE");
-    }
 
     public CircuitNode(String label) {
         this.label = label;
@@ -39,5 +36,6 @@ public class CircuitNode  {
          }
          return ConnectionType.FLOATING;
     }
+
     public String getLabel() { return label; }
 }

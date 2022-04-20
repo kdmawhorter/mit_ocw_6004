@@ -52,7 +52,8 @@ public class XorGateTest {
         xor4Bit = new XorGate("4 Bit Xor", 4);
 
         externalOutput = new CircuitNode("External Output");
-        externalOutputXor2Bit = new XorGate("External Output 2 Bit Xor", 2, externalOutput);
+        externalOutputXor2Bit = new XorGate("External Output 2 Bit Xor", 2);
+        externalOutputXor2Bit.assignOutput(externalOutput);
     }
 
     @Test

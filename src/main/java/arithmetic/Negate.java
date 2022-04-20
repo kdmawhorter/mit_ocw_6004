@@ -2,42 +2,30 @@ package arithmetic;
 
 import bitwise.Increment;
 import bitwise.Inverter;
-import core_architecture.CircuitNode;
 import core_architecture.DigitalCircuit;
-import org.jetbrains.annotations.NotNull;
-
-import java.util.Arrays;
 
 public class Negate extends DigitalCircuit {
 
-    Inverter inverter;
-    Increment incrementer;
-
-    public Negate() { super(); }
+    final Inverter inverter;
+    final Increment incrementer;
 
     public Negate(String label, int nBits) {
         super(label, nBits, nBits);
 
         inverter = new Inverter(label + " Inverter", nBits);
-        inverter.assignInputs(getPortOutputs());
+        inverter.assignInputs(getInPortOutputs());
 
         incrementer = new Increment(label + " Incrementer", nBits);
         incrementer.assignInputs(inverter.getOutputs());
-
-        assignOutputs(Arrays.copyOf(incrementer.getOutputs(), nBits));
+        for (int i = 0; i < nBits; i++) {
+            incrementer.assignOutput(i, getOutPortInput(i));
+        }
 
         transistorCount = inverter.getTransistorCount() + incrementer.getTransistorCount();
     }
 
     @Override
-    public void assignOutput(int i, @NotNull CircuitNode output) {
-        incrementer.assignOutput(i, output);
-        super.assignOutput(i, output);
-    }
-
-    @Override
-    public void evaluate() {
-        super.evaluate();
+    protected void evaluateCircuit() {
         inverter.evaluate();
         incrementer.evaluate();
     }

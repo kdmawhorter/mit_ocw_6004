@@ -51,7 +51,8 @@ public class NandGateTest {
         nand4Bit = new NandGate("4 Bit Nand", 4);
 
         externalOutput = new CircuitNode("External Output");
-        externalOutputNand2Bit = new NandGate("External Output 2 Bit Nand", 2, externalOutput);
+        externalOutputNand2Bit = new NandGate("External Output 2 Bit Nand", 2);
+        externalOutputNand2Bit.assignOutput(externalOutput);
     }
 
     @Test

@@ -1,71 +1,46 @@
 package logic_gates;
 
-import core_architecture.CircuitNode;
-import core_architecture.DigitalCircuit;
-import org.jetbrains.annotations.NotNull;
+import core_architecture.SingleOutputCircuit;
 
-public class XorGate extends DigitalCircuit {
-    private InverterGate[] inv;
+public class XorGate extends SingleOutputCircuit {
+    private final InverterGate[] invPorts;
+    private final NandGate[] calcNands;
+    private final NandGate outputNand;
+    
 
-    private NandGate[] calcNands;
-    private NandGate outputNand;
+    public XorGate(String label, int nBits) {
+        super(label, nBits);
 
-    public XorGate() {
-        super();
-    }
+        invPorts = new InverterGate[nBits];
+        calcNands = new NandGate[nBits];
 
-    public XorGate(String label, int nBit) {
-        this(label, nBit, new CircuitNode(label + " Output"));
-    }
-
-    public XorGate(String label, int nBit, CircuitNode output) {
-        super(label, nBit, 1);
-
-        inv = new InverterGate[getNumInputs()];
-        calcNands = new NandGate[getNumInputs()];
-
-        outputNand = new NandGate(label + " Or", getNumInputs(), output);
+        outputNand = new NandGate(label + " Or", nBits);
+        outputNand.assignOutput(getOutPortInput());
         transistorCount += outputNand.getTransistorCount();
 
-        for (int invIdx = 0; invIdx < getNumInputs(); invIdx++) {
-            inv[invIdx] = new InverterGate(label + " Inv_" + invIdx);
-            inv[invIdx].assignInput(0, getPortOutput(invIdx));
-            transistorCount += inv[invIdx].getTransistorCount();
+        for (int invIdx = 0; invIdx < nBits; invIdx++) {
+            invPorts[invIdx] = new InverterGate(label + " Inv_" + invIdx);
+            invPorts[invIdx].assignInput(0, getInPortOutput(invIdx));
+            transistorCount += invPorts[invIdx].getTransistorCount();
         }
 
-        for (int nandIdx = 0; nandIdx < getNumInputs(); nandIdx++) {
-            calcNands[nandIdx] = new NandGate(label + " And_" + nandIdx, getNumInputs());
+        for (int nandIdx = 0; nandIdx < nBits; nandIdx++) {
+            calcNands[nandIdx] = new NandGate(label + " And_" + nandIdx, nBits);
             transistorCount += calcNands[nandIdx].getTransistorCount();
-            for (int inputIdx = 0; inputIdx < getNumInputs(); inputIdx++) {
+            for (int inputIdx = 0; inputIdx < nBits; inputIdx++) {
                 calcNands[nandIdx].assignInput(inputIdx,
-                        inputIdx!=nandIdx ? inv[inputIdx].getOutput(0) : getPortOutput(inputIdx));
+                        inputIdx!=nandIdx ? invPorts[inputIdx].getOutput(0) : getInPortOutput(inputIdx));
             }
             outputNand.assignInput(nandIdx, calcNands[nandIdx].getOutput(0));
         }
-
-        assignOutput(0, output);
     }
 
-    public XorGate(String label, int nBit, CircuitNode output, CircuitNode[] inputs) {
-        this(label, nBit, output);
-
-        assignInputs(inputs);
-    }
-
-    @Override
-    public void assignOutput(int i, @NotNull CircuitNode output) {
-        outputNand.assignOutput(0, output);
-        super.assignOutput(i, output);
-    }
-
-    public void evaluate() {
-        super.evaluate();
-
-        for (int portIdx = 0; portIdx < getNumInputs(); portIdx++) {
-            inv[portIdx].evaluate();
+    protected void evaluateCircuit() {
+        for (InverterGate invPort : invPorts) {
+            invPort.evaluate();
         }
-        for (int nandIdx = 0; nandIdx < getNumInputs(); nandIdx++) {
-            calcNands[nandIdx].evaluate();
+        for (NandGate calcNand : calcNands) {
+            calcNand.evaluate();
         }
         outputNand.evaluate();
     }

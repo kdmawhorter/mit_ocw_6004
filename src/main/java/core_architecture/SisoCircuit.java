@@ -2,14 +2,8 @@ package core_architecture;
 
 import org.jetbrains.annotations.NotNull;
 
-public abstract class SisoCircuit extends DigitalCircuit {
-    public SisoCircuit() {
-        super();
-    }
-
-    public SisoCircuit(String label) {
-        super(label, 1, 1);
-    }
+public abstract class SisoCircuit extends SingleOutputCircuit {
+    public SisoCircuit(String label) { super(label, 1); }
 
     public void turnOn() {
         assignInputOn(0);
@@ -19,7 +13,7 @@ public abstract class SisoCircuit extends DigitalCircuit {
         assignInputOff(0);
     }
 
-    public void assignInput(CircuitNode input) {
+    public void assignInput(@NotNull CircuitNode input) {
         assignInput(0, input);
     }
 
@@ -27,19 +21,5 @@ public abstract class SisoCircuit extends DigitalCircuit {
         return getInput(0);
     }
 
-    public boolean readOutput() {
-        return readOutput(0);
-    }
-
-    public void assignOutput(@NotNull CircuitNode output) {
-        assignOutput(0, output);
-    }
-
-    public CircuitNode getOutput() {
-        return getOutput(0);
-    }
-
-
-
-
+    public CircuitNode getInPortOutput() { return getInPortOutput(0); }
 }

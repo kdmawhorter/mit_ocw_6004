@@ -51,7 +51,8 @@ public class NorGateTest {
         nor4Bit = new NorGate("4 Bit Nor", 4);
 
         externalOutput = new CircuitNode("External Output");
-        externalOutputNor2Bit = new NorGate("External Output 2 Bit Nor", 2, externalOutput);
+        externalOutputNor2Bit = new NorGate("External Output 2 Bit Nor", 2);
+        externalOutputNor2Bit.assignOutput(externalOutput);
     }
 
     @Test

@@ -1,72 +1,44 @@
 package bitwise;
 
-import core_architecture.CircuitNode;
 import core_architecture.DigitalCircuit;
 import logic_gates.AndGate;
 import logic_gates.InverterGate;
 import logic_gates.XorGate;
-import org.jetbrains.annotations.NotNull;
 
 public class Decrement extends DigitalCircuit {
 
-    private AndGate[] borrowAnds;
-    private XorGate[] outputXors;
-    private InverterGate[] invPorts;
+    private final AndGate[] borrowAnds;
+    private final XorGate[] outputXors;
+    private final InverterGate[] invPorts;
 
-    public Decrement() { super(); }
+    public Decrement(String label, int nBits) {
+        super(label, nBits, nBits+1);
 
-    public Decrement(String label, int nBit) {
-        super(label, nBit, nBit+1);
+        borrowAnds = new AndGate[nBits];
+        outputXors = new XorGate[nBits];
+        invPorts = new InverterGate[nBits];
 
-        borrowAnds = new AndGate[nBit];
-        outputXors = new XorGate[nBit];
-        invPorts = new InverterGate[nBit];
-
-        for (int i = nBit - 1; i >= 0; i--) {
+        for (int i = nBits - 1; i >= 0; i--) {
             invPorts[i] = new InverterGate(label + " InvPort_" + i);
-            invPorts[i].assignInput(0, getPortOutput(i));
+            invPorts[i].assignInput(0, getInPortOutput(i));
             transistorCount += invPorts[i].getTransistorCount();
 
             borrowAnds[i] = new AndGate(label + " BorrowAnd_" + i, 2);
             borrowAnds[i].assignInput(0, invPorts[i].getOutput(0));
-            borrowAnds[i].assignInput(1, i<nBit-1 ? borrowAnds[i+1].getOutput(0) : VDD);
+            borrowAnds[i].assignInput(1, i<nBits-1 ? borrowAnds[i+1].getOutput(0) : VDD);
             transistorCount += borrowAnds[i].getTransistorCount();
 
             outputXors[i] = new XorGate(label + " OutputXor_" + i, 2);
-            outputXors[i].assignInput(0, getPortOutput(i));
-            outputXors[i].assignInput(1, i<nBit-1 ? borrowAnds[i+1].getOutput(0) : VDD);
+            outputXors[i].assignInput(0, getInPortOutput(i));
+            outputXors[i].assignInput(1, i<nBits-1 ? borrowAnds[i+1].getOutput(0) : VDD);
+            outputXors[i].assignOutput(getOutPortInput(i));
             transistorCount += outputXors[i].getTransistorCount();
-
-            assignOutput(i, outputXors[i].getOutput(0));
         }
-
-        assignOutput(nBit, borrowAnds[0].getOutput(0));
-    }
-
-    public Decrement(String label, int nBit, CircuitNode[] outputs) {
-        this(label, nBit);
-        assignOutputs(outputs);
-    }
-
-    public Decrement(String label, int nBit, CircuitNode[] outputs, CircuitNode[] inputs) {
-        this(label, nBit, outputs);
-        assignInputs(inputs);
+        borrowAnds[0].assignOutput(getOutPortInput(nBits));
     }
 
     @Override
-    public void assignOutput(int i, @NotNull CircuitNode output) {
-        if (i == getNumOutputs() - 1) {
-            borrowAnds[0].assignOutput(0, output);
-        } else {
-            outputXors[i].assignOutput(0, output);
-        }
-        super.assignOutput(i, output);
-    }
-
-    @Override
-    public void evaluate() {
-        super.evaluate();
-
+    protected void evaluateCircuit() {
         for (int i = getNumInputs() - 1; i >= 0; i--) {
             invPorts[i].evaluate();
             borrowAnds[i].evaluate();

@@ -1,64 +1,34 @@
 package logic_gates;
 
-import core_architecture.CircuitNode;
-import core_architecture.DigitalCircuit;
-import core_architecture.Nfet;
-import core_architecture.Pfet;
-import org.jetbrains.annotations.NotNull;
+import core_architecture.*;
 
-public class NorGate extends DigitalCircuit {
-    private Pfet[] pfets;
-    private Nfet[] nfets;
-
-    public NorGate() {
-        super();
-    }
+public class NorGate extends SingleOutputCircuit {
+    private final Pfet[] pfets;
+    private final Nfet[] nfets;
 
     public NorGate(String label, int nBits) {
-        this(label, nBits, new CircuitNode(label + " Output"));
-    }
+        super(label, nBits);
 
-    public NorGate(String label, int nBits, CircuitNode output) {
-        super(label, nBits>0 ? nBits : 1, 1);
+        CircuitNode[] pullUpNodes = new CircuitNode[nBits];
+        pfets = new Pfet[nBits];
+        nfets = new Nfet[nBits];
 
-        CircuitNode[] pullUpNodes = new CircuitNode[getNumInputs()];
-        pfets = new Pfet[getNumInputs()];
-        nfets = new Nfet[getNumInputs()];
+        for (int i = 0; i < nBits; i++) {
+            pullUpNodes[i] = (i==nBits-1) ?
+                    getOutPortInput() :
+                    new CircuitNode(label + " PMOS node " + i + "-" + (i+1));
 
-        for (int i = 0; i < getNumInputs(); i++) {
-            pullUpNodes[i] = new CircuitNode(label + " PMOS node " + i + "-" + (i+1));
+            pfets[i] = new Pfet(label + " Pfet_" + i, pullUpNodes[i], getInPortOutput(i),
+                    (i-1>=0) ? pullUpNodes[i-1] : VDD);
 
-            pfets[i] = new Pfet(label + " Pfet_" + i, pullUpNodes[i], getPortOutput(i),
-                    (i-1>=0) ? pullUpNodes[i-1] : DigitalCircuit.VDD);
-
-            nfets[i] = new Nfet(label + " Nfet_" + i, output, getPortOutput(i), DigitalCircuit.GND);
+            nfets[i] = new Nfet(label + " Nfet_" + i, getOutPortInput(), getInPortOutput(i), GND);
 
             transistorCount += pfets[i].getTransistorCount() + nfets[i].getTransistorCount();
         }
-
-        assignOutput(0, output);
-    }
-
-    public NorGate(String label, int nBits, CircuitNode output, CircuitNode[] inputs) {
-        this(label, nBits, output);
-
-        assignInputs(inputs);
     }
 
     @Override
-    public void assignOutput(int i, @NotNull CircuitNode output) {
-        for (Nfet nfet : nfets) {
-            nfet.assignOutput(output);
-        }
-        pfets[pfets.length-1].assignOutput(output);
-
-        super.assignOutput(0, output);
-    }
-
-    @Override
-    public void evaluate() {
-        super.evaluate();
-
+    protected void evaluateCircuit() {
         for (int i = 0; i < getNumInputs(); i++) {
             pfets[i].evaluate();
             nfets[i].evaluate();
