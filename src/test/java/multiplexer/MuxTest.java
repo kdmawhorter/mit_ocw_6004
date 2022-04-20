@@ -1,7 +1,6 @@
 package multiplexer;
 
 import core_architecture.CircuitNode;
-import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 
 import java.util.Arrays;
@@ -12,25 +11,10 @@ import static org.junit.jupiter.api.Assertions.*;
 
 public class MuxTest {
 
-    private Mux mux8to1;
-    private Mux mux20to4;
-    private Mux mux15to5;
-    private Mux mux4to2;
-    private Mux memMux;
-
     private final static Boolean[] TEST_0x0000 = {false, false, false, false, false, false, false, false,
                                                   false, false, false, false, false, false, false, false };
     private final static Boolean[] TEST_0xFFFF = {true, true, true, true, true, true, true, true,
                                                   true, true, true, true, true, true, true, true };
-
-    @BeforeEach
-    void init() {
-        mux8to1 = new Mux("8 to 1 Mux", 8, 1);
-        mux20to4 = new Mux("20 to 4 Mux", 5, 4);
-        mux15to5 = new Mux("15 to 5 Mux", 3, 5);
-        mux4to2 = new Mux("4 to 2 Mux", 2, 2);
-        memMux = new Mux("Mem Mux", 1024, 16);
-    }
 
     private static final boolean[] INCR_TEST_0x0 = {false, false, false, false};
     private static final boolean[] INCR_TEST_0x1 = {false, false, false, true};
@@ -58,6 +42,8 @@ public class MuxTest {
 
     @Test
     void mux8to1Test() {
+        Mux mux8to1 = new Mux("8 to 1 Mux", 8, 1);
+
         CircuitNode[] testArray = {GND, GND, GND, GND, GND, GND, GND, GND, GND, GND, GND};
 
         assertEquals(3, mux8to1.getSelBitCnt(), "8to1 Mux Proper Selector Bit Count");
@@ -95,6 +81,8 @@ public class MuxTest {
 
     @Test
     void mux20to4Test() {
+        Mux mux20to4 = new Mux("20 to 4 Mux", 5, 4);
+
         CircuitNode[] testArray = {GND, GND, GND, GND,
                                    VDD, GND, VDD, VDD,
                                    VDD, GND, GND, VDD,
@@ -140,6 +128,8 @@ public class MuxTest {
 
     @Test
     void mux15to5Test() {
+        Mux mux15to5 = new Mux("15 to 5 Mux", 3, 5);
+
         CircuitNode[] testArray = {
                 GND, GND, GND, GND, VDD,
                 VDD, GND, VDD, VDD, GND,
@@ -177,6 +167,8 @@ public class MuxTest {
 
     @Test
     void mux4to2Test() {
+        Mux mux4to2 = new Mux("4 to 2 Mux", 2, 2);
+
         CircuitNode[] testArray = {
                 GND, GND,
                 VDD, VDD,
@@ -199,6 +191,8 @@ public class MuxTest {
 
     @Test
     void memMuxTest() {
+        Mux memMux = new Mux("Mem Mux", 1024, 16);
+
         CircuitNode[] externalNodes = new CircuitNode[1024*16+10];
 
         assertEquals(10, memMux.getSelBitCnt(), "20to4 Mux Proper Selector Bit Count");
