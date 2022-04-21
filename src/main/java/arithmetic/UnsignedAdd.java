@@ -4,6 +4,31 @@ import core_architecture.CircuitNode;
 import core_architecture.DigitalCircuit;
 import logic_gates.*;
 
+/**
+ * A class representing an unsigned addition operation.<br>
+ * <br>
+ An UnsignedAdd object consists of:<br>
+ * <ul>
+ * Carry Logic:<br>
+ * C[i] = NAND(NAND(C[i+1], A[i]), NAND(A[i], B[i]), NAND(C[i+1])<br>
+ * <li>3 2-bit "Carry Calc" Nands for each bit, representing the three internal Nands above. </li>
+ * <li>1 3-bit "Carry" Nand for each bit, representing the outer Nand above.</li>
+ * <br>
+ * Inverter Logic:<br>
+ * <li> 3 1-bit inverters for each bit of A, B, and the "Carry" Nands above</li>
+ * <br>
+ * Output Logic:<br>
+ * O[i] = NAND(NAND(A[i],B[i],C[i+1]), NAND(A[i],B[i],!C[i+1]), NAND(A[i],!B[i],C[i+1]), NAND(!A[i],B[i],C[i+1]))
+ * <li>4 3-bit "Output Calc" Nands for each bit, representing the four internal Nands above.</li>
+ * <li>1 4-bit "Output" Nand for each bit, representing the outer Nand above.</li></ul>
+ * <b>Inputs</b>: 2*nBits corresponding to:<ul>
+ * <li>an nBit bit string representing an input A</li>
+ * <li>an nBit bit string representing an input B</li></ul>
+ * <b>Outputs</b>: nBits+1 corresponding to:<ul>
+ * <li>an nBit bit string representing the unsigned addition of A and B.</li>
+ * <li>a 1 bit overflow bit</li></ul>
+ */
+
 public class UnsignedAdd extends DigitalCircuit {
     private final NandGate[][] carryCalcNands;
     protected final NandGate[] carryNands;
@@ -12,6 +37,12 @@ public class UnsignedAdd extends DigitalCircuit {
     private final NandGate[][] outputCalcNands;
     private final NandGate[] outputNands;
 
+    /**
+     * UnsignedAdd constructor
+     *
+     * @param label The name of the circuit.
+     * @param nBits The number of bits in each input.
+     */
     public UnsignedAdd(String label, int nBits) {
         super(label, nBits + nBits, nBits + 1);
 
@@ -24,30 +55,26 @@ public class UnsignedAdd extends DigitalCircuit {
         initCarryGates(nBits);
         initOutGates(nBits);
     }
-    
+
+    /**
+     * Construct the "Carry Calc" and "Carry" Nand logic described in the documentation for this class.
+     * @param nBits The number of bits in each input.
+     */
     private void initCarryGates(int nBits) {
-
-        // C_i = OR(AND(C_i-1,A), AND(A,B), AND(C_i-1, B)
-        //      ==>
-        // C_i = NAND((NAND(C_i-1,A), NAND(A,B), NAND(C_i-1, B)
-        // carryNand_i(carryCalcNand_i0(carryNand_i+1,A_i), carryCalcNand_i1(A_i,B_i), carryCalcNand_i2(carryNand_i+1,B_i)
-
         for (int i = nBits - 1; i >= 0; i--) {
             CircuitNode[] carryCalcNandSrcArray = {i < nBits - 1 ? carryNands[i + 1].getOutput() : GND,
                     getInternalInput(i),
                     getInternalInput(i + nBits)};
 
-
-            int[][] carryCalcNandSrcInds = {{0, 1}, {1, 2}, {0, 2}};
-
+            int[][] carryCalcNandSrcIdxs = {{0, 1}, {1, 2}, {0, 2}};
 
             carryNands[i] = new NandGate(getLabel() + " CarryNand_" + i, 3);
             transistorCount += carryNands[i].getTransistorCount();
 
             for (int j = 0; j < 3; j++) {
                 carryCalcNands[i][j] = new NandGate(getLabel() + " CarryCalcNand_" + i + "_" + j, 2);
-                carryCalcNands[i][j].assignInput(0, carryCalcNandSrcArray[carryCalcNandSrcInds[j][0]]);
-                carryCalcNands[i][j].assignInput(1, carryCalcNandSrcArray[carryCalcNandSrcInds[j][1]]);
+                carryCalcNands[i][j].assignInput(0, carryCalcNandSrcArray[carryCalcNandSrcIdxs[j][0]]);
+                carryCalcNands[i][j].assignInput(1, carryCalcNandSrcArray[carryCalcNandSrcIdxs[j][1]]);
 
                 invPortsCarrys[i][j] = new InverterGate(getLabel() + " Inverted_" + i + "_" + j);
                 invPortsCarrys[i][j].assignInput(carryCalcNandSrcArray[j]);
@@ -59,13 +86,11 @@ public class UnsignedAdd extends DigitalCircuit {
         carryNands[0].assignOutput(getInternalOutput(nBits));
     }
 
+    /**
+     * Construct the Inverter, "Output Calc," and "Output" Nand logic described in the documentation for this class.
+     * @param nBits The number of bits in each input.
+     */
     private void initOutGates(int nBits) {
-        /* 
-        O_i = OR(XOR(ABC), AND(ABC))
-                ==>
-        O_i = NAND(NAND(A!B!C), NAND(!A!BC), NAND(!AB!C), NAND(ABC))
-        */
-
         for (int i = nBits - 1; i >= 0; i--) {
             CircuitNode[][] outputCalcNandSrcArray = {
                     { i<nBits-1 ? carryNands[i+1].getOutput() : GND,
@@ -76,17 +101,16 @@ public class UnsignedAdd extends DigitalCircuit {
                       invPortsCarrys[i][1].getOutput(),
                       invPortsCarrys[i][2].getOutput() } };
 
-
-            int[][] outputCalcNandSrcInds = { {0, 0, 0}, {0, 1, 1}, {1, 0, 1}, {1, 1, 0} };
+            int[][] outputCalcNandSrcIdxs = { {0, 0, 0}, {0, 1, 1}, {1, 0, 1}, {1, 1, 0} };
 
             outputNands[i] = new NandGate(getLabel() + " OutputNand_" + i, 4);
             transistorCount += outputNands[i].getTransistorCount();
 
             for (int j = 0; j < 4; j++) {
                 outputCalcNands[i][j] = new NandGate(getLabel() + " OutputCalcNand_" + i + "_" + j, 3);
-                outputCalcNands[i][j].assignInput(0, outputCalcNandSrcArray[outputCalcNandSrcInds[j][0]][0] );
-                outputCalcNands[i][j].assignInput(1, outputCalcNandSrcArray[outputCalcNandSrcInds[j][1]][1] );
-                outputCalcNands[i][j].assignInput(2, outputCalcNandSrcArray[outputCalcNandSrcInds[j][2]][2] );
+                outputCalcNands[i][j].assignInput(0, outputCalcNandSrcArray[outputCalcNandSrcIdxs[j][0]][0] );
+                outputCalcNands[i][j].assignInput(1, outputCalcNandSrcArray[outputCalcNandSrcIdxs[j][1]][1] );
+                outputCalcNands[i][j].assignInput(2, outputCalcNandSrcArray[outputCalcNandSrcIdxs[j][2]][2] );
                 outputCalcNands[i][j].assignOutput(outputNands[i].getInput(j));
 
                 transistorCount += outputCalcNands[i][j].getTransistorCount();
@@ -95,6 +119,15 @@ public class UnsignedAdd extends DigitalCircuit {
         }
     }
 
+    /**
+     * For each bit of the output nBit bit string, starting from the least significant bit (nBit-1):<ul>
+     *     <li>Evaluate the "Carry Calc" Nands</li>
+     *     <li>Evaluate the "Carry" Nands</li>
+     *     <li>Evaluate the Inverters</li>
+     *     <li>Evaluate the "Output Calc" Nands</li>
+     *     <li>Evaluate the "Output" Nands</li>
+     * </ul>
+     */
     @Override
     protected void evaluateCircuit() {
         for (int i = getNumOutputs()-2; i >= 0; i--) {
