@@ -3,15 +3,23 @@ package core_architecture;
 import logic_gates.InverterGate;
 import lombok.Getter;
 
+/**
+ * An abstract class representing a DigitalCircuit that will perform some type of selection.<br>
+ * <br>
+ A SelectorCircuit object consists of:<br>
+ * <ul>
+ * <li>{@link #selBitCnt selBitCnt}</li>
+ * <li>Inverter gates for all selector bit ports</li></ul>
+ */
 public abstract class SelectionCircuit extends DigitalCircuit {
 
     /**
      * The number of bits required to select between the number of options.
      */
     @Getter
-    protected final int selBitCnt;
+    private final int selBitCnt;
 
-    protected final InverterGate[] invSelBitPorts;
+    private final InverterGate[] invSelBitPorts;
 
     /**
      * SelectionCircuit constructor.
