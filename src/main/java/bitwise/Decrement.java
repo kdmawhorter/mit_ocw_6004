@@ -5,12 +5,39 @@ import logic_gates.AndGate;
 import logic_gates.InverterGate;
 import logic_gates.XorGate;
 
+/**
+ * A class representing a Decrement operation.<br>
+ * <br>
+ A Decrement object consists of:<br>
+ * <ul>
+ * <li>Inverted input ports</li>
+ * <li>"Borrow" And gates to determine whether each bit index needs to borrow a bit from the next highest
+ * significant bit to complete a decrement operation. B[i] = AND(B[i+1], !A[i])</li>
+ * <li>"Output" Xor gates that determine the output bit given whether an input bit is on/off and whether it needs
+ * to be borrowed from or not. O[i] = XOR(B[i+1], A[i]) </li> </ul>
+ *
+ * Underflow occurs when the most significant bit needs to borrow from a higher bit.<br>
+ * <br>
+ * The decrement begins by borrowing from the least significant bit.<br>
+ * <br>
+ * <b>Inputs</b>: nBits corresponding to:<ul>
+ * <li>an nBit bit string representing an input A to decrement</li></ul>
+ * <b>Outputs</b>: nBits+1 corresponding to:<ul>
+ * <li>an nBit bit string representing the decremented bit string</li>
+ * <li>an underflow bit</li></ul>
+ */
 public class Decrement extends DigitalCircuit {
 
     private final AndGate[] borrowAnds;
     private final XorGate[] outputXors;
     private final InverterGate[] invPorts;
 
+    /**
+     * Decrement constructor.
+     *
+     * @param label The name of the circuit.
+     * @param nBits The number of bits in the input.
+     */
     public Decrement(String label, int nBits) {
         super(label, nBits, nBits+1);
 
@@ -37,6 +64,13 @@ public class Decrement extends DigitalCircuit {
         borrowAnds[0].assignOutput(getInternalOutput(nBits));
     }
 
+    /**
+     * For each bit of the input starting from the least significant bit (nBit-1):
+     * <ul>
+     * <li>Firstly, evaluates the Inverter tied to the input port for that bit.</li>
+     * <li>Secondly, evaluates the Borrow And gate for that bit.</li>
+     * <li>Lastly, evaluates the Output Xor Gate for that bit.</li>
+     */
     @Override
     protected void evaluateCircuit() {
         for (int i = getNumInputs() - 1; i >= 0; i--) {
