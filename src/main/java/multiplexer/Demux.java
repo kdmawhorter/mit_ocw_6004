@@ -1,10 +1,10 @@
 package multiplexer;
 
-import core_architecture.BitMuxShiftCore;
+import core_architecture.SelectionCircuit;
 import core_architecture.CircuitNode;
 import logic_gates.NandGate;
 
-public class Demux extends BitMuxShiftCore {
+public class Demux extends SelectionCircuit {
     
     private final int wordWidth;
     private final int numChoices;

@@ -1,13 +1,13 @@
 package memory;
 
-import core_architecture.BitMuxShiftCore;
+import core_architecture.SelectionCircuit;
 import core_architecture.CircuitNode;
 import logic_gates.AndGate;
 import logic_gates.InverterGate;
 import multiplexer.Demux;
 import multiplexer.Mux;
 
-public class MemoryModule extends BitMuxShiftCore {
+public class MemoryModule extends SelectionCircuit {
 
     private final Mux mux;
     private final Demux demux;
