@@ -30,8 +30,8 @@ public abstract class Mosfet extends SisoCircuit {
     }
 
     /**
-     * Determines if the drain and source terminal are currently connected. Nfets are connected with gate status is
-     * connected to power. Pfets are connected when gate status is connected to ground.
+     * Determines if the drain and source terminal are currently connected. NFETs are connected with gate status is
+     * connected to power. PFETs are connected when gate status is connected to ground.
      *
      * @return A boolean indicating whether the drain and source terminal are connected
      */

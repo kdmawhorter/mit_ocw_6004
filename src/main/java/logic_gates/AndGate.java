@@ -2,14 +2,25 @@ package logic_gates;
 
 import core_architecture.SingleOutputCircuit;
 
+/**
+ * A class representing the logic gate And. 
+ * <br><br>
+ * Given nBits of input, the output is {@link core_architecture.DigitalCircuit#VDD VDD} if all
+ * those input bits are VDD, else it is {@link core_architecture.DigitalCircuit#GND GND}.
+ */
 public class AndGate extends SingleOutputCircuit {
     private final NandGate nand;
     private final InverterGate inv;
 
-    public AndGate(String label, int nBit) {
-        super(label, nBit);
+    /**
+     * AndGate constructor
+     * @param label The name of the circuit.
+     * @param nBits The number of inputs.
+     */
+    public AndGate(String label, int nBits) {
+        super(label, nBits);
 
-        nand = new NandGate(label + " Nand", nBit);
+        nand = new NandGate(label + " Nand", nBits);
         nand.assignInputs(getInternalInputs());
 
         inv = new InverterGate(label + " Inverter");
@@ -19,6 +30,9 @@ public class AndGate extends SingleOutputCircuit {
         transistorCount = inv.getTransistorCount() + nand.getTransistorCount();
     }
 
+    /**
+     * Evaluates the internal Nand gate and then evaluates the Inverter of that Nand output.
+     */
     @Override
     protected void evaluateCircuit() {
         nand.evaluate();

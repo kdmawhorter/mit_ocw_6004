@@ -10,8 +10,8 @@ public class InverterGate extends SisoCircuit {
     public InverterGate(String label) {
         super(label);
 
-        pfet = new Pfet(label + " PMOS circuit Pfet", getInternalOutput(0), getInternalInput(0), VDD);
-        nfet = new Nfet(label + " NMOS circuit Nfet", getInternalOutput(0), getInternalInput(0), GND);
+        pfet = new Pfet(label + " PMOS circuit PFET", getInternalOutput(0), getInternalInput(0), VDD);
+        nfet = new Nfet(label + " NMOS circuit NFET", getInternalOutput(0), getInternalInput(0), GND);
 
         transistorCount += pfet.getTransistorCount() + nfet.getTransistorCount();
     }
