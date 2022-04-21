@@ -1,18 +1,9 @@
 package core_architecture;
 
+/**
+ * A pull-down type {@link Mosfet MOSFET}.
+ */
 public class Nfet extends Mosfet {
-
-    public Nfet(String label) {
-        this(label, new CircuitNode(label + " Output"), DigitalCircuit.GND, DigitalCircuit.GND);
-    }
-
-    public Nfet(String label, CircuitNode output) {
-        super(label, output, DigitalCircuit.GND, DigitalCircuit.GND);
-    }
-
-    public Nfet(String label, CircuitNode output, CircuitNode input) {
-        super(label, output, input, DigitalCircuit.GND);
-    }
 
     public Nfet(String label, CircuitNode output, CircuitNode input, CircuitNode source) {
         super(label, output, input, source);

@@ -11,11 +11,11 @@ public class OrGate extends SingleOutputCircuit {
         super(label, nBit);
 
         nor = new NorGate(label + " Nor", nBit);
-        nor.assignInputs(getInPortOutputs());
+        nor.assignInputs(getInternalInputs());
 
         inv = new InverterGate(label + " Inverter");
         inv.assignInput(0, nor.getOutput(0));
-        inv.assignOutput(0, getOutPortInput());
+        inv.assignOutput(0, getInternalOutput());
 
         transistorCount = inv.getTransistorCount() + nor.getTransistorCount();
     }

@@ -14,8 +14,8 @@ public class Inverter extends DigitalCircuit {
 
         for (int i = 0; i < getNumInputs(); i++) {
             inverters[i] = new InverterGate(label + " InverterGate_" + i);
-            inverters[i].assignOutput(getOutPortInput(i));
-            inverters[i].assignInput(getInPortOutput(i));
+            inverters[i].assignOutput(getInternalOutput(i));
+            inverters[i].assignInput(getInternalInput(i));
             transistorCount += inverters[i].getTransistorCount();
         }
     }

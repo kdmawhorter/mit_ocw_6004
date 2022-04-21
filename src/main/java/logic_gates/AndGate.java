@@ -10,11 +10,11 @@ public class AndGate extends SingleOutputCircuit {
         super(label, nBit);
 
         nand = new NandGate(label + " Nand", nBit);
-        nand.assignInputs(getInPortOutputs());
+        nand.assignInputs(getInternalInputs());
 
         inv = new InverterGate(label + " Inverter");
         inv.assignInput(0, nand.getOutput(0));
-        inv.assignOutput(0, getOutPortInput());
+        inv.assignOutput(0, getInternalOutput());
 
         transistorCount = inv.getTransistorCount() + nand.getTransistorCount();
     }

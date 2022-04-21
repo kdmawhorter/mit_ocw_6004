@@ -40,12 +40,12 @@ public class Mux extends BitMuxShiftCore {
                 currentSelectorBits = Mux.incrementTruthArray(currentSelectorBits);
 
             }
-            outputNands[outIdx].assignOutput(getOutPortInput(outIdx));
+            outputNands[outIdx].assignOutput(getInternalOutput(outIdx));
         }
     }
 
     private CircuitNode getNthIPortOutput(int n, int i) {
-        return getInPortOutput(n*getNumOutputs()+i);
+        return getInternalInput(n*getNumOutputs()+i);
     }
 
     @Override

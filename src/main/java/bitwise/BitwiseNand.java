@@ -14,9 +14,9 @@ public class BitwiseNand extends DigitalCircuit {
 
         for (int i = 0; i < nBit; i++) {
             nands[i] = new NandGate(label + " Nand_" + i, 2);
-            nands[i].assignInput(0, getInPortOutput(i));
-            nands[i].assignInput(1, getInPortOutput(i+nBit));
-            nands[i].assignOutput(getOutPortInput(i));
+            nands[i].assignInput(0, getInternalInput(i));
+            nands[i].assignInput(1, getInternalInput(i+nBit));
+            nands[i].assignOutput(getInternalOutput(i));
             transistorCount += nands[i].getTransistorCount();
         }
     }

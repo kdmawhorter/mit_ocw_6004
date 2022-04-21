@@ -1,5 +1,8 @@
 package core_architecture;
 
+/**
+ * A {@link CircuitNode CircuitNode} representing a power source terminal.
+ */
 public class PowerSource extends CircuitNode {
 
     public PowerSource(String label) {

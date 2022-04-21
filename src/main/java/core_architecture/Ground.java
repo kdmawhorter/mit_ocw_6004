@@ -1,5 +1,8 @@
 package core_architecture;
 
+/**
+ * A {@link CircuitNode CircuitNode} representing the ground connection terminal.
+ */
 public class Ground extends CircuitNode {
 
     public Ground(String label) {

@@ -22,7 +22,7 @@ public abstract class Shift extends BitMuxShiftCore {
                     muxes[inputIdx].assignInput(nBit+selIdx, getSelBitOut(selIdx));
                 }
             }
-            muxes[inputIdx].assignOutput(0, getOutPortInput(inputIdx));
+            muxes[inputIdx].assignOutput(0, getInternalOutput(inputIdx));
         }
     }
 

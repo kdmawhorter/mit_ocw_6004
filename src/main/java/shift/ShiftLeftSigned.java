@@ -11,8 +11,8 @@ public class ShiftLeftSigned extends Shift{
     @Override
     public CircuitNode getNthMappingForInputI(int n, int i) {
         if (i==0) {
-            return getInPortOutput(0);
+            return getInternalInput(0);
         }
-        return (i+n+1)<(getNumInputs()-getSelBitCnt()) ? getInPortOutput(i+n+1) : GND;
+        return (i+n+1)<(getNumInputs()-getSelBitCnt()) ? getInternalInput(i+n+1) : GND;
     }
 }

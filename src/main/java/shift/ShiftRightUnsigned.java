@@ -10,6 +10,6 @@ public class ShiftRightUnsigned extends Shift{
 
     @Override
     public CircuitNode getNthMappingForInputI(int n, int i) {
-        return (i-n-1)>=0 ? getInPortOutput(i-n-1) : GND;
+        return (i-n-1)>=0 ? getInternalInput(i-n-1) : GND;
     }
 }
