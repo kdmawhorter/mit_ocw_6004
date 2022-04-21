@@ -15,12 +15,12 @@ public class XorGate extends SingleOutputCircuit {
         calcNands = new NandGate[nBits];
 
         outputNand = new NandGate(label + " Or", nBits);
-        outputNand.assignOutput(getOutPortInput());
+        outputNand.assignOutput(getInternalOutput());
         transistorCount += outputNand.getTransistorCount();
 
         for (int invIdx = 0; invIdx < nBits; invIdx++) {
             invPorts[invIdx] = new InverterGate(label + " Inv_" + invIdx);
-            invPorts[invIdx].assignInput(0, getInPortOutput(invIdx));
+            invPorts[invIdx].assignInput(0, getInternalInput(invIdx));
             transistorCount += invPorts[invIdx].getTransistorCount();
         }
 
@@ -29,7 +29,7 @@ public class XorGate extends SingleOutputCircuit {
             transistorCount += calcNands[nandIdx].getTransistorCount();
             for (int inputIdx = 0; inputIdx < nBits; inputIdx++) {
                 calcNands[nandIdx].assignInput(inputIdx,
-                        inputIdx!=nandIdx ? invPorts[inputIdx].getOutput(0) : getInPortOutput(inputIdx));
+                        inputIdx!=nandIdx ? invPorts[inputIdx].getOutput(0) : getInternalInput(inputIdx));
             }
             outputNand.assignInput(nandIdx, calcNands[nandIdx].getOutput(0));
         }

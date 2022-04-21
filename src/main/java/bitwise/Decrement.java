@@ -20,7 +20,7 @@ public class Decrement extends DigitalCircuit {
 
         for (int i = nBits - 1; i >= 0; i--) {
             invPorts[i] = new InverterGate(label + " InvPort_" + i);
-            invPorts[i].assignInput(0, getInPortOutput(i));
+            invPorts[i].assignInput(0, getInternalInput(i));
             transistorCount += invPorts[i].getTransistorCount();
 
             borrowAnds[i] = new AndGate(label + " BorrowAnd_" + i, 2);
@@ -29,12 +29,12 @@ public class Decrement extends DigitalCircuit {
             transistorCount += borrowAnds[i].getTransistorCount();
 
             outputXors[i] = new XorGate(label + " OutputXor_" + i, 2);
-            outputXors[i].assignInput(0, getInPortOutput(i));
+            outputXors[i].assignInput(0, getInternalInput(i));
             outputXors[i].assignInput(1, i<nBits-1 ? borrowAnds[i+1].getOutput(0) : VDD);
-            outputXors[i].assignOutput(getOutPortInput(i));
+            outputXors[i].assignOutput(getInternalOutput(i));
             transistorCount += outputXors[i].getTransistorCount();
         }
-        borrowAnds[0].assignOutput(getOutPortInput(nBits));
+        borrowAnds[0].assignOutput(getInternalOutput(nBits));
     }
 
     @Override

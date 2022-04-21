@@ -27,7 +27,7 @@ public class MemoryModule extends BitMuxShiftCore {
         demux = new Demux(label + " Demux", memSpacesIncZero, wordWidth);
 
         invOpCode = new InverterGate(label + " InvertedOpCode");
-        invOpCode.assignInput(getInPortOutput(wordWidth));
+        invOpCode.assignInput(getInternalInput(wordWidth));
         transistorCount += invOpCode.getTransistorCount() + mux.getTransistorCount() + demux.getTransistorCount();
 
 
@@ -42,7 +42,7 @@ public class MemoryModule extends BitMuxShiftCore {
             mux.assignInput(mux.getNumInputs()-getSelBitCnt()+s, getSelBitOut(s));
 
             demuxMaskAnds[s] = new AndGate(label + "DemuxOpCodeMask_" + s, 2);
-            demuxMaskAnds[s].assignInput(0, getInPortOutput(wordWidth));
+            demuxMaskAnds[s].assignInput(0, getInternalInput(wordWidth));
             demuxMaskAnds[s].assignInput(1, getSelBitOut(s));
             demuxMaskAnds[s].assignOutput(demux.getInput(demux.getNumInputs()-getSelBitCnt()+s));
             transistorCount += demuxMaskAnds[s].getTransistorCount();
@@ -53,10 +53,10 @@ public class MemoryModule extends BitMuxShiftCore {
             muxMaskAnds[w] = new AndGate(label + " MuxOpCodeMask_" + w, 2);
             muxMaskAnds[w].assignInput(0, invOpCode.getOutput());
             muxMaskAnds[w].assignInput(1, mux.getOutput(w));
-            muxMaskAnds[w].assignOutput(getOutPortInput(w));
+            muxMaskAnds[w].assignOutput(getInternalOutput(w));
             transistorCount += muxMaskAnds[w].getTransistorCount();
 
-            demux.assignInput(w, getInPortOutput(w));
+            demux.assignInput(w, getInternalInput(w));
         }
     }
 

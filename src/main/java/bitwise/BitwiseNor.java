@@ -14,9 +14,9 @@ public class BitwiseNor extends DigitalCircuit {
 
         for (int i = 0; i < nBit; i++) {
             nors[i] = new NorGate(label + " Nor_" + i, 2);
-            nors[i].assignInput(0, getInPortOutput(i));
-            nors[i].assignInput(1, getInPortOutput(i+nBit));
-            nors[i].assignOutput(getOutPortInput(i));
+            nors[i].assignInput(0, getInternalInput(i));
+            nors[i].assignInput(1, getInternalInput(i+nBit));
+            nors[i].assignOutput(getInternalOutput(i));
             transistorCount += nors[i].getTransistorCount();
         }
     }

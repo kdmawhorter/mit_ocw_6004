@@ -34,8 +34,8 @@ public class UnsignedAdd extends DigitalCircuit {
 
         for (int i = nBits - 1; i >= 0; i--) {
             CircuitNode[] carryCalcNandSrcArray = {i < nBits - 1 ? carryNands[i + 1].getOutput() : GND,
-                    getInPortOutput(i),
-                    getInPortOutput(i + nBits)};
+                    getInternalInput(i),
+                    getInternalInput(i + nBits)};
 
 
             int[][] carryCalcNandSrcInds = {{0, 1}, {1, 2}, {0, 2}};
@@ -56,7 +56,7 @@ public class UnsignedAdd extends DigitalCircuit {
                 carryNands[i].assignInput(j, carryCalcNands[i][j].getOutput());
             }
         }
-        carryNands[0].assignOutput(getOutPortInput(nBits));
+        carryNands[0].assignOutput(getInternalOutput(nBits));
     }
 
     private void initOutGates(int nBits) {
@@ -69,8 +69,8 @@ public class UnsignedAdd extends DigitalCircuit {
         for (int i = nBits - 1; i >= 0; i--) {
             CircuitNode[][] outputCalcNandSrcArray = {
                     { i<nBits-1 ? carryNands[i+1].getOutput() : GND,
-                      getInPortOutput(i),
-                      getInPortOutput(i+nBits) },
+                      getInternalInput(i),
+                      getInternalInput(i+nBits) },
 
                     { invPortsCarrys[i][0].getOutput(),
                       invPortsCarrys[i][1].getOutput(),
@@ -91,7 +91,7 @@ public class UnsignedAdd extends DigitalCircuit {
 
                 transistorCount += outputCalcNands[i][j].getTransistorCount();
             }
-            outputNands[i].assignOutput(getOutPortInput(i));
+            outputNands[i].assignOutput(getInternalOutput(i));
         }
     }
 

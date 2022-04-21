@@ -14,9 +14,9 @@ public class BitwiseAnd extends DigitalCircuit {
 
         for (int i = 0; i < nBit; i++) {
             ands[i] = new AndGate(label + " And_" + i, 2);
-            ands[i].assignInput(0, getInPortOutput(i));
-            ands[i].assignInput(1, getInPortOutput(i+nBit));
-            ands[i].assignOutput(getOutPortInput(i));
+            ands[i].assignInput(0, getInternalInput(i));
+            ands[i].assignInput(1, getInternalInput(i+nBit));
+            ands[i].assignOutput(getInternalOutput(i));
             transistorCount += ands[i].getTransistorCount();
         }
     }

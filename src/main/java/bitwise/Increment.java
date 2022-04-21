@@ -17,18 +17,18 @@ public class Increment extends DigitalCircuit {
 
         for (int i = nBits - 1; i >= 0; i--) {
             carryAnd[i] = new AndGate(label + " CarryAnd_" + i, 2);
-            carryAnd[i].assignInput(0, getInPortOutput(i));
+            carryAnd[i].assignInput(0, getInternalInput(i));
             carryAnd[i].assignInput(1, i<nBits-1 ? carryAnd[i+1].getOutput(0) : VDD);
             transistorCount += carryAnd[i].getTransistorCount();
 
             outputXor[i] = new XorGate(label + " OutputXor_" + i, 2);
-            outputXor[i].assignInput(0, getInPortOutput(i));
+            outputXor[i].assignInput(0, getInternalInput(i));
             outputXor[i].assignInput(1, i<nBits-1 ? carryAnd[i+1].getOutput(0) : VDD);
-            outputXor[i].assignOutput(getOutPortInput(i));
+            outputXor[i].assignOutput(getInternalOutput(i));
             transistorCount += outputXor[i].getTransistorCount();
         }
 
-        carryAnd[0].assignOutput(getOutPortInput(nBits));
+        carryAnd[0].assignOutput(getInternalOutput(nBits));
     }
 
     @Override

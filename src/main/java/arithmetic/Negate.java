@@ -13,12 +13,12 @@ public class Negate extends DigitalCircuit {
         super(label, nBits, nBits);
 
         inverter = new Inverter(label + " Inverter", nBits);
-        inverter.assignInputs(getInPortOutputs());
+        inverter.assignInputs(getInternalInputs());
 
         incrementer = new Increment(label + " Incrementer", nBits);
         incrementer.assignInputs(inverter.getOutputs());
         for (int i = 0; i < nBits; i++) {
-            incrementer.assignOutput(i, getOutPortInput(i));
+            incrementer.assignOutput(i, getInternalOutput(i));
         }
 
         transistorCount = inverter.getTransistorCount() + incrementer.getTransistorCount();

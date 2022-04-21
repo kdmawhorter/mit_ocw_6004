@@ -14,9 +14,9 @@ public class BitwiseXor extends DigitalCircuit {
 
         for (int i = 0; i < nBit; i++) {
             xors[i] = new XorGate(label + " Xor_" + i, 2);
-            xors[i].assignInput(0, getInPortOutput(i));
-            xors[i].assignInput(1, getInPortOutput(i+nBit));
-            xors[i].assignOutput(getOutPortInput(i));
+            xors[i].assignInput(0, getInternalInput(i));
+            xors[i].assignInput(1, getInternalInput(i+nBit));
+            xors[i].assignOutput(getInternalOutput(i));
             transistorCount += xors[i].getTransistorCount();
         }
     }

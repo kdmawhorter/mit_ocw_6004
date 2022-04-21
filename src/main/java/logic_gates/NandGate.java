@@ -15,13 +15,13 @@ public class NandGate extends SingleOutputCircuit {
 
         for (int i = 0; i < nBits; i++) {
             pullDownNodes[i] = (i==nBits-1) ?
-                    getOutPortInput() :
+                    getInternalOutput() :
                     new CircuitNode(label + " NMOS node " + i + "-" + (i+1));
 
-            nfets[i] = new Nfet(label + " Nfet_" + i, pullDownNodes[i], getInPortOutput(i),
+            nfets[i] = new Nfet(label + " Nfet_" + i, pullDownNodes[i], getInternalInput(i),
                     (i-1>=0) ? pullDownNodes[i-1] : GND);
 
-            pfets[i] = new Pfet(label + " Pfet_" + i, getOutPortInput(), getInPortOutput(i), VDD);
+            pfets[i] = new Pfet(label + " Pfet_" + i, getInternalOutput(), getInternalInput(i), VDD);
 
             transistorCount += pfets[i].getTransistorCount() + nfets[i].getTransistorCount();
         }

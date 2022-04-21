@@ -14,10 +14,12 @@ public class PfetTest {
 
     @BeforeEach
     void init() {
-        pfet = new Pfet("NFET Test");
+        pfet = new Pfet("NFET Test", new CircuitNode("Pfet Drain"), new CircuitNode("Pfet Gate"),
+                DigitalCircuit.VDD);
 
         externalOutput = new CircuitNode("External Node");
-        pfetExternalOutput = new Pfet("External Output NFET Test", externalOutput);
+        pfetExternalOutput = new Pfet("External Output NFET Test", externalOutput,
+                new CircuitNode("Pfet Gate"), DigitalCircuit.VDD);
     }
 
     @Test

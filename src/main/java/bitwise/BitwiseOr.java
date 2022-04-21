@@ -14,9 +14,9 @@ public class BitwiseOr extends DigitalCircuit {
 
         for (int i = 0; i < nBit; i++) {
             ors[i] = new OrGate(label + " Or_" + i, 2);
-            ors[i].assignInput(0, getInPortOutput(i));
-            ors[i].assignInput(1, getInPortOutput(i+nBit));
-            ors[i].assignOutput(getOutPortInput(i));
+            ors[i].assignInput(0, getInternalInput(i));
+            ors[i].assignInput(1, getInternalInput(i+nBit));
+            ors[i].assignOutput(getInternalOutput(i));
             transistorCount += ors[i].getTransistorCount();
         }
     }

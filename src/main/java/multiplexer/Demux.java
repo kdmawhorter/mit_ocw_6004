@@ -58,7 +58,7 @@ public class Demux extends BitMuxShiftCore {
                         label + "OutputNand_" + outWord + "_" + outBit, 2);
                 transistorCount += outputNands[outWord][outBit].getTransistorCount();
 
-                inputSelNands[outWord][outBit].assignInput(0, getInPortOutput(outBit));
+                inputSelNands[outWord][outBit].assignInput(0, getInternalInput(outBit));
                 for (int selBit = 0; selBit < getSelBitCnt(); selBit++) {
                     CircuitNode selOut = currSelBits[selBit] ? getSelBitOut(selBit) : getInvSelBitOut(selBit);
                     
@@ -72,7 +72,7 @@ public class Demux extends BitMuxShiftCore {
                 outputNands[outWord][outBit].assignInput(0, memSelNands[outWord][outBit].getOutput(0));
                 outputNands[outWord][outBit].assignInput(1, inputSelNands[outWord][outBit].getOutput(0));
 
-                outputNands[outWord][outBit].assignOutput(getOutPortInput((outWord+1)*wordWidth+outBit));
+                outputNands[outWord][outBit].assignOutput(getInternalOutput((outWord+1)*wordWidth+outBit));
             }
 
             for (int zeroRegisterBit = 0; zeroRegisterBit < wordWidth; zeroRegisterBit++) {
@@ -82,7 +82,7 @@ public class Demux extends BitMuxShiftCore {
     }
     
     public CircuitNode getNthIOutput(int n, int i) {
-        return getOutPortInput((n+1)*wordWidth + i);
+        return getInternalOutput((n+1)*wordWidth + i);
     }
     
     @Override
