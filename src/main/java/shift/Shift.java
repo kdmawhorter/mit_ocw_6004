@@ -1,10 +1,10 @@
 package shift;
 
-import core_architecture.BitMuxShiftCore;
+import core_architecture.SelectionCircuit;
 import core_architecture.CircuitNode;
 import multiplexer.Mux;
 
-public abstract class Shift extends BitMuxShiftCore {
+public abstract class Shift extends SelectionCircuit {
 
     private final Mux[] muxes;
 

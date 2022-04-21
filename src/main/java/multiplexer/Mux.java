@@ -1,10 +1,10 @@
 package multiplexer;
 
-import core_architecture.BitMuxShiftCore;
+import core_architecture.SelectionCircuit;
 import core_architecture.CircuitNode;
 import logic_gates.NandGate;
 
-public class Mux extends BitMuxShiftCore {
+public class Mux extends SelectionCircuit {
 
     private final NandGate[][] selectionNands;
     private final NandGate[] outputNands;

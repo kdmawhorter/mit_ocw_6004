@@ -3,7 +3,7 @@ package core_architecture;
 import logic_gates.InverterGate;
 import lombok.Getter;
 
-public abstract class BitMuxShiftCore extends DigitalCircuit {
+public abstract class SelectionCircuit extends DigitalCircuit {
 
     /**
      * The number of bits required to select between the number of options.
@@ -14,14 +14,14 @@ public abstract class BitMuxShiftCore extends DigitalCircuit {
     protected final InverterGate[] invSelBitPorts;
 
     /**
-     * BitMuxShiftCore constructor.
+     * SelectionCircuit constructor.
      *
      * @param label The name of the circuit.
      * @param numInputs The number of inputs to the circuit (not including the selection bits).
      * @param numOutputs The number of outputs of the circuit.
      * @param selBitCnt The number of bits required to choose between the desired number of options.
      */
-    public BitMuxShiftCore(String label, int numInputs, int numOutputs, int selBitCnt) {
+    public SelectionCircuit(String label, int numInputs, int numOutputs, int selBitCnt) {
         super(label, numInputs+selBitCnt, numOutputs);
 
         this.selBitCnt = selBitCnt;
