@@ -1,16 +1,28 @@
 package logic_gates;
 
+import core_architecture.DigitalCircuit;
 import core_architecture.SingleOutputCircuit;
 
+/**
+ * A class representing the logic gate Or.
+ * <br><br>
+ * Given nBits of input, the output is {@link DigitalCircuit#GND GND} if all
+ * those input bits are GND, else it is {@link DigitalCircuit#VDD VDD}.
+ */
 public class OrGate extends SingleOutputCircuit {
 
     private final NorGate nor;
     private final InverterGate inv;
 
-    public OrGate(String label, int nBit) {
-        super(label, nBit);
+    /**
+     * OrGate constructor
+     * @param label The name of the circuit.
+     * @param nBits The number of inputs.
+     */
+    public OrGate(String label, int nBits) {
+        super(label, nBits);
 
-        nor = new NorGate(label + " Nor", nBit);
+        nor = new NorGate(label + " Nor", nBits);
         nor.assignInputs(getInternalInputs());
 
         inv = new InverterGate(label + " Inverter");
@@ -20,6 +32,9 @@ public class OrGate extends SingleOutputCircuit {
         transistorCount = inv.getTransistorCount() + nor.getTransistorCount();
     }
 
+    /**
+     * First evaluates the Nor gate then evaluates the inverter attached to that Nor output.
+     */
     @Override
     protected void evaluateCircuit() {
         nor.evaluate();

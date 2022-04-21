@@ -14,12 +14,12 @@ public class NfetTest {
 
     @BeforeEach
     void init() {
-        nfet = new Nfet("NFET Test", new CircuitNode("Nfet Drain"), new CircuitNode("Nfet Gate"),
+        nfet = new Nfet("NFET Test", new CircuitNode("NFET Drain"), new CircuitNode("NFET Gate"),
                 DigitalCircuit.GND);
 
         externalOutput = new CircuitNode("External Node");
         nfetExternalOutput = new Nfet("External Output NFET Test", externalOutput,
-                new CircuitNode("Nfet Gate"), DigitalCircuit.GND);
+                new CircuitNode("NFET Gate"), DigitalCircuit.GND);
     }
 
     @Test
@@ -31,21 +31,21 @@ public class NfetTest {
         nfet.turnOn();
         nfet.evaluate();
         assertEquals(ConnectionType.GROUND, nfet.getOutput().getStatus(),
-                "Nfet output ground with gate power on");
+                "NFET output ground with gate power on");
 
         nfet.turnOff();
         nfet.evaluate();
         assertEquals(ConnectionType.FLOATING, nfet.getOutput().getStatus(),
-                "Nfet output floating with gate power off");
+                "NFET output floating with gate power off");
 
         nfetExternalOutput.turnOn();
         nfetExternalOutput.evaluate();
         assertEquals(ConnectionType.GROUND, externalOutput.getStatus(),
-                "External Output Nfet output ground with gate power on");
+                "External Output NFET output ground with gate power on");
 
         nfetExternalOutput.turnOff();
         nfetExternalOutput.evaluate();
         assertEquals(ConnectionType.FLOATING, externalOutput.getStatus(),
-                "Nfet output floating with gate power off");
+                "NFET output floating with gate power off");
     }
 }

@@ -1,13 +1,25 @@
 package logic_gates;
 
+import core_architecture.DigitalCircuit;
 import core_architecture.SingleOutputCircuit;
 
+/**
+ * A class representing the logic gate Xor.
+ * <br><br>
+ * Given nBits of input, the output is {@link DigitalCircuit#VDD VDD} if one and only one of those inputs is VDD, else
+ * it is {@link DigitalCircuit#GND GND}.
+ */
 public class XorGate extends SingleOutputCircuit {
     private final InverterGate[] invPorts;
     private final NandGate[] calcNands;
     private final NandGate outputNand;
-    
 
+
+    /**
+     * XorGate constructor
+     * @param label The name of the circuit.
+     * @param nBits The number of inputs.
+     */
     public XorGate(String label, int nBits) {
         super(label, nBits);
 
@@ -35,6 +47,11 @@ public class XorGate extends SingleOutputCircuit {
         }
     }
 
+    /**
+     * First evaluates all the inverters tied to each input port.<br>
+     * Then evaluates each "only one input true" Nand (e.g. Nand(A(!B)CD)).<br>
+     * Then evaluates the Nand tying all those "only one input true" Nands together.
+     */
     protected void evaluateCircuit() {
         for (InverterGate invPort : invPorts) {
             invPort.evaluate();
