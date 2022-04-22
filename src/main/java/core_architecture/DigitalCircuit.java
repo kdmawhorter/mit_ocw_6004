@@ -342,4 +342,15 @@ public abstract class DigitalCircuit {
         }
         return returnInputs;
     }
+
+    /**
+     * Sets the input node of the output port
+     * @param i The output port to set.
+     * @param output The node to be the new output.
+     */
+    protected void setInternalOutput(int i, CircuitNode output) {
+        if (i>=0 && i<getNumOutputs()) {
+            outPorts[i].setInput(output);
+        }
+    }
 }
