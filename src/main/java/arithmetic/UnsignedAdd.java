@@ -119,15 +119,6 @@ public class UnsignedAdd extends DigitalCircuit {
         }
     }
 
-    /**
-     * For each bit of the output nBit bit string, starting from the least significant bit (nBit-1):<ul>
-     *     <li>Evaluate the "Carry Calc" Nands</li>
-     *     <li>Evaluate the "Carry" Nands</li>
-     *     <li>Evaluate the Inverters</li>
-     *     <li>Evaluate the "Output Calc" Nands</li>
-     *     <li>Evaluate the "Output" Nands</li>
-     * </ul>
-     */
     @Override
     protected void evaluateCircuit() {
         for (int i = getNumOutputs()-2; i >= 0; i--) {

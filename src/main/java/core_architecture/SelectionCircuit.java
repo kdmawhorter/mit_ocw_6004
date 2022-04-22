@@ -93,9 +93,6 @@ public abstract class SelectionCircuit extends DigitalCircuit {
         return outputTruthArray;
     }
 
-    /**
-     * Evaluates the base level of Mux/Shift/Memory circuitry by priming all the selection bit inverter ports.
-     */
     @Override
     protected void evaluateCircuit() {
         for (int selIdx = 0; selIdx < getSelBitCnt(); selIdx++) {

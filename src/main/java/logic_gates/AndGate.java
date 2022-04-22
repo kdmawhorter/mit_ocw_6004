@@ -30,9 +30,6 @@ public class AndGate extends SingleOutputCircuit {
         transistorCount = inv.getTransistorCount() + nand.getTransistorCount();
     }
 
-    /**
-     * Evaluates the internal Nand gate and then evaluates the Inverter of that Nand output.
-     */
     @Override
     protected void evaluateCircuit() {
         nand.evaluate();

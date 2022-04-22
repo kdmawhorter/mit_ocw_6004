@@ -40,7 +40,7 @@ public class DemuxTest {
     @Test
     void demux4To16Test() {
         // Transistor Count Tests
-        assertEquals((4*2+10)*(4-1)*4+2*2, demux4To16.getTransistorCount(),
+        assertEquals(184, demux4To16.getTransistorCount(),
                 "4 Choice, 4 Bit Mux Transistor Count Test");
 
         demux4To16.evaluate();

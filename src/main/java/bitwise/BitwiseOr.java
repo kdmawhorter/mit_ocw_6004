@@ -43,9 +43,6 @@ public class BitwiseOr extends DigitalCircuit {
         }
     }
 
-    /**
-     * Evaluates the Or gate corresponding to each bit of A and B.
-     */
     @Override
     protected void evaluateCircuit() {
         for(OrGate or : ors) {

@@ -43,9 +43,6 @@ public class BitwiseXor extends DigitalCircuit {
         }
     }
 
-    /**
-     * Evaluates the Xor gate corresponding to each bit of A and B.
-     */
     @Override
     protected void evaluateCircuit() {
         for(XorGate xor : xors) {

@@ -38,9 +38,6 @@ public class Inverter extends DigitalCircuit {
         }
     }
 
-    /**
-     * Evaluates the Inverter gate corresponding to each bit of A.
-     */
     @Override
     protected void evaluateCircuit() {
         for (InverterGate inverter : inverters) {

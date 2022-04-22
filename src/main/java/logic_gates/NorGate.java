@@ -38,9 +38,6 @@ public class NorGate extends SingleOutputCircuit {
         }
     }
 
-    /**
-     * Evaluates the corresponding PFET and NFET for each input.
-     */
     @Override
     protected void evaluateCircuit() {
         for (int i = 0; i < getNumInputs(); i++) {

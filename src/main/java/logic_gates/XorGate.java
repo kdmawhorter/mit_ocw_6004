@@ -47,11 +47,6 @@ public class XorGate extends SingleOutputCircuit {
         }
     }
 
-    /**
-     * First evaluates all the inverters tied to each input port.<br>
-     * Then evaluates each "only one input true" Nand (e.g. Nand(A(!B)CD)).<br>
-     * Then evaluates the Nand tying all those "only one input true" Nands together.
-     */
     protected void evaluateCircuit() {
         for (InverterGate invPort : invPorts) {
             invPort.evaluate();

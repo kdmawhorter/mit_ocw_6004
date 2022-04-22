@@ -43,9 +43,6 @@ public class BitwiseAnd extends DigitalCircuit {
         }
     }
 
-    /**
-     * Evaluates the And gate corresponding to each bit of A and B.
-     */
     @Override
     protected void evaluateCircuit() {
         for(AndGate and : ands) {

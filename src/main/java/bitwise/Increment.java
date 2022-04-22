@@ -57,12 +57,6 @@ public class Increment extends DigitalCircuit {
         carryAnd[0].assignOutput(getInternalOutput(nBits));
     }
 
-    /**
-     * For each bit of the input starting from the least significant bit (nBit-1):
-     * <ul>
-     * <li>Evaluates the Carry And gate for that bit.</li>
-     * <li>Evaluates the Output Xor Gate for that bit.</li>
-     */
     @Override
     protected void evaluateCircuit() {
         for (int i = getNumOutputs() - 2; i >= 0; i--) {
