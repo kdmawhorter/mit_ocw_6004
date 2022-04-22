@@ -1,6 +1,5 @@
 package arithmetic;
 
-import core_architecture.CircuitNode;
 import logic_gates.InverterGate;
 import logic_gates.NandGate;
 
@@ -85,8 +84,7 @@ public class SignedAdd extends UnsignedAdd {
         overflowNand.assignOutput(getInternalOutput(nBits));
         transistorCount += overflowNand.getTransistorCount();
 
-        carryNands[0].assignOutput(new CircuitNode(
-                "Dummy Circuit Node to Prevent Unsigned Carry Overwrite of Signed Overflow Bit"));
+        decoupleUnsignedOverflow();
 
     }
 
