@@ -32,9 +32,6 @@ public class OrGate extends SingleOutputCircuit {
         transistorCount = inv.getTransistorCount() + nor.getTransistorCount();
     }
 
-    /**
-     * First evaluates the Nor gate then evaluates the inverter attached to that Nor output.
-     */
     @Override
     protected void evaluateCircuit() {
         nor.evaluate();

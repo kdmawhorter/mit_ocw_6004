@@ -45,9 +45,6 @@ public class Negate extends DigitalCircuit {
         transistorCount = inverter.getTransistorCount() + incrementer.getTransistorCount();
     }
 
-    /**
-     * First evaluates the inverter, then evaluates the incrementer.
-     */
     @Override
     protected void evaluateCircuit() {
         inverter.evaluate();

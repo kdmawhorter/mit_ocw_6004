@@ -54,9 +54,6 @@ public abstract class Shift extends SelectionCircuit {
      */
     public abstract CircuitNode getKthMappingForInputI(int k, int i);
 
-    /**
-     * Evaluate the mux for each input bit.
-     */
     @Override
     protected void evaluateCircuit() {
         for (Mux mux : muxes) {

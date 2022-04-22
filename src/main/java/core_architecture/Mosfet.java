@@ -37,10 +37,6 @@ public abstract class Mosfet extends SisoCircuit {
      */
     public abstract boolean areDrainAndSourceConnected();
 
-    /**
-     * If the drain and the source are connected, the source status is propagated to the drain, else the drain status is
-     * set to floating.
-     */
     @Override
     protected void evaluateCircuit() {
         ConnectionType newStatus = ConnectionType.FLOATING;

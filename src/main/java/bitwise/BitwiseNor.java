@@ -43,9 +43,6 @@ public class BitwiseNor extends DigitalCircuit {
         }
     }
 
-    /**
-     * Evaluates the Nor gate corresponding to each bit of A and B.
-     */
     @Override
     protected void evaluateCircuit() {
         for(NorGate nor : nors) {

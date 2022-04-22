@@ -41,6 +41,10 @@ public class MemoryModuleTest {
 
     @Test
     void memModuleTestTest() {
+        // Memory Module Transistor Count Test
+        assertEquals(872, memoryModule.getTransistorCount(),
+                "8 Choice, 4 Bit Memory Module Transistor Count Test");
+
         memoryModule.assignInputs(TEST_0_READ_4);
         memoryModule.evaluate();
         assertArrayEquals(OUTPUT_0, memoryModule.readOutputs(), "Read 4: 0");

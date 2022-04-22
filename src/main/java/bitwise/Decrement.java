@@ -64,13 +64,6 @@ public class Decrement extends DigitalCircuit {
         borrowAnds[0].assignOutput(getInternalOutput(nBits));
     }
 
-    /**
-     * For each bit of the input starting from the least significant bit (nBit-1):
-     * <ul>
-     * <li>Firstly, evaluates the Inverter tied to the input port for that bit.</li>
-     * <li>Secondly, evaluates the Borrow And gate for that bit.</li>
-     * <li>Lastly, evaluates the Output Xor Gate for that bit.</li>
-     */
     @Override
     protected void evaluateCircuit() {
         for (int i = getNumInputs() - 1; i >= 0; i--) {

@@ -43,9 +43,6 @@ public class BitwiseNand extends DigitalCircuit {
         }
     }
 
-    /**
-     * Evaluates the Nand gate corresponding to each bit of A and B.
-     */
     @Override
     protected void evaluateCircuit() {
         for(NandGate nand : nands) {

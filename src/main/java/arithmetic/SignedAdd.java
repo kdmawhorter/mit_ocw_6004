@@ -90,12 +90,6 @@ public class SignedAdd extends UnsignedAdd {
 
     }
 
-    /**
-     * Evaluate the unsigned addition logic gates.<br>
-     * Evaluate the sign inverters.<br>
-     * Evaluate the mismatched output sign Nands.<br>
-     * Evaluate the overflow nand.<br>
-     */
     @Override
     protected void evaluateCircuit() {
         super.evaluateCircuit();

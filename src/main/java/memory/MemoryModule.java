@@ -7,14 +7,34 @@ import logic_gates.InverterGate;
 import multiplexer.Demux;
 import multiplexer.Mux;
 
+/**
+ * A class representing a memory module.<br>
+ * <br>
+ * A MemoryModule object consists of:<ul>
+ *     <li>numWords * nBits contiguous {@link CircuitNode CircuitNodes} representing physical memory</li>
+ *     <li>A multiplexer with the memory from above on the input</li>
+ *     <li>A demultiplexer with the memory from above on the output</li>
+ *     <li>An op code inverter</li>
+ *     <li>{@link #getSelBitCnt() selBitCnt} 2-bit demuxMaskAnds which Ands the input selection with the op code to only
+ *     push the selection into the demux if the op code is 1 </li>
+ *     <li>nBit 2-bit muxMaskAnds which only allows the mux to output its values if the op code is zero</li>
+ * </ul>
+ *
+ * <b>Inputs</b>: nBits + 1 + selBitCnt corresponding to:<ul>
+ * <li>an nBit bit string representing some value to write to memory</li>
+ * <li>a 1-bit op code representing whether the selection should be read (0) or written to (1)</li>
+ * <li>a selBitCnt bit string representing which word in memory to read or write.</li></ul>
+ * <b>Outputs</b>: nBits corresponding to:<ul>
+ * <li>an nBit bit string corresponding to the contents of the selected memory address if a read operation</li></ul>
+ */
 public class MemoryModule extends SelectionCircuit {
 
     private final Mux mux;
     private final Demux demux;
 
+    private final InverterGate invOpCode;
     private final AndGate[] demuxMaskAnds;
     private final AndGate[] muxMaskAnds;
-    private final InverterGate invOpCode;
 
     // input is nBits for the word, 1 bit for opcode (0 is read, 1 is write), selBit for selector bits
 
@@ -28,8 +48,8 @@ public class MemoryModule extends SelectionCircuit {
 
         invOpCode = new InverterGate(label + " InvertedOpCode");
         invOpCode.assignInput(getInternalInput(wordWidth));
-        transistorCount += invOpCode.getTransistorCount() + mux.getTransistorCount() + demux.getTransistorCount();
 
+        transistorCount += invOpCode.getTransistorCount() + mux.getTransistorCount() + demux.getTransistorCount();
 
         for (int m = 0; m < wordWidth*memSpacesIncZero; m++) {
             memory[m] = new CircuitNode(label + " Memory_" + m);
@@ -61,7 +81,7 @@ public class MemoryModule extends SelectionCircuit {
     }
 
     @Override
-    public void evaluateCircuit() {
+    protected void evaluateCircuit() {
         super.evaluateCircuit();
 
         invOpCode.evaluate();
