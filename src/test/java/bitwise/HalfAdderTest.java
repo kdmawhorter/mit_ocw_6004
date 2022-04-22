@@ -10,42 +10,47 @@ import static core_architecture.DigitalCircuit.GND;
 
 public class HalfAdderTest {
 
-    private HalfAdder halfAdder00;
+    private HalfAdder halfAdder;
     private HalfAdder halfAdder01;
-    private HalfAdder halfAdder10;
-    private HalfAdder halfAdder11;
 
     private final static CircuitNode[] TEST_00 = {GND, GND};
     private final static CircuitNode[] TEST_01 = {GND, VDD};
     private final static CircuitNode[] TEST_10 = {VDD, GND};
     private final static CircuitNode[] TEST_11 = {VDD, VDD};
 
+    private final static Boolean[] ANS_00 = {false, false};
+    private final static Boolean[] ANS_01 = {false, true};
+    private final static Boolean[] ANS_10 = {true, false};
 
     @BeforeEach
     void init() {
-        halfAdder00 = new HalfAdder("Half Adder Test 00", GND, GND);
+        halfAdder = new HalfAdder("Half Adder Test 00");
         halfAdder01 = new HalfAdder("Half Adder Test 01", GND, VDD);
-        halfAdder10 = new HalfAdder("Half Adder Test 10", VDD, GND);
-        halfAdder11 = new HalfAdder("Half Adder Test 11", VDD, VDD);
-
     }
 
     @Test
-    void funcTest() {
-        halfAdder00.evaluate();
-        assertFalse(halfAdder00.readOutput(0), "Half Adder 00 High Bit");
-        assertFalse(halfAdder00.readOutput(1), "Half Adder 00 Low Bit");
+    void halfAdderTest() {
+        //Transistor Count Test
+        assertEquals(22, halfAdder.getTransistorCount());
+
+        //Half Adder Test
+        halfAdder.assignInputs(TEST_00);
+        halfAdder.evaluate();
+        assertArrayEquals(ANS_00, halfAdder.readOutputs(), "Half Adder 00 Test");
+
+        halfAdder.assignInputs(TEST_01);
+        halfAdder.evaluate();
+        assertArrayEquals(ANS_01, halfAdder.readOutputs(), "Half Adder 01 Test");
+
+        halfAdder.assignInputs(TEST_10);
+        halfAdder.evaluate();
+        assertArrayEquals(ANS_01, halfAdder.readOutputs(), "Half Adder 10 Test");
+
+        halfAdder.assignInputs(TEST_11);
+        halfAdder.evaluate();
+        assertArrayEquals(ANS_10, halfAdder.readOutputs(), "Half Adder 11 Test");
 
         halfAdder01.evaluate();
-        assertFalse(halfAdder01.readOutput(0), "Half Adder 01 High Bit");
-        assertTrue(halfAdder01.readOutput(1), "Half Adder 01 Low Bit");
-
-        halfAdder10.evaluate();
-        assertFalse(halfAdder10.readOutput(0), "Half Adder 10 High Bit");
-        assertTrue(halfAdder10.readOutput(1), "Half Adder 10 Low Bit");
-
-        halfAdder11.evaluate();
-        assertTrue(halfAdder11.readOutput(0), "Half Adder 11 High Bit");
-        assertFalse(halfAdder11.readOutput(1), "Half Adder 11 Low Bit");
+        assertArrayEquals(ANS_01, halfAdder01.readOutputs(), "Half Adder 01 External Test");
     }
 }

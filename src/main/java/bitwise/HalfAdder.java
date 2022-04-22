@@ -28,23 +28,35 @@ public class HalfAdder extends DigitalCircuit {
      * HalfAdder constructor.
      *
      * @param label The name of the circuit.
-     * @param inputA The first bit/node.
-     * @param inputB The second bit/node.
      */
-    public HalfAdder(String label, CircuitNode inputA, CircuitNode inputB) {
+    public HalfAdder(String label) {
         super(label, 2, 2);
 
         lowBitGate = new XorGate(label + " LowBitGate", 2);
-        lowBitGate.assignInput(0, inputA);
-        lowBitGate.assignInput(1, inputB);
+        lowBitGate.assignInput(0, getInternalInput(0));
+        lowBitGate.assignInput(1, getInternalInput(1));
         lowBitGate.assignOutput(getInternalOutput(1));
         transistorCount += lowBitGate.getTransistorCount();
 
         highBitGate = new AndGate(label + " HighBitGate", 2);
-        highBitGate.assignInput(0, inputA);
-        highBitGate.assignInput(1, inputB);
+        highBitGate.assignInput(0, getInternalInput(0));
+        highBitGate.assignInput(1, getInternalInput(1));
         highBitGate.assignOutput(getInternalOutput(0));
         transistorCount += highBitGate.getTransistorCount();
+    }
+
+    /**
+     * HalfAdder constructor.
+     *
+     * @param label The name of the circuit.
+     * @param inputA The first bit/node.
+     * @param inputB The second bit/node.
+     */
+    public HalfAdder(String label, CircuitNode inputA, CircuitNode inputB) {
+        this(label);
+
+        assignInput(0, inputA);
+        assignInput(1, inputB);
     }
 
     @Override
