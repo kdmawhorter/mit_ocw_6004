@@ -1,6 +1,7 @@
 package multiplexer;
 
 import core_architecture.CircuitNode;
+import core_architecture.MitOcwTest;
 import org.junit.jupiter.api.Test;
 
 import java.util.Arrays;
@@ -9,7 +10,7 @@ import static core_architecture.DigitalCircuit.GND;
 import static core_architecture.DigitalCircuit.VDD;
 import static org.junit.jupiter.api.Assertions.*;
 
-public class MuxTest {
+public class MuxTest extends MitOcwTest {
 
     private final static Boolean[] TEST_0x0000 = {false, false, false, false, false, false, false, false,
                                                   false, false, false, false, false, false, false, false };

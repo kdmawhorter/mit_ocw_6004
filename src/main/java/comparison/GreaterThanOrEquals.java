@@ -25,7 +25,7 @@ public class GreaterThanOrEquals extends Comparator {
      * @param label The name of the circuit.
      * @param nBits The number of bits in each input.
      */
-    GreaterThanOrEquals(String label, int nBits) {
+    public GreaterThanOrEquals(String label, int nBits) {
         super(label, nBits);
 
         outputInverter = new InverterGate(label + " OutputInverter");

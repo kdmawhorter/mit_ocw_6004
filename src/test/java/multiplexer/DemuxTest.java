@@ -1,6 +1,7 @@
 package multiplexer;
 
 import core_architecture.CircuitNode;
+import core_architecture.MitOcwTest;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 
@@ -8,7 +9,7 @@ import static org.junit.jupiter.api.Assertions.*;
 import static core_architecture.DigitalCircuit.VDD;
 import static core_architecture.DigitalCircuit.GND;
 
-public class DemuxTest {
+public class DemuxTest extends MitOcwTest {
 
     private Demux demux4To16;
 

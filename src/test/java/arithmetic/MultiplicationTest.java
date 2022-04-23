@@ -1,6 +1,7 @@
 package arithmetic;
 
 import core_architecture.CircuitNode;
+import core_architecture.MitOcwTest;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 
@@ -9,7 +10,7 @@ import static core_architecture.DigitalCircuit.VDD;
 import static org.junit.jupiter.api.Assertions.*;
 
 
-public class MultiplicationTest {
+public class MultiplicationTest extends MitOcwTest {
 
     private Multiplication mult;
     private Multiplication mult32;
@@ -128,39 +129,22 @@ public class MultiplicationTest {
 
     @Test
     public void mult32Test() {
-        mult32.assignInputs(generateCNArrayFromInt(400, 900));
+        mult32.assignInputs(generateCNArrayFromInts(400, 900));
         mult32.evaluate();
-        assertArrayEquals(generateBooleanArrayFromInt(400*900), mult32.readOutputs(), "400*900 Test");
+        assertArrayEquals(generateBooleanArrayFromLong(400*900), mult32.readOutputs(), "400*900 Test");
 
-        mult32.assignInputs(generateCNArrayFromInt(Integer.MAX_VALUE, Integer.MAX_VALUE));
+        mult32.assignInputs(generateCNArrayFromInts(Integer.MAX_VALUE, Integer.MAX_VALUE));
         mult32.evaluate();
-        assertArrayEquals(generateBooleanArrayFromInt((long) Integer.MAX_VALUE * (long) Integer.MAX_VALUE),
+        assertArrayEquals(generateBooleanArrayFromLong((long) Integer.MAX_VALUE * (long) Integer.MAX_VALUE),
                 mult32.readOutputs(), "Integer Max Value Test");
 
-        mult32.assignInputs(generateCNArrayFromInt(0, 0));
+        mult32.assignInputs(generateCNArrayFromInts(0, 0));
         mult32.evaluate();
-        assertArrayEquals(generateBooleanArrayFromInt(0), mult32.readOutputs(), "0*0 Test");
+        assertArrayEquals(generateBooleanArrayFromLong(0), mult32.readOutputs(), "0*0 Test");
 
-        mult32.assignInputs(generateCNArrayFromInt(123456, 456789));
+        mult32.assignInputs(generateCNArrayFromInts(123456, 456789));
         mult32.evaluate();
-        assertArrayEquals(generateBooleanArrayFromInt(123456L * 456789L), mult32.readOutputs(),
+        assertArrayEquals(generateBooleanArrayFromLong(123456L * 456789L), mult32.readOutputs(),
                 "123456*456789 Test");
-    }
-
-    private static CircuitNode[] generateCNArrayFromInt(int inputA, int inputB) {
-        CircuitNode[] returnCNArray = new CircuitNode[64];
-        for (int i = 0; i < 32; i++) {
-            returnCNArray[63-i] = ((inputA>>i)&1)==1 ? VDD : GND;
-            returnCNArray[31-i] = ((inputB>>i)&1)==1 ? VDD : GND;
-        }
-        return returnCNArray;
-    }
-
-    private static Boolean[] generateBooleanArrayFromInt(long input) {
-        Boolean[] returnBoolArray = new Boolean[64];
-        for (int i = 0; i < 64; i++) {
-            returnBoolArray[63-i] = ((input>>i)&1)==1;
-        }
-        return returnBoolArray;
     }
 }

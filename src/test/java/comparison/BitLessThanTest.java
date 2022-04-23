@@ -19,68 +19,68 @@ public class BitLessThanTest extends MitOcwTest {
     void bitLessThanTest() {
         assertEquals(32, bitLessThan.getTransistorCount(), "Bit Less Than Transistor Count Test");
 
-        bitLessThan.assignInputs(TEST_0000);
+        bitLessThan.assignInputs(TEST_4_0000);
         bitLessThan.evaluate();
-        assertArrayEquals(ANS_00, bitLessThan.readOutputs(), "Bit Less Than 0000 Test");
+        assertArrayEquals(ANS_2_00, bitLessThan.readOutputs(), "Bit Less Than 0000 Test");
 
-        bitLessThan.assignInputs(TEST_0001);
+        bitLessThan.assignInputs(TEST_4_0001);
         bitLessThan.evaluate();
-        assertArrayEquals(ANS_01, bitLessThan.readOutputs(), "Bit Less Than 0001 Test");
+        assertArrayEquals(ANS_2_01, bitLessThan.readOutputs(), "Bit Less Than 0001 Test");
 
-        bitLessThan.assignInputs(TEST_0010);
+        bitLessThan.assignInputs(TEST_4_0010);
         bitLessThan.evaluate();
-        assertArrayEquals(ANS_10, bitLessThan.readOutputs(), "Bit Less Than 0010 Test");
+        assertArrayEquals(ANS_2_10, bitLessThan.readOutputs(), "Bit Less Than 0010 Test");
 
-        bitLessThan.assignInputs(TEST_0011);
+        bitLessThan.assignInputs(TEST_4_0011);
         bitLessThan.evaluate();
-        assertArrayEquals(ANS_11, bitLessThan.readOutputs(), "Bit Less Than 0011 Test");
+        assertArrayEquals(ANS_2_11, bitLessThan.readOutputs(), "Bit Less Than 0011 Test");
 
-        bitLessThan.assignInputs(TEST_0100);
+        bitLessThan.assignInputs(TEST_4_0100);
         bitLessThan.evaluate();
-        assertArrayEquals(ANS_00, bitLessThan.readOutputs(), "Bit Less Than 0100 Test");
+        assertArrayEquals(ANS_2_00, bitLessThan.readOutputs(), "Bit Less Than 0100 Test");
 
-        bitLessThan.assignInputs(TEST_0101);
+        bitLessThan.assignInputs(TEST_4_0101);
         bitLessThan.evaluate();
-        assertArrayEquals(ANS_10, bitLessThan.readOutputs(), "Bit Less Than 0101 Test");
+        assertArrayEquals(ANS_2_10, bitLessThan.readOutputs(), "Bit Less Than 0101 Test");
 
-        bitLessThan.assignInputs(TEST_0110);
+        bitLessThan.assignInputs(TEST_4_0110);
         bitLessThan.evaluate();
-        assertArrayEquals(ANS_10, bitLessThan.readOutputs(), "Bit Less Than 0110 Test");
+        assertArrayEquals(ANS_2_10, bitLessThan.readOutputs(), "Bit Less Than 0110 Test");
 
-        bitLessThan.assignInputs(TEST_0111);
+        bitLessThan.assignInputs(TEST_4_0111);
         bitLessThan.evaluate();
-        assertArrayEquals(ANS_10, bitLessThan.readOutputs(), "Bit Less Than 0111 Test");
+        assertArrayEquals(ANS_2_10, bitLessThan.readOutputs(), "Bit Less Than 0111 Test");
 
-        bitLessThan.assignInputs(TEST_1000);
+        bitLessThan.assignInputs(TEST_4_1000);
         bitLessThan.evaluate();
-        assertArrayEquals(ANS_00, bitLessThan.readOutputs(), "Bit Less Than 1000 Test");
+        assertArrayEquals(ANS_2_00, bitLessThan.readOutputs(), "Bit Less Than 1000 Test");
 
-        bitLessThan.assignInputs(TEST_1001);
+        bitLessThan.assignInputs(TEST_4_1001);
         bitLessThan.evaluate();
-        assertArrayEquals(ANS_00, bitLessThan.readOutputs(), "Bit Less Than 1001 Test");
+        assertArrayEquals(ANS_2_00, bitLessThan.readOutputs(), "Bit Less Than 1001 Test");
 
-        bitLessThan.assignInputs(TEST_1010);
+        bitLessThan.assignInputs(TEST_4_1010);
         bitLessThan.evaluate();
-        assertArrayEquals(ANS_10, bitLessThan.readOutputs(), "Bit Less Than 1010 Test");
+        assertArrayEquals(ANS_2_10, bitLessThan.readOutputs(), "Bit Less Than 1010 Test");
 
-        bitLessThan.assignInputs(TEST_1011);
+        bitLessThan.assignInputs(TEST_4_1011);
         bitLessThan.evaluate();
-        assertArrayEquals(ANS_10, bitLessThan.readOutputs(), "Bit Less Than 1011 Test");
+        assertArrayEquals(ANS_2_10, bitLessThan.readOutputs(), "Bit Less Than 1011 Test");
 
-        bitLessThan.assignInputs(TEST_1100);
+        bitLessThan.assignInputs(TEST_4_1100);
         bitLessThan.evaluate();
-        assertArrayEquals(ANS_00, bitLessThan.readOutputs(), "Bit Less Than 1100 Test");
+        assertArrayEquals(ANS_2_00, bitLessThan.readOutputs(), "Bit Less Than 1100 Test");
 
-        bitLessThan.assignInputs(TEST_1101);
+        bitLessThan.assignInputs(TEST_4_1101);
         bitLessThan.evaluate();
-        assertArrayEquals(ANS_01, bitLessThan.readOutputs(), "Bit Less Than 1101 Test");
+        assertArrayEquals(ANS_2_01, bitLessThan.readOutputs(), "Bit Less Than 1101 Test");
 
-        bitLessThan.assignInputs(TEST_1110);
+        bitLessThan.assignInputs(TEST_4_1110);
         bitLessThan.evaluate();
-        assertArrayEquals(ANS_10, bitLessThan.readOutputs(), "Bit Less Than 1110 Test");
+        assertArrayEquals(ANS_2_10, bitLessThan.readOutputs(), "Bit Less Than 1110 Test");
 
-        bitLessThan.assignInputs(TEST_1111);
+        bitLessThan.assignInputs(TEST_4_1111);
         bitLessThan.evaluate();
-        assertArrayEquals(ANS_11, bitLessThan.readOutputs(), "Bit Less Than 1111 Test");
+        assertArrayEquals(ANS_2_11, bitLessThan.readOutputs(), "Bit Less Than 1111 Test");
     }
 }

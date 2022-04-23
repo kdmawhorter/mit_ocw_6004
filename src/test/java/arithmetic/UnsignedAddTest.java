@@ -1,6 +1,7 @@
 package arithmetic;
 
 import core_architecture.CircuitNode;
+import core_architecture.MitOcwTest;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 
@@ -8,15 +9,13 @@ import static org.junit.jupiter.api.Assertions.*;
 import static core_architecture.DigitalCircuit.VDD;
 import static core_architecture.DigitalCircuit.GND;
 
-public class UnsignedAddTest {
+public class UnsignedAddTest extends MitOcwTest {
 
     private UnsignedAdd unsignedAdd3Bit;
     private UnsignedAdd unsignedAdd4Bit;
 
     private static final CircuitNode[] NO_OVERFLOW_4_BIT = { VDD, GND, GND, VDD, GND, GND, VDD, GND };
     private static final CircuitNode[] OVERFLOW_4_BIT = { VDD, GND, GND, GND, VDD, VDD, VDD, GND };
-    private static final CircuitNode[] ADD_ZEROES = { GND, GND, GND, GND, GND, GND, GND, GND };
-    private static final CircuitNode[] ADD_FFS = { VDD, VDD, VDD, VDD, VDD, VDD, VDD, VDD };
 
     private static final Boolean[] NO_OVERFLOW_4_BIT_ANS = {true, false, true, true, false};
     private static final Boolean[] OVERFLOW_4_BIT_ANS = {false, true, true, false, true};
@@ -48,11 +47,11 @@ public class UnsignedAddTest {
         unsignedAdd4Bit.evaluate();
         assertArrayEquals(OVERFLOW_4_BIT_ANS, unsignedAdd4Bit.readOutputs(), "4 Bit Add With Overflow");
 
-        unsignedAdd4Bit.assignInputs(ADD_ZEROES);
+        unsignedAdd4Bit.assignInputs(TEST_0x00);
         unsignedAdd4Bit.evaluate();
         assertArrayEquals(ADD_ZEROES_ANS, unsignedAdd4Bit.readOutputs(), "4 Bit Add Zeroes");
 
-        unsignedAdd4Bit.assignInputs(ADD_FFS);
+        unsignedAdd4Bit.assignInputs(TEST_0xFF);
         unsignedAdd4Bit.evaluate();
         assertArrayEquals(ADD_FFS_ANS, unsignedAdd4Bit.readOutputs(), "4 Bit Add 0xFF and 0xFF");
     }

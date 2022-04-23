@@ -2,13 +2,13 @@ package bitwise;
 
 import core_architecture.CircuitNode;
 import core_architecture.ConnectionType;
+import core_architecture.MitOcwTest;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 
-import static org.junit.jupiter.api.Assertions.assertArrayEquals;
-import static org.junit.jupiter.api.Assertions.assertEquals;
+import static org.junit.jupiter.api.Assertions.*;
 
-public class BitwiseOrTest extends BitwiseTest {
+public class BitwiseOrTest extends MitOcwTest {
 
     private BitwiseOr or1Bit;
     private BitwiseOr or2Bit;
@@ -35,84 +35,84 @@ public class BitwiseOrTest extends BitwiseTest {
         // 1 Bit Or Test
         or1Bit.assignInputs(TEST_2_00);
         or1Bit.evaluate();
-        assertArrayEquals(mapTest(TEST_1_0), or1Bit.readOutputs(), "1 Bit Bitwise Or 00 Test");
+        assertFalse(or1Bit.readOutput(0), "1 Bit Bitwise Or 00 Test");
 
         or1Bit.assignInputs(TEST_2_01);
         or1Bit.evaluate();
-        assertArrayEquals(mapTest(TEST_1_1), or1Bit.readOutputs(), "1 Bit Bitwise Or 01 Test");
+        assertTrue(or1Bit.readOutput(0), "1 Bit Bitwise Or 01 Test");
 
         or1Bit.assignInputs(TEST_2_10);
         or1Bit.evaluate();
-        assertArrayEquals(mapTest(TEST_1_1), or1Bit.readOutputs(), "1 Bit Bitwise Or 10 Test");
+        assertTrue(or1Bit.readOutput(0), "1 Bit Bitwise Or 10 Test");
 
         or1Bit.assignInputs(TEST_2_11);
         or1Bit.evaluate();
-        assertArrayEquals(mapTest(TEST_1_1), or1Bit.readOutputs(), "1 Bit Bitwise Or 11 Test");
+        assertTrue(or1Bit.readOutput(0), "1 Bit Bitwise Or 11 Test");
 
         // 2 Bit Or Test
         or2Bit.assignInputs(TEST_4_0000);
         or2Bit.evaluate();
-        assertArrayEquals(mapTest(TEST_2_00), or2Bit.readOutputs(), "2 Bit Bitwise Or 0000 Test");
+        assertArrayEquals(ANS_2_00, or2Bit.readOutputs(), "2 Bit Bitwise Or 0000 Test");
 
         or2Bit.assignInputs(TEST_4_0001);
         or2Bit.evaluate();
-        assertArrayEquals(mapTest(TEST_2_01), or2Bit.readOutputs(), "2 Bit Bitwise Or 0001 Test");
+        assertArrayEquals(ANS_2_01, or2Bit.readOutputs(), "2 Bit Bitwise Or 0001 Test");
 
         or2Bit.assignInputs(TEST_4_0010);
         or2Bit.evaluate();
-        assertArrayEquals(mapTest(TEST_2_10), or2Bit.readOutputs(), "2 Bit Bitwise Or 0010 Test");
+        assertArrayEquals(ANS_2_10, or2Bit.readOutputs(), "2 Bit Bitwise Or 0010 Test");
 
         or2Bit.assignInputs(TEST_4_0011);
         or2Bit.evaluate();
-        assertArrayEquals(mapTest(TEST_2_11), or2Bit.readOutputs(), "2 Bit Bitwise Or 0011 Test");
+        assertArrayEquals(ANS_2_11, or2Bit.readOutputs(), "2 Bit Bitwise Or 0011 Test");
 
         or2Bit.assignInputs(TEST_4_0100);
         or2Bit.evaluate();
-        assertArrayEquals(mapTest(TEST_2_01), or2Bit.readOutputs(), "2 Bit Bitwise Or 0100 Test");
+        assertArrayEquals(ANS_2_01, or2Bit.readOutputs(), "2 Bit Bitwise Or 0100 Test");
 
         or2Bit.assignInputs(TEST_4_0101);
         or2Bit.evaluate();
-        assertArrayEquals(mapTest(TEST_2_01), or2Bit.readOutputs(), "2 Bit Bitwise Or 0101 Test");
+        assertArrayEquals(ANS_2_01, or2Bit.readOutputs(), "2 Bit Bitwise Or 0101 Test");
 
         or2Bit.assignInputs(TEST_4_0110);
         or2Bit.evaluate();
-        assertArrayEquals(mapTest(TEST_2_11), or2Bit.readOutputs(), "2 Bit Bitwise Or 0110 Test");
+        assertArrayEquals(ANS_2_11, or2Bit.readOutputs(), "2 Bit Bitwise Or 0110 Test");
 
         or2Bit.assignInputs(TEST_4_0111);
         or2Bit.evaluate();
-        assertArrayEquals(mapTest(TEST_2_11), or2Bit.readOutputs(), "2 Bit Bitwise Or 0111 Test");
+        assertArrayEquals(ANS_2_11, or2Bit.readOutputs(), "2 Bit Bitwise Or 0111 Test");
 
         or2Bit.assignInputs(TEST_4_1000);
         or2Bit.evaluate();
-        assertArrayEquals(mapTest(TEST_2_10), or2Bit.readOutputs(), "2 Bit Bitwise Or 1000 Test");
+        assertArrayEquals(ANS_2_10, or2Bit.readOutputs(), "2 Bit Bitwise Or 1000 Test");
 
         or2Bit.assignInputs(TEST_4_1001);
         or2Bit.evaluate();
-        assertArrayEquals(mapTest(TEST_2_11), or2Bit.readOutputs(), "2 Bit Bitwise Or 1001 Test");
+        assertArrayEquals(ANS_2_11, or2Bit.readOutputs(), "2 Bit Bitwise Or 1001 Test");
 
         or2Bit.assignInputs(TEST_4_1010);
         or2Bit.evaluate();
-        assertArrayEquals(mapTest(TEST_2_10), or2Bit.readOutputs(), "2 Bit Bitwise Or 1010 Test");
+        assertArrayEquals(ANS_2_10, or2Bit.readOutputs(), "2 Bit Bitwise Or 1010 Test");
 
         or2Bit.assignInputs(TEST_4_1011);
         or2Bit.evaluate();
-        assertArrayEquals(mapTest(TEST_2_11), or2Bit.readOutputs(), "2 Bit Bitwise Or 1011 Test");
+        assertArrayEquals(ANS_2_11, or2Bit.readOutputs(), "2 Bit Bitwise Or 1011 Test");
 
         or2Bit.assignInputs(TEST_4_1100);
         or2Bit.evaluate();
-        assertArrayEquals(mapTest(TEST_2_11), or2Bit.readOutputs(), "2 Bit Bitwise Or 1100 Test");
+        assertArrayEquals(ANS_2_11, or2Bit.readOutputs(), "2 Bit Bitwise Or 1100 Test");
 
         or2Bit.assignInputs(TEST_4_1101);
         or2Bit.evaluate();
-        assertArrayEquals(mapTest(TEST_2_11), or2Bit.readOutputs(), "2 Bit Bitwise Or 1101 Test");
+        assertArrayEquals(ANS_2_11, or2Bit.readOutputs(), "2 Bit Bitwise Or 1101 Test");
 
         or2Bit.assignInputs(TEST_4_1110);
         or2Bit.evaluate();
-        assertArrayEquals(mapTest(TEST_2_11), or2Bit.readOutputs(), "2 Bit Bitwise Or 1110 Test");
+        assertArrayEquals(ANS_2_11, or2Bit.readOutputs(), "2 Bit Bitwise Or 1110 Test");
 
         or2Bit.assignInputs(TEST_4_1111);
         or2Bit.evaluate();
-        assertArrayEquals(mapTest(TEST_2_11), or2Bit.readOutputs(), "2 Bit Bitwise Or 1111 Test");
+        assertArrayEquals(ANS_2_11, or2Bit.readOutputs(), "2 Bit Bitwise Or 1111 Test");
 
         // 1 Bit External Output Or Test
         or1BitExternal.assignInputs(TEST_2_00);
