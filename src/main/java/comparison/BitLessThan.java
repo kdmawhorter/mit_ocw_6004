@@ -19,7 +19,7 @@ import logic_gates.NandGate;
  * <li>2 3-bit Nands representing the inner Nands above</li>
  * <li>1 2-bit Nands representing the outer Nand above</li></ul>
  * Less Than Logic:<br>
- * This bit string is less if upstream the bitstring was less, or if the upstream bits matched and this A bit is less than B.<br>
+ * This bit string is less if upstream the bit string was less, or if the upstream bits matched and this A bit is less than B.<br>
  * Lo = Li + Ui!AB = Nand(!Li, Nand(Ui,!A, B))<ul>
  * <li>1 3-bit Nand representing the inner Nand above</li>
  * <li>1 2-bit Nand representing the outer Nand above</li>

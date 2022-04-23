@@ -1,12 +1,9 @@
 package bitwise;
 
-import core_architecture.CircuitNode;
 import core_architecture.MitOcwTest;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 
-import static core_architecture.DigitalCircuit.GND;
-import static core_architecture.DigitalCircuit.VDD;
 import static org.junit.jupiter.api.Assertions.*;
 
 public class DecrementTest extends MitOcwTest {

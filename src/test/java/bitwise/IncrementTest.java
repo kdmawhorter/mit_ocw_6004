@@ -1,13 +1,10 @@
 package bitwise;
 
-import core_architecture.CircuitNode;
 import core_architecture.MitOcwTest;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 
 import static org.junit.jupiter.api.Assertions.*;
-import static core_architecture.DigitalCircuit.VDD;
-import static core_architecture.DigitalCircuit.GND;
 
 public class IncrementTest extends MitOcwTest {
 
