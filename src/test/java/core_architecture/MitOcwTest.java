@@ -114,10 +114,16 @@ public abstract class MitOcwTest {
     }
 
     protected CircuitNode[] generateInputsArray(int inputA, int inputB, int length) {
-        CircuitNode[] returnCNArray = new CircuitNode[length*2];
-        for (int i = 0; i < length; i++) {
-            returnCNArray[2*length-1-i] = ((inputB>>i)&1)==1 ? VDD : GND;
-            returnCNArray[length-1-i] = ((inputA>>i)&1)==1 ? VDD : GND;
+        return generateInputsArray(inputA, length, inputB, length);
+    }
+
+    protected CircuitNode[] generateInputsArray(int inputA, int lengthA, int inputB, int lengthB) {
+        CircuitNode[] returnCNArray = new CircuitNode[lengthA + lengthB];
+        for (int i = 0; i < lengthA; i++) {
+            returnCNArray[lengthA - 1 - i] = ((inputA >> i) & 1) == 1 ? VDD : GND;
+        }
+        for (int i = 0; i < lengthB; i++) {
+            returnCNArray[lengthA+lengthB - 1 - i] = ((inputB>>i)&1)==1 ? VDD : GND;
         }
         return returnCNArray;
     }
@@ -130,6 +136,17 @@ public abstract class MitOcwTest {
         Boolean[] returnBoolArray = new Boolean[length];
         for (int i = 0; i < length; i++) {
             returnBoolArray[length-1-i] = ((input>>i)&1)==1;
+        }
+        return returnBoolArray;
+    }
+
+    protected  Boolean[] generateBooleanArrayTwoInputs(int inputA, int lengthA, int inputB, int lengthB) {
+        Boolean[] returnBoolArray = new Boolean[lengthA+lengthB];
+        for (int i = 0; i < lengthA; i++) {
+            returnBoolArray[lengthA-1-i] = ((inputA>>i)&1)==1;
+        }
+        for (int i = 0; i < lengthB; i++) {
+            returnBoolArray[lengthA+lengthB-1-i] = ((inputB>>i)&1)==1;
         }
         return returnBoolArray;
     }

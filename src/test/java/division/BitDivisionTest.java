@@ -1,4 +1,4 @@
-package bitwise;
+package division;
 
 import core_architecture.MitOcwTest;
 import org.junit.jupiter.api.BeforeEach;
@@ -250,6 +250,7 @@ public class BitDivisionTest extends MitOcwTest {
 
         for (int dividend = 0; dividend < 16; dividend++) {
             for (int divisor = 0; divisor < 16; divisor++) {
+                Boolean[] expectedAnswer;
                 if (divisor>7 || divisor<4) {
                     bitDivision.assignInputs(generateInputsArray(dividend, divisor, 4));
                     bitDivision.evaluate();
