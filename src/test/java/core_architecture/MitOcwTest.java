@@ -36,6 +36,13 @@ public abstract class MitOcwTest {
     protected static final CircuitNode[] TEST_1110 = {VDD, VDD, VDD, GND};
     protected static final CircuitNode[] TEST_1111 = {VDD, VDD, VDD, VDD};
 
+    protected static final CircuitNode[] TEST_0xFF = {VDD, VDD, VDD, VDD, VDD, VDD, VDD, VDD};
+    protected static final CircuitNode[] TEST_0xFE = {VDD, VDD, VDD, VDD, VDD, VDD, VDD, GND};
+    protected static final CircuitNode[] TEST_0xEF = {VDD, VDD, VDD, GND, VDD, VDD, VDD, VDD};
+    protected static final CircuitNode[] TEST_0x10 = {GND, GND, GND, VDD, GND, GND, GND, GND};
+    protected static final CircuitNode[] TEST_0x01 = {GND, GND, GND, GND, GND, GND, GND, VDD};
+    protected static final CircuitNode[] TEST_0x00 = {GND, GND, GND, GND, GND, GND, GND, GND};
+
     protected static final Boolean[] ANS_00 = {false, false};
     protected static final Boolean[] ANS_01 = {false, true};
     protected static final Boolean[] ANS_10 = {true, false};

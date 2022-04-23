@@ -45,4 +45,12 @@ public abstract class SingleOutputCircuit extends DigitalCircuit {
      * @return The internal connection to output.
      */
     protected CircuitNode getInternalOutput() { return getInternalOutput(0); }
+
+    /**
+     * Sets the sole internal output of the circuit.
+     * @param output The node to be output.
+     */
+    protected void setInternalOutput(@NotNull CircuitNode output) {
+        setInternalOutput(0, output);
+    }
 }
