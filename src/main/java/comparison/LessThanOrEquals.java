@@ -26,7 +26,7 @@ public class LessThanOrEquals extends Comparator {
      * @param label The name of the circuit.
      * @param nBits The number of bits in each input.
      */
-    LessThanOrEquals(String label, int nBits) {
+    public LessThanOrEquals(String label, int nBits) {
         super(label, nBits);
 
         outputOr = new OrGate(label + " OutputOr", 2);

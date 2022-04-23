@@ -1,6 +1,7 @@
 package bitwise;
 
 import core_architecture.CircuitNode;
+import core_architecture.MitOcwTest;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 
@@ -8,14 +9,10 @@ import static core_architecture.DigitalCircuit.GND;
 import static core_architecture.DigitalCircuit.VDD;
 import static org.junit.jupiter.api.Assertions.*;
 
-public class DecrementTest {
+public class DecrementTest extends MitOcwTest {
     
     private Decrement decrement3Bit;
     private Decrement decrement4Bit;
-
-    private static final CircuitNode[] F_DEC = {VDD, VDD, VDD, VDD };
-    private static final CircuitNode[] EIGHT_DEC = {VDD, GND, GND, GND };
-    private static final CircuitNode[] ZERO_DEC = {GND, GND, GND, GND };
 
     private static final Boolean[] F_DEC_ANS = {true, true, true, false, false};
     private static final Boolean[] EIGHT_DEC_ANS = {false, true, true, true, false};
@@ -34,15 +31,15 @@ public class DecrementTest {
         assertEquals(24*4, decrement4Bit.getTransistorCount(), "4 Bit Incrementer Transistor Count Test");
 
         // Increment Testing
-        decrement4Bit.assignInputs(F_DEC);
+        decrement4Bit.assignInputs(TEST_4_1111);
         decrement4Bit.evaluate();
         assertArrayEquals(F_DEC_ANS, decrement4Bit.readOutputs(), "Decrement 15");
 
-        decrement4Bit.assignInputs(EIGHT_DEC);
+        decrement4Bit.assignInputs(TEST_4_1000);
         decrement4Bit.evaluate();
         assertArrayEquals(EIGHT_DEC_ANS, decrement4Bit.readOutputs(), "Decrement 7");
 
-        decrement4Bit.assignInputs(ZERO_DEC);
+        decrement4Bit.assignInputs(TEST_4_0000);
         decrement4Bit.evaluate();
         assertArrayEquals(ZERO_DEC_ANS, decrement4Bit.readOutputs(), "Decrement 0");
     }

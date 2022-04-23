@@ -21,7 +21,7 @@ public class LessThan extends Comparator {
      * @param label The name of the circuit.
      * @param nBits The number of bits in each input.
      */
-    LessThan(String label, int nBits) {
+    public LessThan(String label, int nBits) {
         super(label, nBits);
 
         setInternalOutput(getLessThanOutput());

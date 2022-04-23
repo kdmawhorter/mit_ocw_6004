@@ -3,6 +3,7 @@ package logic_gates;
 import core_architecture.CircuitNode;
 
 import core_architecture.ConnectionType;
+import core_architecture.MitOcwTest;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 
@@ -10,7 +11,7 @@ import static org.junit.jupiter.api.Assertions.*;
 import static core_architecture.DigitalCircuit.GND;
 import static core_architecture.DigitalCircuit.VDD;
 
-public class InverterGateTest {
+public class InverterGateTest extends MitOcwTest {
 
     private InverterGate inv;
     private InverterGate invExternalNode;
@@ -42,11 +43,11 @@ public class InverterGateTest {
         assertTrue(inv.readOutput(), "Invert GND Test");
 
         // 1 Bit External Inverter Test
-        invExternalNode.assignInput(VDD);
+        invExternalNode.turnOn();
         invExternalNode.evaluate();
         assertEquals(ConnectionType.GROUND, externalNode.getStatus(), "Invert VDD External Test");
 
-        invExternalNode.assignInput(GND);
+        invExternalNode.turnOff();
         invExternalNode.evaluate();
         assertEquals(ConnectionType.POWER, externalNode.getStatus(), "Invert GND External Test");
     }

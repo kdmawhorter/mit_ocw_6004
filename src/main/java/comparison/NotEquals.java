@@ -26,7 +26,7 @@ public class NotEquals extends Comparator {
      * @param label The name of the circuit.
      * @param nBits The number of bits in each input.
      */
-    NotEquals(String label, int nBits) {
+    public NotEquals(String label, int nBits) {
         super(label, nBits);
 
         notEqualsOutput = new InverterGate(label + " NotEqualsOutput");

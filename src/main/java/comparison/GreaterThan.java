@@ -28,7 +28,7 @@ public class GreaterThan extends Comparator {
      * @param label The name of the circuit.
      * @param nBits The number of bits in each input.
      */
-    GreaterThan(String label, int nBits) {
+    public GreaterThan(String label, int nBits) {
         super(label, nBits);
 
         lessThanOrEquals = new OrGate(label + " LTE_Or", 2);
