@@ -1,7 +1,8 @@
-package bitwise;
+package division;
 
 import arithmetic.Negate;
 import arithmetic.UnsignedAdd;
+import bitwise.BitwiseAnd;
 import comparison.GreaterThanOrEquals;
 import core_architecture.CircuitNode;
 import core_architecture.DigitalCircuit;
@@ -10,7 +11,7 @@ import logic_gates.InverterGate;
 
 /**
  * A class representing a bit division helper. The intent of this class is to serve as a helper to the {@link
- * arithmetic.Division Division} class, by determining if the input divisor (B) divides the input dividend (A), and the
+ * Division Division} class, by determining if the input divisor (B) divides the input dividend (A), and the
  * remainder after doing so. The output of this logic block only writes if B is valid, defined as the most significant
  * 1 in B is its second most significant bit. The output of this logic block is only valid if A < 2*B,
  * which is enforced in the Division class.<br>
