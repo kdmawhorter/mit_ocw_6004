@@ -8,9 +8,6 @@ import org.junit.jupiter.api.Test;
 
 import static org.junit.jupiter.api.Assertions.*;
 
-import static core_architecture.DigitalCircuit.GND;
-import static core_architecture.DigitalCircuit.VDD;
-
 public class OrGateTest extends MitOcwTest {
 
     private OrGate or1Bit;

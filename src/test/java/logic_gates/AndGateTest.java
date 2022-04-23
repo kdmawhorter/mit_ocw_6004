@@ -8,9 +8,6 @@ import org.junit.jupiter.api.Test;
 
 import static org.junit.jupiter.api.Assertions.*;
 
-import static core_architecture.DigitalCircuit.GND;
-import static core_architecture.DigitalCircuit.VDD;
-
 public class AndGateTest extends MitOcwTest {
 
     private AndGate and1Bit;

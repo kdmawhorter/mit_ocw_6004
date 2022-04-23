@@ -7,8 +7,6 @@ import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 
 import static org.junit.jupiter.api.Assertions.*;
-import static core_architecture.DigitalCircuit.GND;
-import static core_architecture.DigitalCircuit.VDD;
 
 public class NandGateTest extends MitOcwTest {
 
