@@ -32,6 +32,8 @@ public class NotEquals extends Comparator {
         notEqualsOutput = new InverterGate(label + " NotEqualsOutput");
         notEqualsOutput.assignInput(getEqualsOutput());
         notEqualsOutput.assignOutput(getInternalOutput());
+
+        transistorCount += notEqualsOutput.getTransistorCount();
     }
 
     @Override

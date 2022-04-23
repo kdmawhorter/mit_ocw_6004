@@ -17,6 +17,8 @@ public class NotEqualsTest extends MitOcwTest {
 
     @Test
     void notEqualsTest() {
+        assertEquals(32*4 + 2, notEquals.getTransistorCount(),"Not Equals Transistor Count Test");
+
         notEquals.assignInputs(TEST_0xFF);
         notEquals.evaluate();
         assertFalse(notEquals.readOutput(), "Not Equals 0xFF Test");

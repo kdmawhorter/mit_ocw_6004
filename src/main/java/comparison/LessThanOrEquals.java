@@ -33,6 +33,8 @@ public class LessThanOrEquals extends Comparator {
         outputOr.assignInput(0, getLessThanOutput());
         outputOr.assignInput(1, getEqualsOutput());
         outputOr.assignOutput(getInternalOutput());
+
+        transistorCount += outputOr.getTransistorCount();
     }
 
     @Override
