@@ -17,6 +17,9 @@ public class GreaterThanOrEqualsTest extends MitOcwTest {
 
     @Test
     void greaterThanOrEqualsTest() {
+        assertEquals(32*4 + 2, greaterThanOrEquals.getTransistorCount(),
+                "Greater Than Or Equals Transistor Count Test");
+
         greaterThanOrEquals.assignInputs(TEST_0xFF);
         greaterThanOrEquals.evaluate();
         assertTrue(greaterThanOrEquals.readOutput(), "Greater Than Or Equals 0xFF Test");

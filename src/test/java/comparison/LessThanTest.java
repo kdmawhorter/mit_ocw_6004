@@ -17,6 +17,8 @@ public class LessThanTest extends MitOcwTest {
 
     @Test
     void lessThanTest() {
+        assertEquals(32*4, lessThan.getTransistorCount(),"Less Than Equals Transistor Count Test");
+
         lessThan.assignInputs(TEST_0xFF);
         lessThan.evaluate();
         assertFalse(lessThan.readOutput(), "Less Than 0xFF Test");

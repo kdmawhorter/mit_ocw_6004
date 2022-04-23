@@ -17,6 +17,8 @@ public class EqualsTest extends MitOcwTest {
 
     @Test
     void equalsTest() {
+        assertEquals(32*4, equals.getTransistorCount(), "Equals Transistor Count Test");
+
         equals.assignInputs(TEST_0xFF);
         equals.evaluate();
         assertTrue(equals.readOutput(), "Equals 0xFF Test");
