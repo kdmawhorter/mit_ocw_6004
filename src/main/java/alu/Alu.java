@@ -37,46 +37,44 @@ public class Alu extends DigitalCircuit {
     private final int nBits;
 
     // Registers and Memory
-    final CircuitNode[] pc;
+    private MemoryModule registers;
+    private MemoryModule memory;
 
-    MemoryModule registers;
-    MemoryModule memory;
-
-    final InverterGate[] invertedOpCode;
-    AndGate registerWrite;
-    AndGate memoryWrite;
+    private final InverterGate[] invertedOpCode;
+    private AndGate registerWrite;
+    private AndGate memoryWrite;
 
     // Arithmetic
-    UnsignedAdd unsignedAdd_0x10;
-    SignedAdd signedAdd_0x11;
-    Multiplication mult_0x12;
-    SignedMultiplication signedMult_0x13;
-    Division div_0x14;
-    SignedDivision signedDiv_0x15;
-    Increment increment_0x16;
-    Decrement decrement_0x17;
+    private UnsignedAdd unsignedAdd_0x10;
+    private SignedAdd signedAdd_0x11;
+    private Multiplication mult_0x12;
+    private SignedMultiplication signedMult_0x13;
+    private Division div_0x14;
+    private SignedDivision signedDiv_0x15;
+    private Increment increment_0x16;
+    private Decrement decrement_0x17;
 
     // Bitwise and Comparison Operations
-    BitwiseAnd bwAnd_0x20;
-    BitwiseNand bwNand_0x21;
-    BitwiseNor bwNor_0x22;
-    BitwiseOr bwOr_0x23;
-    BitwiseXor bwXor_0x24;
-    Inverter bwNot_0x25;
-    Equals equals_0x26;
-    GreaterThan gt_0x27;
-    GreaterThanOrEquals gte_0x28;
-    LessThan lt_0x29;
-    LessThanOrEquals lte_0x2A;
-    NotEquals ne_0x2B;
+    private BitwiseAnd bwAnd_0x20;
+    private BitwiseNand bwNand_0x21;
+    private BitwiseNor bwNor_0x22;
+    private BitwiseOr bwOr_0x23;
+    private BitwiseXor bwXor_0x24;
+    private Inverter bwNot_0x25;
+    private Equals equals_0x26;
+    private GreaterThan gt_0x27;
+    private GreaterThanOrEquals gte_0x28;
+    private LessThan lt_0x29;
+    private LessThanOrEquals lte_0x2A;
+    private NotEquals ne_0x2B;
 
     // Shift Operations
-    ShiftLeftUnsigned slu_0x30;
-    ShiftLeftSigned sls_0x31;
-    ShiftLeftCircle slc_0x32;
-    ShiftRightUnsigned sru_0x33;
-    ShiftRightSigned srs_0x34;
-    ShiftRightCircle src_0x35;
+    private ShiftLeftUnsigned slu_0x30;
+    private ShiftLeftSigned sls_0x31;
+    private ShiftLeftCircle slc_0x32;
+    private ShiftRightUnsigned sru_0x33;
+    private ShiftRightSigned srs_0x34;
+    private ShiftRightCircle src_0x35;
 
     private final Mux outputHiArbitration;
     private final Mux outputLoArbitration;
@@ -85,12 +83,6 @@ public class Alu extends DigitalCircuit {
         super(label, MAX_OP_CODES+2*nBits, 2*nBits);
 
         this.nBits = nBits;
-
-        pc = new CircuitNode[nBits];
-
-        for (int i = 0; i < nBits; i++) {
-            pc[i] = new CircuitNode(label + " PC_" + i);
-        }
 
         outputHiArbitration = new Mux(label + "OutputHiArbitration", (int) Math.pow(2, MAX_OP_CODES), nBits);
         outputHiArbitration.assignOutputs(getRegHi());
