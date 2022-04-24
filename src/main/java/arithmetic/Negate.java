@@ -1,6 +1,5 @@
 package arithmetic;
 
-import bitwise.Increment;
 import bitwise.Inverter;
 import core_architecture.DigitalCircuit;
 

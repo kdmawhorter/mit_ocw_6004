@@ -127,6 +127,22 @@ public abstract class MitOcwTest {
         }
         return returnCNArray;
     }
+
+    protected CircuitNode[] generateThreeInputsArray(int inputA, int lengthA,
+                                                     int inputB, int lengthB,
+                                                     int inputC, int lengthC) {
+        CircuitNode[] returnCNArray = new CircuitNode[lengthA + lengthB + lengthC];
+        for (int i = 0; i < lengthA; i++) {
+            returnCNArray[lengthA - 1 - i] = ((inputA >> i) & 1) == 1 ? VDD : GND;
+        }
+        for (int i = 0; i < lengthB; i++) {
+            returnCNArray[lengthA+lengthB - 1 - i] = ((inputB>>i)&1)==1 ? VDD : GND;
+        }
+        for (int i = 0; i < lengthC; i++) {
+            returnCNArray[lengthA+lengthB+lengthC - 1 - i] = ((inputC>>i)&1)==1 ? VDD : GND;
+        }
+        return returnCNArray;
+    }
     
     protected Boolean[] generateBooleanArrayFromLong(long input) {
         return generateBooleanArray(input, 64);
