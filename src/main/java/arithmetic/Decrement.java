@@ -1,4 +1,4 @@
-package bitwise;
+package arithmetic;
 
 import core_architecture.DigitalCircuit;
 import logic_gates.AndGate;

@@ -1,4 +1,4 @@
-package bitwise;
+package arithmetic;
 
 import core_architecture.MitOcwTest;
 import org.junit.jupiter.api.BeforeEach;
