@@ -40,7 +40,7 @@ public class Division extends DigitalCircuit {
      * @param label The name of the circuit.
      * @param nBits The number of bits in each input.
      */
-    Division(String label, int nBits) {
+    public Division(String label, int nBits) {
         super(label, 2*nBits, 2*nBits);
 
         this.nBits = nBits;
